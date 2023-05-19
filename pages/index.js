@@ -5,6 +5,10 @@ import Landing from '../compos/Homepage/Landing'
 import Platform from '../compos/Homepage/Platform'
 import Stats from '../compos/Homepage/Stats'
 import Footer from '../compos/Homepage/Footer'
+import Features from '../compos/Homepage/Features'
+import { useInView } from "react-intersection-observer";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
 
 
 export default function Home() {
@@ -17,8 +21,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Landing />
+
       <Platform />
+
+
       <Stats />
+
+
+      <Features />
+
       <Footer />
     </>
   )

@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
 function Stats() {
-    var [month, setMonth] = useState("")
-    var [day, setDay] = useState('')
+    var [fullDate, setFullDate] = useState('')
 
     function getToday() {
         var date = new Date()
+        var month = date.getMonth()
+        //get date from 1 to 31
+        var day = date.getDate()
 
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octomber', 'November', 'December']
 
-
+        if (day < 10) {
+            day = '0' + day
+        }
+        setFullDate(months[month] + ' ' + day + ', ' + date.getFullYear())
     }
 
     useEffect(() => {
@@ -20,8 +28,8 @@ function Stats() {
             <div className="stats shadow p-10 flex justify-center">
                 <div className="stat place-items-center">
                     <div className="stat-title">User Registered</div>
-                    <div className="stat-value">23</div>
-                    <div className="stat-desc">From Feburary 1st to February 1st</div>
+                    <div className="stat-value">33</div>
+                    <div className="stat-desc">From Feburary 1 to {fullDate}</div>
                 </div>
                 <div className="stat place-items-center">
                     <div className="stat-title">Users</div>

@@ -2,9 +2,12 @@ import React from 'react'
 import site from '../../images/sites.png'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useInView } from 'react-intersection-observer'
+import { motion } from 'framer-motion'
 
 
 function Landing() {
+    const { ref, inView, entry } = useInView()
     var router = useRouter()
     function navLogin() {
         router.push('/login')
@@ -13,7 +16,13 @@ function Landing() {
         router.push('/explore')
     }
     return (
-        <div className="hero min-h-screen bg-base-200 landing">
+        <motion.div className="hero min-h-screen bg-base-200 landing"
+            ref={ref}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: (inView) ? 1 : 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+        >
             <div className="hero text-center ">
                 <div className="max-w-md">
                     <h1 className="text-6xl font-bold">Hello Artist!!</h1>
@@ -26,7 +35,7 @@ function Landing() {
                 </div>
             </div>
 
-        </div>
+        </motion.div>
     )
 }
 

@@ -2,11 +2,14 @@ import React from 'react'
 import site from '../../images/sites.png'
 import Image from 'next/image'
 import TextTransition, { presets } from 'react-text-transition';
+import { motion } from 'framer-motion'
+import { useInView } from 'react-intersection-observer';
 
 const TEXTS = ['Artist', 'Singer', 'Designer', 'Developers', 'Writer', 'Student'];
 
 function Platform() {
     const [index, setIndex] = React.useState(0);
+    const { ref, inView } = useInView()
 
     React.useEffect(() => {
         const intervalId = setInterval(
@@ -16,7 +19,13 @@ function Platform() {
         return () => clearTimeout(intervalId);
     }, []);
     return (
-        <div className="hero min-h-screen bg-base-200">
+        <motion.div className="hero min-h-screen bg-base-200"
+            ref={ref}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: (inView) ? 1 : 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+        >
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <Image src={site} className='max-w-sm rounded-lg shadow-2xl' />
                 <div className='max-w-xl'>
@@ -29,7 +38,7 @@ function Platform() {
                     <button className="btn btn-primary">Get Started</button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
