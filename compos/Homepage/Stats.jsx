@@ -25,7 +25,7 @@ function Stats() {
     return (
         <div className="grid">
             <h2 className='text text-center text-4xl font-bold py-5'>Our website&apos;s Report</h2>
-            <div className="stats shadow p-10 flex justify-center">
+            <div className="stats flex-col sm:flex-row shadow p-10 flex justify-center">
                 <div className="stat place-items-center">
                     <div className="stat-title">User Registered</div>
                     <div className="stat-value">33</div>
