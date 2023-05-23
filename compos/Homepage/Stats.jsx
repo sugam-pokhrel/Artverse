@@ -16,7 +16,7 @@ function Stats() {
         if (day < 10) {
             day = '0' + day
         }
-        setFullDate(months[month] + ' ' + day + ', ' + date.getFullYear())
+        setFullDate(`${months[month]} ${day}, ${date.getFullYear()}`)
     }
 
     useEffect(() => {
