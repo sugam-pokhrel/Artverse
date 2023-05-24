@@ -40,9 +40,9 @@ function Upload() {
                 <h2 className='text upload-title md:text-2xl text-xl font-bold py-10'> <span>2/2</span> Add title and Description about your project.</h2>
                 <div className="flex md:w-3/5 w-11/12 h-5/6  border border-dotted">
                     <div className="flex py-10 gap-3 flex-col upload ease-out duration-300" >
-                        <input type="text" className='outline-none border-none input bg-gradient-to-r from-transparent w-full to-transparent uploadInput' placeholder='Give a suitable Title' />
+                        <input type="text" className='focus:bg-base-300 p-5 rounded-none outline-none border-none input bg-gradient-to-r from-transparent w-full to-transparent uploadInput' placeholder='Give a suitable Title' />
                         <img className='w-100 h-3/6' src={URL.createObjectURL(image)} alt="" />
-                        <textarea name="desc" id="upload-textarea" placeholder='Describe your Project under 2000 words' cols="30" rows="10"></textarea>
+                        <textarea name="desc" id="upload-textarea" className='text focus:bg-base-300 p-5' placeholder='Describe your Project under 2000 words, add Hasgtags for better reach' cols="30" rows="10"></textarea>
                         <button className='bg-primary text-white py-2 px-4 rounded-md'>Upload</button>
                     </div>
                 </div>
