@@ -1,5 +1,5 @@
 import React from 'react'
-import site from '../../images/sites.png'
+import site from '../../../images/sites.png'
 import Image from 'next/image'
 import TextTransition, { presets } from 'react-text-transition';
 import { motion } from 'framer-motion'

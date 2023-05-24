@@ -1,6 +1,4 @@
 import React from 'react'
-import site from '../../images/sites.png'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'

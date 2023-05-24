@@ -1,17 +1,25 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Navbar from '../compos/Navbar'
-import Landing from '../compos/Homepage/Landing'
-import Platform from '../compos/Homepage/Platform'
-import Stats from '../compos/Homepage/Stats'
-import Footer from '../compos/Homepage/Footer'
-import Features from '../compos/Homepage/Features'
-import { useInView } from "react-intersection-observer";
-import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import Landing from '../compos/Homepage/NotLoggedIn/Landing'
+import Platform from '../compos/Homepage/NotLoggedIn/Platform'
+import Stats from '../compos/Homepage/NotLoggedIn/Stats'
+import Footer from '../compos/Homepage/NotLoggedIn/Footer'
+import Features from '../compos/Homepage/NotLoggedIn/Features'
+import { useEffect, useState } from "react";
+import { useSession } from 'next-auth/react'
+import Dashboard from '../compos/Homepage/LoggedIn/Dashboard'
 
 
 export default function Home() {
+  var session = useSession()
+  var [authenticated, setAuthenticated] = useState(false)
+  useEffect(() => {
+    if (session.status === 'authenticated') {
+      setAuthenticated(true)
+    } else {
+      setAuthenticated(false)
+    }
+  }, [session.status])
+
   return (
     <>
       <Head>
@@ -20,17 +28,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Landing />
+      {(!authenticated) && <div>
+        <Landing />
+        <Platform />
+        <Stats />
+        <Features />
+        <Footer />
+      </div>}
+      {(authenticated) && <div>
+        <Dashboard />
+      </div>}
 
-      <Platform />
-
-
-      <Stats />
-
-
-      <Features />
-
-      <Footer />
     </>
   )
 }

@@ -1,9 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { useSession, signIn, signOut } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 function Loggedin() {
     const { data: session, status } = useSession()
+    var router = useRouter()
+
+    function navigateUpload() {
+        router.push("/upload")
+    }
     return (
         <div className="navbar bg-base-100">
             <div className="flex-1">
@@ -49,6 +55,7 @@ function Loggedin() {
                         <li><a onClick={signOut}>Logout</a></li>
                     </ul>
                 </div>
+                <div className="btn mx-5 bg-green-800 border-none btn-primary" onClick={navigateUpload}>Upload</div>
             </div>
         </div>
     )
