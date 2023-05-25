@@ -1,4 +1,4 @@
-import { Client, Account, ID,Databases } from 'appwrite';
+import { Client, Storage,Databases } from 'appwrite';
 
 const client = new Client()//i have not used the process env coz its testing purpose but you rather add it
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
@@ -6,3 +6,4 @@ const client = new Client()//i have not used the process env coz its testing pur
 
 
 export const databases = new Databases(client);
+export const storage = new Storage(client);

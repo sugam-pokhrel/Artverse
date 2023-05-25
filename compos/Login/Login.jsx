@@ -15,7 +15,7 @@ function Login() {
                             <h1 className="text-5xl font-bold">Log In to <span className='text text-secondary'>Artverse</span></h1>
                             <p className="py-5"> with your favourate social media, it will save your time, and you should not have to remember the password again and again.</p>
                             <div className="p-5 flex justify-center  flex-col gap-5">
-                                <button className="btn flex items-center gap-5 btn-primary" onClick={() => signIn("google")}>
+                                <button className="btn flex items-center gap-5 btn-primary" onClick={() => signIn("google",{callbackUrl:"/auth"})}>
                                     <BsGoogle />
                                     Login with Google</button>
                                 <button className="btn flex items-center gap-5 btn-secondary">
