@@ -49,7 +49,7 @@ export default async function handler(req, res) {
 
     // Process a PUT request
 
-const promise = databases.updateDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid,{formdata});
+const promise = databases.updateDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid,formdata);
 
 promise.then(function (response) {
     res.send(response) // Success this is the updated document
