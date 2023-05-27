@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "appwrite": "^11.0.0",
     "daisyui": "^2.51.6",
+    "dayjs": "^1.11.7",
     "framer-motion": "^10.12.12",
     "next": "13.4.2",
     "next-auth": "^4.22.1",
