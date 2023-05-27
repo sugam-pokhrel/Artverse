@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Explorepage from '../compos/Explore/Explorepage'
+import ExploreNav from '../compos/Explore/ExploreNav'
 
 function explore() {
+    const [data, setData] = useState([])
+    function getPosts() {
+        fetch("/api/post")
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.documents)
+                setData(data.documents)
+            })
+    }
+    useEffect(() => {
+        getPosts()
+    }, [])
     return (
-        <div>
-            <h1 className='text text-primary p-5'>Explore page is under development</h1>
+        <div className='Explore'>
+            <ExploreNav />
+            <Explorepage />
         </div>
     )
 }
