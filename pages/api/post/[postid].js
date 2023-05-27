@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
 
 
-    const {postid}=req.query;
+    const {postid}=req.body||req.query;
 
     //this is the get
 
