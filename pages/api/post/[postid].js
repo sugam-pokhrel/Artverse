@@ -1,3 +1,4 @@
+import { json } from 'express';
 import { databases } from '../../../appwrite'
 
 import { getSession } from "next-auth/react";
@@ -24,19 +25,19 @@ export default async function handler(req, res) {
     promise.then(function (response) {
 
         let userData=response.createdBy;
+      
 
          if (req.method === 'GET') {
-
-             res.send(response);
+            res.send(response)
 
          }
     // Success
 }, function (error) {
-    console.log(error); // Failure
+   res.send({msg:"no docs found"}); // Failure
 });
 
     
-
+//for update
 
     if (req.method === 'PUT') {
         if(session.user.email!=userData){
@@ -54,12 +55,12 @@ const promise = databases.updateDocument('646ed509771c8bf97447', '646ed512bc1b4d
 promise.then(function (response) {
     res.send(response) // Success this is the updated document
 }, function (error) {
-    console.log(error); // Failure
+   res.status(400).json({msg:"document not found"}) // Failure
 });
 
   } 
 
-
+//for delete
     if (req.method === 'DELETE') {
 
                 if(session.user.email!=userData){
@@ -76,7 +77,7 @@ promise.then(function (response) {
 promise.then(function (response) {
     res.send({msg:"deleted Successfully"}) // Success this is the updated document
 }, function (error) {
-    console.log(error); // Failure
+   res.status(400).json({msg:"document not found"}) // Failure
 });
 
   } 
