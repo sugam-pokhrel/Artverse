@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 function Explorecard({ post }) {
     var [user, setUser] = useState({})
+    var [verifiedUser, setVerifiedUser] = useState(true)
     var [time, setTime] = useState('')
     var [loading, setLoading] = useState(true)
     var router = useRouter()
@@ -13,6 +14,9 @@ function Explorecard({ post }) {
             .then(res => res.json())
             .then(data => {
                 setUser(data?.user[0])
+                if (data?.user[0] == undefined) {
+                    setVerifiedUser(false)
+                }
                 setLoading(false)
             })
     }
@@ -30,6 +34,7 @@ function Explorecard({ post }) {
     }
 
     return (
+
         <div className="card bg-base-100 exploreCard" onClick={navtoPost}>
             {loading ? <div className="ec-load-img"></div> :
                 <img className='ec-img' src={post.image} alt="" />
@@ -38,7 +43,6 @@ function Explorecard({ post }) {
                 <div className="ec-load-title-1"></div>
                 <div className="ec-load-title-2"></div>
             </div> :
-
                 <div className="ec-info">
                     <div className="ec-user">
                         <img src={user.image} alt="" />
@@ -50,6 +54,7 @@ function Explorecard({ post }) {
                 </div>
             }
         </div>
+
     )
 }
 
