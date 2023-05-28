@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       const promise = databases.getDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', likedid);
       const response = await promise;
       res.send(response.likes);
-    } else if (req.method === 'PUT') {
+    } else if (req.method === 'POST') {
       const docPromise = databases.getDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', likedid);
       const doc = await docPromise;
       let emails = doc.likes;
