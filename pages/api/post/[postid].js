@@ -1,88 +1,45 @@
-import { json } from 'express';
-import { databases } from '../../../appwrite'
-
-import { getSession } from "next-auth/react";
+import { databases } from '../../../appwrite';
+import { getSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
+  const session = await getSession({ req });
 
-    var session = await getSession({ req })
+  if (!session) {
+    return res.status(401).json({ error: 'Not Authenticated' });
+  }
 
+  const { postid } = req.body || req.query;
 
-
-    if (!session) {
-        return res.status(401).json({ error: "Not Authenticated" });
-    }
-
-
-
-
-    const {postid}=req.body||req.query;
-
-    //this is the get
-
+  try {
     const promise = databases.getDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid);
+    const response = await promise;
+    const userData = response.createdBy;
 
-    promise.then(function (response) {
+    if (req.method === 'GET') {
+      res.send(response);
+    } else if (req.method === 'PUT') {
+      if (session.user.email !== userData) {
+        return res.status(401).json({ error: 'Not Authenticated' });
+      }
 
-        let userData=response.createdBy;
-      
+      const { formdata } = req.body||req.query; // Data must be passed as form data
 
-         if (req.method === 'GET') {
-            res.send(response)
+      const updatePromise = databases.updateDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid, formdata);
+      const updateResponse = await updatePromise;
+      res.send(updateResponse);
+    } else if (req.method === 'DELETE') {
+      if (session.user.email !== userData) {
+        return res.status(401).json({ error: 'Not Authenticated' });
+      }
 
-         }
-    // Success
-}, function (error) {
-   res.send({msg:"no docs found"}); // Failure
-});
-
-    
-//for update
-
-    if (req.method === 'PUT') {
-        if(session.user.email!=userData){
-            return res.status(401).json({ error: "Not Authenticated" });
-
-        }
-
-        const {formdata}=req.query; //data must be passed as form data
-
-
-    // Process a PUT request
-
-const promise = databases.updateDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid,formdata);
-
-promise.then(function (response) {
-    res.send(response) // Success this is the updated document
-}, function (error) {
-   res.status(400).json({msg:"document not found"}) // Failure
-});
-
-  } 
-
-//for delete
-    if (req.method === 'DELETE') {
-
-                if(session.user.email!=userData){
-            return res.status(401).json({ error: "Not Authenticated" });
-
-        }
-     
-
-
-    // Process a Delete request
-
-    const promise = databases.deleteDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid);
-
-promise.then(function (response) {
-    res.send({msg:"deleted Successfully"}) // Success this is the updated document
-}, function (error) {
-   res.status(400).json({msg:"document not found"}) // Failure
-});
-
-  } 
-
-
-
-
+      const deletePromise = databases.deleteDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid);
+      await deletePromise;
+      res.send({ msg: 'Deleted Successfully' });
+    } else {
+      res.status(400).json({ msg: 'Invalid request method' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Internal Server Error' });
+  }
 }
