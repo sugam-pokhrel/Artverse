@@ -2,23 +2,30 @@ import { databases } from '../../../appwrite';
 import { getSession } from "next-auth/react";
 
 export default async function handler(req, res) {
-  var session = await getSession({ req })
-  if (!session) {
-    return res.status(401).json({ error: "Not Authenticated" });
-  }
 
-  const { likedid } = req.body || req.query;
+
+  const { likedid } = req.query;
 
   try {
     if (req.method === 'GET') {
       const promise = databases.getDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', likedid);
       const response = await promise;
       res.send(response.likes);
-    } else if (req.method === 'POST') {
+    } 
+    else if (req.method === 'POST') {
+const session = await getSession({ req });
+
+  console.log(session);
+
+  if (!session) {
+    return res.status(401).json({ error: "Not Authenticated" });
+  }
+
+  const likedby = session.user.email;
       const docPromise = databases.getDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', likedid);
       const doc = await docPromise;
       let emails = doc.likes;
-      const likedby= session.user.email; //data must be passed as form data
+      // data must be passed as form data
       console.log(emails);
 
       if (emails.includes(likedby)) {
@@ -37,10 +44,10 @@ export default async function handler(req, res) {
         res.send(response);
       }
     } else {
-      res.status(400).json({ msg: "Invalid request method" });
+      return res.status(400).json({ msg: "Invalid request method" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ msg: "Internal Server Error" });
+    return res.status(500).json({ msg: "Internal Server Error" });
   }
 }
