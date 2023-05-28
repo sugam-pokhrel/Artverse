@@ -4,15 +4,6 @@ import { getSession } from "next-auth/react";
 
 export default async function handler(req, res) {
 
-    var session = await getSession({ req })
-
-
-
-    if (!session) {
-        return res.status(401).json({ error: "Not Authenticated" });
-    }
-
-
 
 
     const { postid } = req.query;
