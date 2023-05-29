@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 
 function Social(a) {
@@ -44,6 +45,7 @@ function Social(a) {
 }
 
 function Edit() {
+
     var session = useSession()
     var [auth, setAuth] = React.useState(false)
     React.useEffect(() => {
@@ -62,6 +64,68 @@ function Edit() {
     var [domain, setDomain] = React.useState('')
     var [username, setUsername] = React.useState('')
     var [socials, setSocials] = React.useState([])
+     const [profession, setProfession] = useState('Other');
+  const [location, setLocation] = useState('');
+  const [website, setWebsite] = useState('');
+  const [bio, setBio] = useState('');
+
+
+function saveChanges (){
+    const requestBody = {};
+
+    if (profession.trim() !== '') {
+      requestBody.profession = profession;
+    }
+    if (location.trim() !== '') {
+      requestBody.location = location;
+    }
+    if (website.trim() !== '') {
+      requestBody.website = website;
+    }
+    if (bio.trim() !== '') {
+      requestBody.bio = bio;
+    }
+
+
+    console.log(requestBody)
+
+    let url='/api/users/'+session.data.user.email;
+    console.log(url)
+
+     fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestBody),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response data
+      console.log(data);
+    })
+    .catch((error) => {
+      // Handle the error
+      console.error('Error:', error);
+    });
+  };
+
+  const handleProfessionChange = (event) => {
+    setProfession(event.target.value);
+  };
+
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleWebsiteChange = (event) => {
+    setWebsite(event.target.value);
+  };
+
+  const handleBioChange = (event) => {
+    setBio(event.target.value);
+  };
+
 
     function checkifWebsite(e) {
         var url = e.value
@@ -98,94 +162,96 @@ function Edit() {
         setShowSocial(true)
     }
     return (
-        <div className="ep-home">
-            {(showSocial) && <div className="ep-social">
-                <div className="socialAdd">
-                    <input type="text" onChange={(e) => checkifWebsite(e.target)} placeholder='Enter or paste your link' />
-                    <button className='btn btn-primary' onClick={submitSocial}>Add</button>
-                    <button className='btn btn-warning' onClick={() => setShowSocial(false)}>Cancel</button>
-
-                </div>
-            </div>}
-            <div className="editProfile__header">
-                <div className="ep-image">
-                    <img src={session.data.user.image} alt="" referrerPolicy='no-referrer' />
-                </div>
-                <div className="ep-info">
-                    <div className="ep-name">
-                        <h1>{session.data.user.name}</h1>
-                        <h1>/ Edit Profile</h1>
-                    </div>
-                    <div className="ep-gyan">
-                        <p>Set up your accunt to 100% to create a faboulous Portfolio</p>
-                    </div>
-                </div>
-            </div>
-            <div className="ep-earea">
-                <div className="ep-etext">
-                    <p>Name:</p>
-                    <input type="text" value={session.data.user.name} readOnly />
-                    <span>This Name field is readonly and cannot be edited</span>
-                </div>
-                <div className="ep-etext">
-                    <p>Email:</p>
-                    <input type="text" value={session.data.user.email} readOnly />
-                    <span>This Email field is readonly and cannot be edited</span>
-                </div>
-                <div className="ep-etext">
-                    <p>Profession:</p>
-                    <select name="profession" id="profession">
-                        <option value="Student">Student</option>
-                        <option value="Artist">Artist</option>
-                        <option value="Musician">Musician</option>
-                        <option value="Photographer">Photographer</option>
-                        <option value="Writer">Writer</option>
-                        <option value="Developer">Developer</option>
-                        <option value="Designer">Designer</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <span>Choose a profession, and our algorithm will set homepage for you</span>
-                </div>
-                <div className="ep-etext">
-                    <p>Location:</p>
-                    <input type="text" placeholder="Where Do you live?" />
-                </div>
-                <div className="ep-etext">
-                    <p>Website:</p>
-                    <input type="text" placeholder="Enter your website if you have any" />
-                </div>
-                <div className="ep-etext">
-                    <p>Bio: </p>
-                    <textarea name="bio" id="bio" cols="30" rows="10" placeholder="Enter your bio"></textarea>
-                </div>
-                <div className="ep-etext">
-                    <p>Socials Medias</p>
-                    <button className='btn btn-base' onClick={showAddSocial}>+ Add</button>
-                    {(socials.length > 0) && <div className="ep-socials">
-                        {socials.map((social, index) => {
-                            return (
-                                <div className="ep-soc-card" key={index}>
-                                    <div className="ec-left">
-                                        <Social a={social.domain} />
-                                        <p>{social.domain} - {social.username}</p>
-                                    </div>
-                                    <div className="ep-del">
-                                        <button className='btn btn-primary bg-red-800'>Remove</button>
-                                    </div>
-                                </div>
-                            )
-                        })
-                        }
-                    </div>}
-                </div>
-                <div className="ep-etext">
-                    {/* save */}
-                    <button className='btn btn-primary'>Save Changes</button>
-
-                </div>
-            </div>
+         <div className="ep-home">
+      {/* Social Media form */}
+      {showSocial && (
+        <div className="ep-social">
+          <div className="socialAdd">
+            <input type="text" onChange={(e) => checkifWebsite(e.target)} placeholder="Enter or paste your link" />
+            <button className="btn btn-primary" onClick={submitSocial}>
+              Add
+            </button>
+            <button className="btn btn-warning" onClick={() => setShowSocial(false)}>
+              Cancel
+            </button>
+          </div>
         </div>
-    )
+      )}
+      {/* Rest of the code */}
+      <div className="ep-earea">
+        <div className="ep-etext">
+          <p>Name:</p>
+          <input type="text" value={session.data.user.name} readOnly />
+          <span>This Name field is readonly and cannot be edited</span>
+        </div>
+        <div className="ep-etext">
+          <p>Email:</p>
+          <input type="text" value={session.data.user.email} readOnly />
+          <span>This Email field is readonly and cannot be edited</span>
+        </div>
+        <div className="ep-etext">
+          <p>Profession:</p>
+          <select name="profession" id="profession" value={profession} onChange={handleProfessionChange}>
+            <option value="Student">Student</option>
+            <option value="Artist">Artist</option>
+            <option value="Musician">Musician</option>
+            <option value="Photographer">Photographer</option>
+            <option value="Writer">Writer</option>
+            <option value="Developer">Developer</option>
+            <option value="Designer">Designer</option>
+            <option value="Other">Other</option>
+          </select>
+          <span>Choose a profession, and our algorithm will set a homepage for you</span>
+        </div>
+        <div className="ep-etext">
+          <p>Location:</p>
+          <input type="text" placeholder="Where Do you live?" value={location} onChange={handleLocationChange} />
+        </div>
+        <div className="ep-etext">
+          <p>Website:</p>
+          <input
+            type="text"
+            placeholder="Enter your website if you have any"
+            value={website}
+            onChange={handleWebsiteChange}
+          />
+        </div>
+        <div className="ep-etext">
+          <p>Bio: </p>
+          <textarea name="bio" id="bio" cols="30" rows="10" placeholder="Enter your bio" value={bio} onChange={handleBioChange}></textarea>
+        </div>
+        <div className="ep-etext">
+          <p>Socials Medias</p>
+          <button className="btn btn-base" onClick={showAddSocial}>
+            + Add
+          </button>
+          {socials.length > 0 && (
+            <div className="ep-socials">
+              {socials.map((social, index) => {
+                return (
+                  <div className="ep-soc-card" key={index}>
+                    <div className="ec-left">
+                      <Social a={social.domain} />
+                      <p>
+                        {social.domain} - {social.username}
+                      </p>
+                    </div>
+                    <div className="ep-del">
+                      <button className="btn btn-primary bg-red-800">Remove</button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+        <div className="ep-etext">
+          {/* save */}
+          <button className="btn btn-primary" onClick={saveChanges}>Save Changes</button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Edit
