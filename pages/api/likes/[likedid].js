@@ -11,9 +11,9 @@ export default async function handler(req, res) {
       res.send(response.likes);
     }
     else if (req.method === 'POST') {
-      // const session = await getSession({ req });
+      const session = await getSession({ req });
 
-      // console.log(session);
+      console.log(session);
 
       // if (!session) {
       //   return res.status(401).json({ error: "Not Authenticated" });
