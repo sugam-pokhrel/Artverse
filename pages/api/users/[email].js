@@ -13,9 +13,10 @@ export default async function handler(req, res) {
         }
         )
         if (user) {
-            let current_userid=user[0].$id;
+           
             if(req.method ==='GET'){res.send(user)}
             if (req.method === 'POST') {
+                 let current_userid=user[0].$id;
                 const requestBody=req.body;
 
                
