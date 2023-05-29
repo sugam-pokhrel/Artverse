@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 
 
 function Home({ post, user }) {
+<<<<<<< HEAD
     var session = useSession()
     var [auth, setAuth] = React.useState(false)
     useEffect(() => {
@@ -17,6 +18,9 @@ function Home({ post, user }) {
         }
     }, [session.status])
 
+=======
+    const { data: session } = useSession()
+>>>>>>> af1f2a8b7bfe5b803d6d074c1bce0ae50dbd17f3
 
     function likePost() {
         var url = "/api/likes/" + post.$id;
