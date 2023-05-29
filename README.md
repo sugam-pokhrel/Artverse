@@ -1,4 +1,4 @@
-Making a Platform for almost everyone where they can showcase their skills and projects.
+Making a Platform for almost everyone where they can showcase their skills and projects. \n
 TO contribute clone the repo https://github.com/Meprazhant/Artverse.git
 Here are the commands:
 git clone https://github.com/Meprazhant/Artverse.git
