@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { AiOutlineHeart, AiFillHeart, AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { FaRegSave } from 'react-icons/fa'
 import Thoughts from './Thoughts'
 import AddThought from './AddThought'
@@ -7,22 +7,49 @@ import { useSession } from 'next-auth/react'
 
 
 function Home({ post, user }) {
-<<<<<<< HEAD
-    var session = useSession()
+
+    const { data: session } = useSession()
     var [auth, setAuth] = React.useState(false)
+    var [liked, setLiked] = React.useState(false)
+    var [likeLoading, setLikeLoading] = React.useState(true)
     useEffect(() => {
-        if (session.status === 'authenticated') {
+        if (session) {
             setAuth(true)
         } else {
             setAuth(false)
         }
-    }, [session.status])
+    }, [session])
 
-=======
-    const { data: session } = useSession()
->>>>>>> af1f2a8b7bfe5b803d6d074c1bce0ae50dbd17f3
+    useEffect(() => {
+        likedByuser()
+    }, [])
+
+    function likedByuser() {
+        fetch("/api/likes/likedByuser?id=" + post.$id)
+            .then(res => {
+                const contentType = res.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    return res.json();
+                } else {
+                    return 0;
+                }
+            }
+            )
+            .then(data => {
+                setLikeLoading(false)
+                if (data == true) {
+                    setLiked(true)
+                } else {
+                    setLiked(false)
+                }
+            }
+            )
+
+    }
+
 
     function likePost() {
+        setLikeLoading(true)
         var url = "/api/likes/" + post.$id;
         if (auth) {
             fetch(url, {
@@ -30,8 +57,21 @@ function Home({ post, user }) {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ likedby: session.data.user.email }), // Pass session email in the request body
+                body: JSON.stringify({ likedby: session.user.email }), // Pass session email in the request body
             })
+                .then(res => {
+                    const contentType = res.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        return res.json();
+                    } else {
+                        return 0;
+                    }
+                })
+                .then(data => {
+                    console.log(data);
+                    setLiked(true)
+                    setLikeLoading(false)
+                })
                 .catch(error => {
                     console.error('An error occurred while liking the post:', error);
                 });
@@ -71,7 +111,14 @@ function Home({ post, user }) {
                     </div>
                 </div>
                 <div className="ep-u-actions flex gap-5">
-                    <div className="btn btn-primary" onClick={likePost}><AiOutlineHeart size={22} />Like</div>
+                    {(!likeLoading) && <>
+                        {liked ? <div className="btn btn-primary"><AiFillHeart size={22} />Liked</div>
+                            : <div className="btn btn-primary" onClick={likePost}><AiOutlineHeart size={22} />Like</div>
+                        }
+                    </>}
+                    {likeLoading && <div className="btn btn-primary likeload" ><AiOutlineLoading3Quarters size={22} /></div>
+                    }
+
                     <div className="btn btn-warning"><FaRegSave size={22} />Save</div>
                 </div>
             </div>

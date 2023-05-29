@@ -560,7 +560,7 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }
@@ -703,4 +703,20 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 20px;
+}
+
+.likeload svg {
+    animation: rotate 1s infinite;
+
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+
 }
