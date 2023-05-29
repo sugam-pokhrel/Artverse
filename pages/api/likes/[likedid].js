@@ -11,15 +11,15 @@ export default async function handler(req, res) {
       res.send(response.likes);
     }
     else if (req.method === 'POST') {
-      const session = await getSession({ req });
+      // const session = await getSession({ req });
 
-      console.log(session);
+      // console.log(session);
 
-      if (!session) {
-        return res.status(401).json({ error: "Not Authenticated" });
-      }
+      // if (!session) {
+      //   return res.status(401).json({ error: "Not Authenticated" });
+      // }
 
-      const likedby = session.user.email;
+      const likedby = req.body.likedby;
       const docPromise = databases.getDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', likedid);
       const doc = await docPromise;
       let emails = doc.likes;
