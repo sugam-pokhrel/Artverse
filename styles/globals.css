@@ -587,6 +587,7 @@
 
 .ep-home {
     width: 50%;
+    min-width: 600px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -719,4 +720,36 @@
         transform: rotate(360deg);
     }
 
+}
+
+.ep-soc-card {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ffffff0d;
+}
+
+.ec-left {
+    max-width: 80%;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+}
+
+.ep-soc-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    mix-blend-mode: color-burn;
+}
+
+.ep-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
