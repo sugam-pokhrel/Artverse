@@ -19,10 +19,11 @@ export default async function handler(req, res) {
                 let social=user[0].social
 
 
-                if(social===null){
+                if(social==null){
+
                     social=[];
                 }
-                if(social!==null){
+                if(!social==null){
                     social=JSON.parse(social)
                 }
                

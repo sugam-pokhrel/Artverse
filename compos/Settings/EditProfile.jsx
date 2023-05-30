@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState ,useEffect} from 'react'
+import Login from '../Login/Login'
 import { useSession } from 'next-auth/react'
 
 function Social(a) {
@@ -50,6 +51,9 @@ function Edit() {
   
 
     const session= useSession();
+    if(!session){
+      return <Login />
+    }
     var [auth, setAuth] = React.useState(false)
     React.useEffect(() => {
         if (session.status === 'loading') {
