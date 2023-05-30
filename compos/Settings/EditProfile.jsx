@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React from 'react'
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 
 function Social(a) {
+
+
     console.log(a.a)
     var social = a.a
     var iconval = ""
@@ -47,7 +49,7 @@ function Social(a) {
 function Edit() {
 
 
-    var session = useSession()
+    const session = useSession();
     var [auth, setAuth] = React.useState(false)
     React.useEffect(() => {
         if (session.status === 'loading') {
@@ -65,34 +67,35 @@ function Edit() {
     var [domain, setDomain] = React.useState('')
     var [username, setUsername] = React.useState('')
     var [socials, setSocials] = React.useState([])
-    const [profession, setProfession] = useState('Other');
-    const [location, setLocation] = useState('');
-    const [website, setWebsite] = useState('');
-    const [bio, setBio] = useState('');
-    var [userData, setUserData] = React.useState({})
-    var [saved, setSaved] = React.useState(false)
-
-    function addData() {
-        var url = '/api/users/' + session.data.user.email
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-                // Handle the response data
-                var userdets = data[0]
-                setUserData(data[0])
-                setProfession(userdets.profession)
-                setLocation(userdets.location)
-                setWebsite(userdets.website)
-                setBio(userdets.bio)
-            })
-            .catch((error) => {
-                // Handle the error
-                console.error('Error:', error);
-            });
-    }
+    let [profession, setProfession] = useState('Other');
+    let [location, setLocation] = useState('');
+    let [website, setWebsite] = useState('');
+    let [bio, setBio] = useState('');
     useEffect(() => {
-        addData()
-    }, [])
+        // Define an async function to fetch the data
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/users/' + session.data.user.email);  // Replace with your API endpoint URL
+                if (response.ok) {
+                    const json = await response.json();
+                    setProfession(json.profession)
+                    setSocials(json.social)
+                    setLocation(json.location)
+                    setBio(json.bio)
+                    setWebsite(json.website)
+
+                } else {
+                    // Handle the error case if needed
+                    console.log('Error: ' + response.status);
+                }
+            } catch (error) {
+                // Handle any network or fetch-related erroreks
+                console.error('Error: ' + error);
+            }
+        };
+
+        fetchData(); // Call the async function to fetch the data
+    }, []); // Empty dependency array to run the effect only once
 
 
     function saveChanges() {
@@ -109,6 +112,11 @@ function Edit() {
         }
         if (bio.trim() !== '') {
             requestBody.bio = bio;
+        }
+        if (socials.length > 0) {
+
+
+            requestBody.social = JSON.stringify(socials);
         }
 
 
@@ -127,13 +135,7 @@ function Edit() {
             .then((response) => response.json())
             .then((data) => {
                 // Handle the response data
-                setSaved(true)
-                // scroll to top
-                window.scrollTo(0, 0);
-                setTimeout(() => {
-                    setSaved(false)
-                }, 3000);
-
+                console.log(data);
             })
             .catch((error) => {
                 // Handle the error
@@ -155,6 +157,7 @@ function Edit() {
 
     const handleBioChange = (event) => {
         setBio(event.target.value);
+        console.log(socials)
     };
 
 
@@ -195,12 +198,6 @@ function Edit() {
     return (
         <div className="ep-home">
             {/* Social Media form */}
-            {(saved) && <div className="alert alert-success shadow-lg">
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>Your information has been saved.</span>
-                </div>
-            </div>}
             {showSocial && (
                 <div className="ep-social">
                     <div className="socialAdd">
@@ -250,7 +247,7 @@ function Edit() {
                         type="text"
                         placeholder="Enter your website if you have any"
                         value={website}
-                        onChange={(e) => handleWebsiteChange(e)}
+                        onChange={handleWebsiteChange}
                     />
                 </div>
                 <div className="ep-etext">
