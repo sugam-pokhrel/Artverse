@@ -68,7 +68,9 @@ function auth() {
 
 
         return (
-            <div></div>
+            <div className="explore-load">
+                <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
+            </div>
         )
     }
 }
