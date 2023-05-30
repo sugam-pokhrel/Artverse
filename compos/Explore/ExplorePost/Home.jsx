@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
-import { AiOutlineHeart, AiFillHeart, AiOutlineLoading3Quarters } from 'react-icons/ai';
+import React, { useEffect, useState } from 'react';
+import { AiOutlineHeart, AiFillHeart, AiOutlineLoading3Quarters, AiOutlineDelete } from 'react-icons/ai';
 import { FaRegSave } from 'react-icons/fa';
 import Thoughts from './Thoughts';
 import AddThought from './AddThought';
 import { useSession } from 'next-auth/react';
+import Explorecard from '../Explorecard';
+import ExploreUser from '../ExploreUser';
 
 function Home({ post, user }) {
   const { data: session } = useSession();
@@ -97,6 +99,35 @@ function Home({ post, user }) {
         });
     }
   }
+  var [posts, setPosts] = useState([])
+  function getPost() {
+    fetch("/api/post/getpostbyEmail?email=" + post.createdBy)
+      .then(res => res.json())
+      .then(data => {
+        var gotPost = data?.post
+        // remove post thats same as params.id
+        for (var i = 0; i < gotPost.length; i++) {
+          if (gotPost[i].$id === post.$id) {
+            gotPost.splice(i, 1)
+          }
+        }
+        var revpost = [...gotPost].reverse()
+        setPosts(revpost)
+      }
+      )
+  }
+  var [selfposted, setSelfposted] = useState(false)
+  function checkifSelfposted() {
+    if (post.createdBy === session.user.email) {
+      setSelfposted(true)
+    } else {
+      setSelfposted(false)
+    }
+  }
+  useEffect(() => {
+    getPost()
+    checkifSelfposted()
+  }, [])
 
   return (
     <div className='explorePost'>
@@ -124,18 +155,41 @@ function Home({ post, user }) {
             <FaRegSave size={22} />
             Save
           </div>
+
+          {(selfposted) && <div className="btn bg-red-800">
+            <AiOutlineDelete size={22} />
+            Delete
+          </div>}
+
         </div>
       </div>
       <div className="ep-img">
         <img src={post.image} alt="" />
       </div>
       <div className="ep-desc">
+        <h2>Description: </h2>
         <p>{post.desc}</p>
       </div>
-      <div className="ep-thoughts">
+      {/* <div className="ep-thoughts">
         <AddThought />
         <Thoughts />
+      </div> */}
+      <div className="ep-userC">
+        <ExploreUser user={user} />
       </div>
+
+      {(posts.length > 0) && <div className="ep-more">
+        <h2>More by {user.name}</h2>
+        <div className="ep-more-posts">
+
+          {posts.slice(0, 4).map((post) => (
+            <Explorecard key={post.$id} post={post} />
+          ))
+          }
+
+        </div>
+
+      </div>}
     </div>
   );
 }
