@@ -842,7 +842,6 @@
     width: 40px;
     height: 40px;
     object-fit: contain;
-    mix-blend-mode: color-burn;
 }
 
 .ep-socials {
@@ -1125,4 +1124,108 @@
 .pd-input textarea {
     height: 100px;
     max-height: 300px;
+}
+
+.link-card {
+    display: flex;
+    border-radius: 15px;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff0d;
+}
+
+.link-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.link-card-header img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.link-card-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ec-lefty {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.ep-bts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.eps-bts button {
+    flex: 1;
+}
+
+.getQr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.explore-load h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 28px;
+}
+
+.explore-load h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 18px;
+}
+
+.explore-load {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 80px);
+}
+
+.copied {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px;
+    animation: slideIn 1s ease-in-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(100px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }

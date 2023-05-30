@@ -81,8 +81,8 @@ function Dashboard() {
                     <h1>+</h1>
                     <p>Show your projects to the world, post one now</p>
                 </div>
-                <div className="dc-item">
-                    <h2 className='text text-secondary font-bold text-3xl '>Linkify</h2>
+                <div className="dc-item" onClick={() => router.push("/create/linkify")}>
+                    <h2 className='text text-secondary font-bold text-3xl ' >Linkify</h2>
                     <h1>+</h1>
                     <p>Got many social medias? Share all social media links under one link with Linkify</p>
                 </div>
