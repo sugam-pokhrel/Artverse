@@ -1,17 +1,18 @@
-import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
-function Dashboard() {
+function index() {
     var session = useSession()
     var router = useRouter()
     var [userData, setUserData] = React.useState(null)
+    var [loading, setLoading] = React.useState(true)
 
     useEffect(() => {
         if (session.status === 'authenticated') {
 
         }
-        if (session.status === 'unasuthenticated') {
+        if (session.status === 'unauthenticated') {
             router.push('/login')
         }
     }, [session.status])
@@ -22,6 +23,7 @@ function Dashboard() {
                 console.log(data.user[0])
                 setUserData(data.user[0])
                 checkInfostatus(data.user[0])
+                setLoading(false)
             })
 
     }
@@ -56,21 +58,8 @@ function Dashboard() {
     }
     return (
         <div className='dashboard'>
-            <h1>Hello {session?.data?.user.name} </h1>
-            <div className="dashboard__info">
-                <div className="radial-progress bg-primary text-primary-content border-4 border-primary" style={{ "--value": infoStatus }}>{infoStatus}%</div>
-                <div className="dashboard__info__text">
-                    {infoStatus === 100 ? <h2 className='text p-2 text-green-200'>Profile Completed and you are eligible to create a portfolio</h2> : <h2>Complete your profile to create a portfolio and also other exclusive features</h2>}
-                    <div className="dash-btns">
-                        {(infoStatus === 100) && <button className='btn btn-secondary' onClick={() => router.push("/create/portfolio")}>Create a Portfolio</button>}
-                        {(infoStatus === 100) && <button className='btn btn-primary' onClick={() => router.push("/profile/edit")}>Edit Profile</button>}
-                        {(infoStatus !== 100) && <button className='btn bg-green-400 text-white' onClick={() => router.push("/profile/edit")}>Complete Profile</button>}
-
-                    </div>
-                </div>
-            </div>
             <h1>Create</h1>
-            <div className="dash-create">
+            {(!loading) && <div className="dash-create">
                 {(infoStatus === 100) && <div className="dc-item" onClick={() => router.push("/create/portfolio")}>
                     <h2 className='text text-secondary font-bold text-3xl '>Portfolio</h2>
                     <h1>+</h1>
@@ -86,11 +75,14 @@ function Dashboard() {
                     <h1>+</h1>
                     <p>Got many social medias? Share all social media links under one link with Linkify</p>
                 </div>
-            </div>
+            </div>}
+            {(loading) && <div className="explore-load">
+                <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
 
+            </div>}
 
         </div>
     )
 }
 
-export default Dashboard
+export default index

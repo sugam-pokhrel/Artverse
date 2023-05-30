@@ -886,5 +886,243 @@
 }
 
 .dashboard__info__text button {
-    width: 180px;
+    width: 200px;
+}
+
+.dash-btns {
+    display: flex;
+    gap: 10px;
+}
+
+.dash-create {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.dc-item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff0d;
+    border-radius: 10px;
+    min-width: 300px;
+    transition: ease-in-out 0.2s;
+}
+
+.dc-item:hover {
+    background-color: #ffffff1a;
+    cursor: pointer;
+}
+
+.dc-item h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 58px;
+    text-align: center;
+}
+
+.create-portfolio {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.create-portfolio__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cc-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    background-color: #ffffff0d;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cc-items h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 28px;
+}
+
+.cc-items p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 18px;
+}
+
+.cc-the {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: flex-start;
+    background-color: #ffffff0d;
+    align-items: flex-start;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cc-themes {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cc-theme img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cc-theme {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: flex-start;
+    background-color: #ffffff0d;
+    align-items: flex-start;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.pf-home {
+    width: 100%;
+    height: calc(100vh - 80px);
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+
+}
+
+.pf-left {
+    width: 40%;
+    min-width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-right: 2px solid #ffffff0d;
+}
+
+.pf-left h2,
+.pf-preview h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 28px;
+
+}
+
+.pf-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.pf-left {
+    overflow-y: scroll;
+}
+
+.pf-left::-webkit-scrollbar {
+    width: 10px;
+}
+
+.pf-left::-webkit-scrollbar-track {
+    background: #ffffff0d;
+}
+
+.pf-left::-webkit-scrollbar-thumb {
+    background: #ffffff1a;
+    border-radius: 10px;
+}
+
+.pf-data {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pd-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff0d;
+    border-radius: 10px;
+}
+
+.pd-wrap h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 18px;
+}
+
+.pd-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pd-input p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 18px;
+}
+
+.pd-input input,
+.pd-input textarea {
+    width: 100%;
+    height: 40px;
+    background-color: #ffffff0d;
+    border: none;
+    border-radius: 10px;
+    padding: 0 10px;
+    color: rgba(255, 255, 255, 0.748);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    resize: vertical;
+}
+
+.pd-input textarea {
+    height: 100px;
+    max-height: 300px;
 }
