@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 
@@ -46,6 +46,7 @@ function Social(a) {
 
 function Edit() {
 
+
     var session = useSession()
     var [auth, setAuth] = React.useState(false)
     React.useEffect(() => {
@@ -64,67 +65,97 @@ function Edit() {
     var [domain, setDomain] = React.useState('')
     var [username, setUsername] = React.useState('')
     var [socials, setSocials] = React.useState([])
-     const [profession, setProfession] = useState('Other');
-  const [location, setLocation] = useState('');
-  const [website, setWebsite] = useState('');
-  const [bio, setBio] = useState('');
+    const [profession, setProfession] = useState('Other');
+    const [location, setLocation] = useState('');
+    const [website, setWebsite] = useState('');
+    const [bio, setBio] = useState('');
+    var [userData, setUserData] = React.useState({})
+    var [saved, setSaved] = React.useState(false)
 
-
-function saveChanges (){
-    const requestBody = {};
-
-    if (profession.trim() !== '') {
-      requestBody.profession = profession;
+    function addData() {
+        var url = '/api/users/' + session.data.user.email
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the response data
+                var userdets = data[0]
+                setUserData(data[0])
+                setProfession(userdets.profession)
+                setLocation(userdets.location)
+                setWebsite(userdets.website)
+                setBio(userdets.bio)
+            })
+            .catch((error) => {
+                // Handle the error
+                console.error('Error:', error);
+            });
     }
-    if (location.trim() !== '') {
-      requestBody.location = location;
-    }
-    if (website.trim() !== '') {
-      requestBody.website = website;
-    }
-    if (bio.trim() !== '') {
-      requestBody.bio = bio;
-    }
+    useEffect(() => {
+        addData()
+    }, [])
 
 
-    console.log(requestBody)
+    function saveChanges() {
+        const requestBody = {};
 
-    let url='/api/users/'+session.data.user.email;
-    console.log(url)
+        if (profession.trim() !== '') {
+            requestBody.profession = profession;
+        }
+        if (location.trim() !== '') {
+            requestBody.location = location;
+        }
+        if (website.trim() !== '') {
+            requestBody.website = website;
+        }
+        if (bio.trim() !== '') {
+            requestBody.bio = bio;
+        }
 
-     fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Handle the response data
-      console.log(data);
-    })
-    .catch((error) => {
-      // Handle the error
-      console.error('Error:', error);
-    });
-  };
 
-  const handleProfessionChange = (event) => {
-    setProfession(event.target.value);
-  };
+        console.log(requestBody)
 
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
+        let url = '/api/users/' + session.data.user.email;
+        console.log(url)
 
-  const handleWebsiteChange = (event) => {
-    setWebsite(event.target.value);
-  };
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the response data
+                setSaved(true)
+                // scroll to top
+                window.scrollTo(0, 0);
+                setTimeout(() => {
+                    setSaved(false)
+                }, 3000);
 
-  const handleBioChange = (event) => {
-    setBio(event.target.value);
-  };
+            })
+            .catch((error) => {
+                // Handle the error
+                console.error('Error:', error);
+            });
+    };
+
+    const handleProfessionChange = (event) => {
+        setProfession(event.target.value);
+    };
+
+    const handleLocationChange = (event) => {
+        setLocation(event.target.value);
+    };
+
+    const handleWebsiteChange = (event) => {
+        setWebsite(event.target.value);
+    };
+
+    const handleBioChange = (event) => {
+        setBio(event.target.value);
+    };
 
 
     function checkifWebsite(e) {
@@ -162,96 +193,102 @@ function saveChanges (){
         setShowSocial(true)
     }
     return (
-         <div className="ep-home">
-      {/* Social Media form */}
-      {showSocial && (
-        <div className="ep-social">
-          <div className="socialAdd">
-            <input type="text" onChange={(e) => checkifWebsite(e.target)} placeholder="Enter or paste your link" />
-            <button className="btn btn-primary" onClick={submitSocial}>
-              Add
-            </button>
-            <button className="btn btn-warning" onClick={() => setShowSocial(false)}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-      {/* Rest of the code */}
-      <div className="ep-earea">
-        <div className="ep-etext">
-          <p>Name:</p>
-          <input type="text" value={session.data.user.name} readOnly />
-          <span>This Name field is readonly and cannot be edited</span>
-        </div>
-        <div className="ep-etext">
-          <p>Email:</p>
-          <input type="text" value={session.data.user.email} readOnly />
-          <span>This Email field is readonly and cannot be edited</span>
-        </div>
-        <div className="ep-etext">
-          <p>Profession:</p>
-          <select name="profession" id="profession" value={profession} onChange={handleProfessionChange}>
-            <option value="Student">Student</option>
-            <option value="Artist">Artist</option>
-            <option value="Musician">Musician</option>
-            <option value="Photographer">Photographer</option>
-            <option value="Writer">Writer</option>
-            <option value="Developer">Developer</option>
-            <option value="Designer">Designer</option>
-            <option value="Other">Other</option>
-          </select>
-          <span>Choose a profession, and our algorithm will set a homepage for you</span>
-        </div>
-        <div className="ep-etext">
-          <p>Location:</p>
-          <input type="text" placeholder="Where Do you live?" value={location} onChange={handleLocationChange} />
-        </div>
-        <div className="ep-etext">
-          <p>Website:</p>
-          <input
-            type="text"
-            placeholder="Enter your website if you have any"
-            value={website}
-            onChange={handleWebsiteChange}
-          />
-        </div>
-        <div className="ep-etext">
-          <p>Bio: </p>
-          <textarea name="bio" id="bio" cols="30" rows="10" placeholder="Enter your bio" value={bio} onChange={handleBioChange}></textarea>
-        </div>
-        <div className="ep-etext">
-          <p>Socials Medias</p>
-          <button className="btn btn-base" onClick={showAddSocial}>
-            + Add
-          </button>
-          {socials.length > 0 && (
-            <div className="ep-socials">
-              {socials.map((social, index) => {
-                return (
-                  <div className="ep-soc-card" key={index}>
-                    <div className="ec-left">
-                      <Social a={social.domain} />
-                      <p>
-                        {social.domain} - {social.username}
-                      </p>
+        <div className="ep-home">
+            {/* Social Media form */}
+            {(saved) && <div className="alert alert-success shadow-lg">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>Your information has been saved.</span>
+                </div>
+            </div>}
+            {showSocial && (
+                <div className="ep-social">
+                    <div className="socialAdd">
+                        <input type="text" onChange={(e) => checkifWebsite(e.target)} placeholder="Enter or paste your link" />
+                        <button className="btn btn-primary" onClick={submitSocial}>
+                            Add
+                        </button>
+                        <button className="btn btn-warning" onClick={() => setShowSocial(false)}>
+                            Cancel
+                        </button>
                     </div>
-                    <div className="ep-del">
-                      <button className="btn btn-primary bg-red-800">Remove</button>
-                    </div>
-                  </div>
-                );
-              })}
+                </div>
+            )}
+            {/* Rest of the code */}
+            <div className="ep-earea">
+                <div className="ep-etext">
+                    <p>Name:</p>
+                    <input type="text" value={session.data.user.name} readOnly />
+                    <span>This Name field is readonly and cannot be edited</span>
+                </div>
+                <div className="ep-etext">
+                    <p>Email:</p>
+                    <input type="text" value={session.data.user.email} readOnly />
+                    <span>This Email field is readonly and cannot be edited</span>
+                </div>
+                <div className="ep-etext">
+                    <p>Profession:</p>
+                    <select name="profession" id="profession" value={profession} onChange={handleProfessionChange}>
+                        <option value="Student">Student</option>
+                        <option value="Artist">Artist</option>
+                        <option value="Musician">Musician</option>
+                        <option value="Photographer">Photographer</option>
+                        <option value="Writer">Writer</option>
+                        <option value="Developer">Developer</option>
+                        <option value="Designer">Designer</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span>Choose a profession, and our algorithm will set a homepage for you</span>
+                </div>
+                <div className="ep-etext">
+                    <p>Location:</p>
+                    <input type="text" placeholder="Where Do you live?" value={location} onChange={handleLocationChange} />
+                </div>
+                <div className="ep-etext">
+                    <p>Website:</p>
+                    <input
+                        type="text"
+                        placeholder="Enter your website if you have any"
+                        value={website}
+                        onChange={(e) => handleWebsiteChange(e)}
+                    />
+                </div>
+                <div className="ep-etext">
+                    <p>Bio: </p>
+                    <textarea name="bio" id="bio" cols="30" rows="10" placeholder="Enter your bio" value={bio} onChange={handleBioChange}></textarea>
+                </div>
+                <div className="ep-etext">
+                    <p>Socials Medias</p>
+                    <button className="btn btn-base" onClick={showAddSocial}>
+                        + Add
+                    </button>
+                    {socials.length > 0 && (
+                        <div className="ep-socials">
+                            {socials.map((social, index) => {
+                                return (
+                                    <div className="ep-soc-card" key={index}>
+                                        <div className="ec-left">
+                                            <Social a={social.domain} />
+                                            <p>
+                                                {social.domain} - {social.username}
+                                            </p>
+                                        </div>
+                                        <div className="ep-del">
+                                            <button className="btn btn-primary bg-red-800">Remove</button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+                <div className="ep-etext">
+                    {/* save */}
+                    <button className="btn btn-primary" onClick={saveChanges}>Save Changes</button>
+                </div>
             </div>
-          )}
         </div>
-        <div className="ep-etext">
-          {/* save */}
-          <button className="btn btn-primary" onClick={saveChanges}>Save Changes</button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Edit

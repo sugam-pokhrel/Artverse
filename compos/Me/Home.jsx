@@ -15,6 +15,7 @@ function Home() {
                 if (data?.user) {
                     setUser(data.user[0])
                     setLoading(false)
+                    console.log(data.user[0])
                 }
             })
             .catch(error => console.error('An error occurred while fetching the users:', error));
@@ -58,12 +59,10 @@ function Home() {
                         <h1>{user?.name}</h1>
                     }
                     {loading ? <div className="mp-load-username"></div> :
-                        <p>Jhapa, Nepal</p>
+                        (user?.location) ? <p className="mp-username">{user?.location}</p> : <p className="mp-username">No Location</p>
                     }
                     {loading ? <div className="mp-load-bio"></div> :
-                        <p className="mp-bio">
-                            UI/Ux Designer, Full Stack Web Developer, A CS student
-                        </p>
+                        (user?.bio) ? <p className="mp-bio">{user?.bio}</p> : <p className="mp-bio">No Bio, Add bio from <span className='text text-primary'>EDIT PROFILE</span></p>
                     }
                     <div className="mp-btns">
                         {loading ? <div className="mp-load-btn  "></div> :
