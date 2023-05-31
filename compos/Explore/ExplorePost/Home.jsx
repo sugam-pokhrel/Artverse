@@ -6,8 +6,10 @@ import AddThought from './AddThought';
 import { useSession } from 'next-auth/react';
 import Explorecard from '../Explorecard';
 import ExploreUser from '../ExploreUser';
+import { useRouter } from 'next/router';
 
 function Home({ post, user }) {
+  var router = useRouter();
   const { data: session } = useSession();
   const [auth, setAuth] = React.useState(false);
   const [liked, setLiked] = React.useState(false);
@@ -124,6 +126,12 @@ function Home({ post, user }) {
       setSelfposted(false)
     }
   }
+  function navtouser() {
+    // get username from email
+    var username = post.createdBy.split('@')[0]
+    router.push('/u/' + username)
+  }
+
   useEffect(() => {
     getPost()
     checkifSelfposted()
@@ -132,11 +140,11 @@ function Home({ post, user }) {
   return (
     <div className='explorePost'>
       <div className="ep-top">
-        <div className="ep-user flex ">
-          <img src={user?.image} alt="" />
+        <div className="ep-user flex">
+          <img src={user?.image} alt="" referrerPolicy='no-referrer' />
           <div className="ep-u-data">
             <p>{post.title}</p>
-            <div>{user?.name} . <span>Follow</span></div>
+            <div><span className='ep-username' onClick={navtouser}>{user?.name}</span> . <span>Follow</span></div>
           </div>
         </div>
         <div className="ep-u-actions flex gap-5">
