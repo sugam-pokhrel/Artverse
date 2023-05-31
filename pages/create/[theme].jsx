@@ -84,8 +84,13 @@ function fetchInfos(e) {
                 setLoading(false);
                 fetchInfos(data.user[0]);
                 fetch('/api/portfolio/'+data.user[0].email)
-                .then(res=>res.json())
+                .then(res=>
+                  
+                  res.json()
+                  
+                  )
                 .then(data=>{
+
                  
 
 
