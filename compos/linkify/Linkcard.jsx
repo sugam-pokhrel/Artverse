@@ -69,7 +69,7 @@ function Linkcard({ links, user }) {
             {(!loading) && <div className="link-card">
                 <h2 className='text text-warning text-2xl font-bold '>Linkify - Manage Links</h2>
                 <div className="link-card-header">
-                    <img src={user?.image} alt="" />
+                    <img src={user?.image} alt="" referrerPolicy='no-referrer' />
                 </div>
                 {(links) && <div className="link-card-links">
                     <h2>Social Media Links</h2>

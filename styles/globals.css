@@ -643,6 +643,18 @@
     font-size: 28px;
 }
 
+.mp-followers {
+    display: flex;
+    gap: 10px;
+}
+
+.mp-following {
+    padding: 10px;
+    background-color: #ffffff0d;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 .editProfile {
     width: 100%;
     height: 100%;
@@ -672,6 +684,17 @@
 .ep-name {
     display: flex;
     gap: 16px;
+}
+
+.ep-username {
+    color: #efbd3f !important;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.ep-username:hover {
+    text-decoration: underline;
+
 }
 
 .ep-name h1 {
