@@ -41,9 +41,20 @@ function Edit() {
                 const response = await fetch('/api/users/' + session.data.user.email);  // Replace with your API endpoint URL
                 if (response.ok) {
                     const json = await response.json();
-
+                    
+                    if (!json.social.length === 0) {
+ 
                     var jsonstr = JSON.parse(json.social)
                     setSocials(jsonstr)
+
+}
+                  
+
+
+                    
+                        
+                                        
+                    
                     // stringify the json
                     if (json.profession !== null) {
                         setProfession(json.profession);

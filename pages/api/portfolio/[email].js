@@ -26,9 +26,18 @@ export default async function handler(req, res) {
                 // }
                 // if(!social==null){
                 //     social=JSON.parse(social)
+
+
                 // }
-               return res.send(user[0])
+
+
+                if(user[0]){
+                    return res.send(user[0])
                 
+                }
+               else{
+                return res.send({msg:"notfound"})
+               }
              
                 
                 
