@@ -12,11 +12,15 @@ import Dashboard from '../compos/Homepage/LoggedIn/Dashboard'
 export default function Home() {
   var session = useSession()
   var [authenticated, setAuthenticated] = useState(false)
+  var [loading, setLoading] = useState(true)
   useEffect(() => {
     if (session.status === 'authenticated') {
       setAuthenticated(true)
-    } else {
+      setLoading(false)
+
+    } else if (session.status === 'unauthenticated') {
       setAuthenticated(false)
+      setLoading(false)
     }
   }, [session.status])
 
@@ -28,15 +32,19 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {(!authenticated) && <div>
+      {(!authenticated && !loading) && <div>
         <Landing />
         <Platform />
         <Stats />
         <Features />
         <Footer />
       </div>}
-      {(authenticated) && <div>
+      {(authenticated && !loading) && <div>
         <Dashboard />
+      </div>}
+      {loading && <div className='explore-load'>
+        <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
+
       </div>}
 
 
