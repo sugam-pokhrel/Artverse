@@ -25,15 +25,13 @@ function linkify() {
         fetch("/api/users/getloggedin")
             .then(res => res.json())
             .then(data => {
-                console.log(data.user[0])
 
-                    
-                    if (!data.user[0].social === 0) {
- 
-                var parsed = JSON.parse(data.user[0].social)
+                if (!!data.user[0].social) {
 
+                    var parsed = JSON.parse(data.user[0].social)
+                    setUserSocials(parsed)
 
-}
+                }
 
                 setUser(data.user[0])
             })
