@@ -1,118 +1,154 @@
-import React, { useEffect } from 'react'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import React, { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import Login from '../../compos/Login/Login';
+import { data } from 'autoprefixer';
 
 function Thems() {
-    var session = useSession()
-    var router = useRouter()
-    var [userData, setUserData] = React.useState(null)
-    var [loading, setLoading] = React.useState(true)
-    var [websiteDets, setWebsiteDets] = React.useState(
-        {
-            websiteDetail: {
-                title: '',
-            },
-            landing: {
-                bgImg: '',
-                heading: '',
-                subHeading: ''
-            },
-            about: {
-                heading: '',
-                aboutImage: '',
-                aboutDesc: ''
-            },
-            project: "",
-            contact: ""
+    const session = useSession();
+    if(session){
+    
+        const router = useRouter();
+    const [userData, setUserData] = React.useState(null);
+    const [loading, setLoading] = React.useState(true);
+    const [websiteDets, setWebsiteDets] = React.useState({
+        websiteDetail: {
+            title: '',
+        },
+        landing: {
+            bgImg: '',
+            heading: '',
+            subHeading: '',
+        },
+        about: {
+            heading: '',
+            aboutImage: '',
+            aboutDesc: '',
+        },
+        project: '',
+        contact: '',
+    });
+
+function fetchInfos(e) {
+    const { name, bgImg, bio, image, projects, email, location } = e;
+
+    setWebsiteDets({
+        ...websiteDets,
+        websiteDetail: {
+            ...websiteDets.websiteDetail,
+            title: name ? `${name}'s Portfolio` : ''
+        },
+        landing: {
+            ...websiteDets.landing,
+            bgImg: bgImg || '',
+            heading: name ? `Hello, I am ${name}` : '',
+            subHeading: bio || ''
+        },
+        about: {
+            ...websiteDets.about,
+            heading: 'About Me',
+            aboutImage: image || '',
+            aboutDesc: bio || ''
+        },
+        project: {
+            ...websiteDets.project,
+            heading: 'My Projects',
+            projects: projects || ''
+        },
+        contact: {
+            ...websiteDets.contact,
+            heading: 'Contact Me',
+            email: email || '',
+            location: location || ''
         }
-    )
-
-
-    function fetchInfos(e) {
-        setWebsiteDets({
-            ...websiteDets,
-            websiteDetail: {
-                ...websiteDets.websiteDetail,
-                title: e.name + "'s Portfolio"
-            },
-            landing: {
-                ...websiteDets.landing,
-                bgImg: e.bgImg,
-                heading: "Hello I am " + e.name,
-                subHeading: e.bio
-            },
-            about: {
-                ...websiteDets.about,
-                heading: "About Me",
-                aboutImage: e.image,
-                aboutDesc: e.bio
-            },
-            project: {
-                ...websiteDets.project,
-                heading: "My Projects",
-                projects: e.projects
-            },
-            contact: {
-                ...websiteDets.contact,
-                heading: "Contact Me",
-                email: e.email,
-                location: e.location
-            }
-        })
-        console.log(websiteDets)
-    }
-
+    });
+    console.log(websiteDets);
+}
 
     useEffect(() => {
         if (session.status === 'authenticated') {
-
+            getUserData();
         }
         if (session.status === 'unauthenticated') {
-            router.push('/login')
+            router.push('/login');
         }
-    }, [session.status])
+    }, [session.status]);
+
     function getUserData() {
         fetch("/api/users/getloggedin")
             .then(res => res.json())
             .then(data => {
-                console.log(data.user[0])
-                setUserData(data.user[0])
-                checkInfostatus(data.user[0])
-                setLoading(false)
-                fetchInfos(data.user[0])
-            })
+                console.log(data.user[0]);
+                setUserData(data.user[0]);
+                checkInfostatus(data.user[0]);
+                setLoading(false);
+                fetchInfos(data.user[0]);
+                fetch('/api/portfolio/'+data.user[0].email)
+                .then(res=>res.json())
+                .then(data=>{
+                 
 
+
+  const updatedWebsiteDets = {
+    ...websiteDets,
+    websiteDetail: {
+      title: data.websiteDetailtitle || '',
+    },
+    landing: {
+      bgImg: data.landingbgImg||'',
+      heading: data.landingheading || '',
+      subHeading: data.landingsubHeading || '',
+    },
+    about: {
+      heading: data.aboutheading || '',
+      aboutImage: data.aboutaboutImage || '',
+      aboutDesc: data.aboutaboutDesc || '',
+    },
+    project: data.projectheading || '',
+    contact: data.contactheading || '',
+  };
+
+  setWebsiteDets(updatedWebsiteDets);
+                  
+
+                })
+            });
+
+          
     }
+
     useEffect(() => {
-        getUserData()
-    }, [])
-    var [infoStatus, setInfoStatus] = React.useState(0)
+      getUserData()
+     
+
+
+    }, []);
+
+    const [infoStatus, setInfoStatus] = React.useState(0);
 
     function checkInfostatus(data) {
-        // return how much percent user has filled his her data
-        var count = 0
+        let count = 0;
         if (data.name) {
-            count = count + 1
+            count = count + 1;
         }
         if (data.email) {
-            count = count + 1
+            count = count + 1;
         }
         if (data.bio) {
-            count = count + 1
+            count = count + 1;
         }
         if (data.location) {
-            count = count + 1
+            count = count + 1;
         }
         if (data.profession) {
-            count = count + 1
+            count = count + 1;
         }
 
-        var percent = (count / 5) * 100
-        // round off
-        percent = Math.round(percent)
-        setInfoStatus(percent)
-        if (!percent === 100) {
-            router.push('/')
+        let percent = (count / 5) * 100;
+        percent = Math.round(percent);
+        setInfoStatus(percent);
+        if (percent !== 100) {
+            router.push('/');
         }
     }
 
@@ -121,90 +157,231 @@ function Thems() {
             ...websiteDets,
             websiteDetail: {
                 ...websiteDets.websiteDetail,
-                title: e.target.value
-            }
-        })
-
+                title: e.target.value,
+            },
+        });
     }
+
+    function addDb() {
+      let requestBody={email:session.data.user.email,landingbgImg:websiteDets.landing.bgImg}
+
+      let objectsToAdd=websiteDets;
+for (const [name, value] of Object.entries(objectsToAdd)) {
+  if (Object.keys(value).length > 0) {
+    for (const [key, val] of Object.entries(value)) {
+      if (val.trim() !== "") {
+        requestBody[name + key] = val;
+      }
+    }
+  }
+}
+delete requestBody.project0;
+delete requestBody.project1;
+delete requestBody.project3;
+delete requestBody.project4;
+delete requestBody.project5;
+delete requestBody.project6;
+delete requestBody.project7;
+delete requestBody.project8;
+delete requestBody.project9;
+delete requestBody.project10;
+delete requestBody.contact0;
+delete requestBody.contact1;
+delete requestBody.contact2;
+delete requestBody.contact3;
+delete requestBody.contact4;
+delete requestBody.contact5;
+delete requestBody.contact6;
+delete requestBody.contact8;
+delete requestBody.contact9;
+
+console.log(requestBody);
+
+  let url = '/api/portfolio/' + session.data.user.email;
+        console.log(url)
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the response data
+                console.log(data);
+            })
+            .catch((error) => {
+                // Handle the error
+                console.error('Error:', error);
+            });
+
+
+
+        // Save data to the database or perform other actions
+    }
+
     return (
-        <div className='pf-home'>
-            <div className="pf-left">
-                <div className="pl-header">
-                    <h2>Add your Data</h2>
-                </div>
-                <div className="pf-data">
-                    <div className="pd-wrap">
-                        <h3>Website Detail</h3>
-                        <div className="pd-input">
-                            <p>Website's Title</p>
-                            <input type="text" placeholder="Enter your website's title" defaultValue={websiteDets.websiteDetail.title} onChange={(e) => setWebsiteDetail(e)} />
-                        </div>
-                    </div>
-                    <div className="pd-wrap">
-                        <h3>Landing page</h3>
-                        <div className="pd-input">
-                            <p>Background Image Url</p>
-                            <input type="text" placeholder="Enter your background's url" />
-                        </div>
-                        <div className="pd-input">
-                            <p>Landing Heading Text</p>
-                            <input type="text" placeholder="Enter Landing Heading Text" defaultValue={websiteDets.landing.heading} />
-                        </div>
-                        <div className="pd-input">
-                            <p>Landing Sub Heading Text</p>
-                            <input type="text" placeholder="Enter Landing Sub Heading Text"
-                                defaultValue={websiteDets.landing.subHeading}
-                            />
-                        </div>
-                    </div>
-                    <div className="pd-wrap">
-                        <h3>About</h3>
-                        <div className="pd-input">
-                            <p>About Heading Text</p>
-                            <input type="text" placeholder="Enter About Heading Text"
-                                defaultValue={websiteDets.about.heading}
-                            />
-                        </div>
-                        <div className="pd-input">
-                            <p>About Image Url</p>
-                            <input type="text" placeholder="Enter About Image Url"
-                                defaultValue={websiteDets.about.aboutImage}
-                            />
-                        </div>
-                        <div className="pd-input">
-                            <p>About Description</p>
-                            <textarea name="" id="" cols="30" rows="10"
-                                defaultValue={websiteDets.about.aboutDesc}
-                                placeholder="Enter About Description"></textarea>
-                        </div>
-                    </div>
-                    <div className="pd-wrap">
-                        <h3>Projects</h3>
-                        <p>Projects will automatically be fetched from your profile. To add more project here, upload it from Homepage</p>
-                        <button className='btn btn-primary' onClick={() => router.push("/upload")}>Upload Project</button>
-                    </div>
-
-                    <div className="pd-wrap">
-                        <h3>Contact Details</h3>
-                        <p>Contact details will automatically be fetched from your profile. Review it or edit it from profile page</p>
-                        <button className='btn btn-primary' onClick={() => router.push("/profile/edit")}>Edit Profile</button>
-                    </div>
-
-                    <div className="pd-wrap">
-                        <button className='btn btn-warning'>Save</button>
-                    </div>
-                </div>
-            </div>
-            <div className="pf-preview">
-                <div className="pp-head">
-                    <h2>Preview</h2>
-                    <div className="pp-prev">
-                        <h2>Preview Aile chaldaina, paila yo DB ma janey banau</h2>
+<div className='pf-home'>
+  <div className="pf-left">
+    <div className="pl-header">
+      <h2>Add your Data</h2>
+    </div>
+    <div className="pf-data">
+      <div className="pd-wrap">
+        <h3>Website Detail</h3>
+        <div className="pd-input">
+          <p>Website's Title</p>
+          <input
+            type="text"
+            placeholder="Enter your website's title"
+            value={websiteDets.websiteDetail.title}
+            onChange={(e) =>
+              setWebsiteDets({
+                ...websiteDets,
+                websiteDetail: {
+                  ...websiteDets.websiteDetail,
+                  title: e.target.value
+                }
+              })
+            }
+          />
+        </div>
+      </div>
+      <div className="pd-wrap">
+        <h3>Landing page</h3>
+        <div className="pd-input">
+          <p>Background Image Url</p>
+          <input
+            type="text"
+            placeholder="Enter your background's url"
+            value={websiteDets.landing.bgImg}
+            onChange={(e) =>
+              setWebsiteDets({
+                ...websiteDets,
+                landing: { ...websiteDets.landing, bgImg: e.target.value }
+              })
+            }
+          />
+        </div>
+        <div className="pd-input">
+          <p>Landing Heading Text</p>
+          <input
+            type="text"
+            placeholder="Enter Landing Heading Text"
+            value={websiteDets.landing.heading}
+            onChange={(e) =>
+              setWebsiteDets({
+                ...websiteDets,
+                landing: { ...websiteDets.landing, heading: e.target.value }
+              })
+            }
+          />
+        </div>
+        <div className="pd-input">
+          <p>Landing Sub Heading Text</p>
+          <input
+            type="text"
+            placeholder="Enter Landing Sub Heading Text"
+            value={websiteDets.landing.subHeading}
+            onChange={(e) =>
+              setWebsiteDets({
+                ...websiteDets,
+                landing: { ...websiteDets.landing, subHeading: e.target.value }
+              })
+            }
+          />
+        </div>
+      </div>
+      <div className="pd-wrap">
+        <h3>About</h3>
+        <div className="pd-input">
+          <p>About Heading Text</p>
+          <input
+            type="text"
+            placeholder="Enter About Heading Text"
+            value={websiteDets.about.heading}
+            onChange={(e) =>
+              setWebsiteDets({
+                ...websiteDets,
+                about: { ...websiteDets.about, heading: e.target.value }
+              })
+            }
+          />
+        </div>
+        <div className="pd-input">
+          <p>About Image Url</p>
+          <input
+            type="text"
+            placeholder="Enter About Image Url"
+            value={websiteDets.about.aboutImage}
+            onChange={(e) =>
+              setWebsiteDets({
+                ...websiteDets,
+                about: { ...websiteDets.about, aboutImage: e.target.value }
+              })
+            }
+          />
+        </div>
+        <div className="pd-input">
+          <p>About Description</p>
+          <textarea
+            cols="30"
+            rows="10"
+            value={websiteDets.about.aboutDesc}
+            onChange={(e) =>
+              setWebsiteDets({
+                ...websiteDets,
+                about: { ...websiteDets.about, aboutDesc: e.target.value }
+              })
+            }
+            placeholder="Enter About Description"
+          ></textarea>
+        </div>
+      </div>
+      <div className="pd-wrap">
+        <h3>Projects</h3>
+        <p>
+          Projects will automatically be fetched from your profile. To add more
+          projects here, upload them from the Homepage.
+        </p>
+        <button className="btn btn-primary" onClick={() => router.push("/upload")}>
+          Upload Project
+        </button>
+      </div>
+      <div className="pd-wrap">
+        <h3>Contact Details</h3>
+        <p>
+          Contact details will automatically be fetched from your profile.
+          Review or edit them from the profile page.
+        </p>
+        <button className="btn btn-primary" onClick={() => router.push("/profile/edit")}>
+          Edit Profile
+        </button>
+      </div>
+      <div className="pd-wrap">
+        <button onClick={addDb} className="btn btn-warning">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+  <div className="pf-preview">
+    <div className="pp-head">
+      <h2>Preview</h2>
+      <div className="pp-prev">
+        <h2>Preview Aile chaldaina, paila yo DB ma janey banau</h2>
                     </div>
                 </div>
             </div>
         </div>
     )
+    }
+   else{
+    return <Login />
+   } 
+ 
 }
 
 export default Thems
