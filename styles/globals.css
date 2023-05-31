@@ -1035,22 +1035,19 @@
 
 .pf-home {
     width: 100%;
-    height: calc(100vh - 80px);
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 20px;
-    padding: 20px;
-
 }
 
 .pf-left {
-    width: 40%;
     min-width: 500px;
     height: 100%;
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    border-right: 2px solid #ffffff0d;
 }
 
 .pf-left h2,
@@ -1072,9 +1069,7 @@
     padding: 20px;
 }
 
-.pf-left {
-    overflow-y: scroll;
-}
+
 
 .pf-left::-webkit-scrollbar {
     width: 10px;
@@ -1105,6 +1100,15 @@
     padding: 20px;
     background-color: #ffffff0d;
     border-radius: 10px;
+}
+
+.pd-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
 }
 
 .pd-wrap h3 {
@@ -1250,5 +1254,233 @@
 
     100% {
         transform: translateY(0px);
+    }
+}
+
+.pp-portfolio {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.pp-portfolio-landing {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ph-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.ph-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ph-img img {
+    filter: blur(5px) brightness(0.5);
+}
+
+.ph-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 450px;
+}
+
+.ph-content h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 50px;
+}
+
+.ph-content p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.748);
+    margin: 0;
+    font-size: 18px;
+}
+
+.pp-portfolio-about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    height: 80vh;
+}
+
+.ph-about-img img {
+    height: 400px;
+    width: 300px;
+    object-fit: cover;
+}
+
+.ph-aboutDetail {
+    display: flex;
+    height: 100%;
+    height: 400px;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 450px;
+}
+
+.ph-aboutDetail h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    margin: 0;
+    font-size: 50px;
+}
+
+.pha-tbl {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pha-tbl-row {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.pha-tbl-col:nth-child(1) {
+    width: 100px;
+}
+
+.ph-projects {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    min-height: 80vh;
+    background-color: #ffffff0d;
+}
+
+.ph-projects h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    margin: 0;
+    font-size: 50px;
+}
+
+.ph-projects-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.ph-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    height: 20vh;
+}
+
+.ph-socials {
+    display: flex;
+    gap: 5px;
+}
+
+.ph-socials img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+
+@media only screen and (max-width:680px) {
+    .upload-btn {
+        display: none;
+    }
+
+    .pp-portfolio-about {
+        flex-direction: column;
+        height: auto;
+
+    }
+
+    .ph-about-img img {
+        border-radius: 20px;
+    }
+
+    .ph-aboutDetail {
+        height: auto;
+        width: 100%;
+    }
+
+    .ph-projects-list {
+        justify-content: center;
+    }
+
+    .pf-left {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .dash-btns {
+        flex-direction: column;
+    }
+
+    .dashboard__info {
+        flex-direction: column;
+    }
+
+    .dashboard__info__text button {
+        width: 100%;
+    }
+
+    .me-Home {
+        padding: 10px;
+    }
+
+    .mp-post {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mp-name h1 {
+        font-size: 20px;
+    }
+
+    .me-profile {
+        flex-direction: column;
+    }
+
+    .mp-image {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .explorePosts {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .exploreSearch {
+        width: 100%;
     }
 }

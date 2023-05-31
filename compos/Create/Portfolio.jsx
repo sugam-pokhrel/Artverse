@@ -16,12 +16,21 @@ function Portfolio() {
             router.push('/login')
         }
     }, [session.status])
+    var [pfExists, setPfExists] = React.useState(false)
+    function fetchPF(email) {
+        fetch("/api/portfolio/" + email)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            }
+            )
+    }
     function getUserData() {
         fetch("/api/users/getloggedin")
             .then(res => res.json())
             .then(data => {
-                console.log(data.user[0])
                 setUserData(data.user[0])
+                fetchPF(data.user[0].email)
                 checkInfostatus(data.user[0])
                 setLoading(false)
             })
@@ -29,6 +38,7 @@ function Portfolio() {
     }
     useEffect(() => {
         getUserData()
+
     }, [])
     var [infoStatus, setInfoStatus] = React.useState(0)
 
