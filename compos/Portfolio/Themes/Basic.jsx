@@ -22,7 +22,7 @@ function Basic({ data, posts, socials, user }) {
             </div>
             <div className="pp-portfolio-about">
                 <div className="ph-about-img">
-                    {data.about.aboutImage ? <img src={data.about.aboutImage} alt={data.websiteDetail.title} /> : <img src="https://th.bing.com/th/id/R.6335f63541390303b2bd6e676a63ad6d?rik=xuOqjVQAxhQOgA&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_74993.png&ehk=EfK83pRw4Bls5DbAtwniJeJAwrwxwa%2fR6kmTZKzTBl8%3d&risl=&pid=ImgRaw&r=0" alt={data.websiteDetail.title} />}
+                    {data.about.aboutImage ? <img src={data.about.aboutImage} alt={data.websiteDetail.title} /> : <img src={user.image} alt={data.websiteDetail.title} />}
                 </div>
                 <div className="ph-aboutDetail">
                     <h1 className='text text-warning'>{data.about.heading}</h1>
