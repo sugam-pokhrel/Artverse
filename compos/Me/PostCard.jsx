@@ -46,7 +46,7 @@ function Postcard({ post }) {
             </div> :
                 <div className="ec-info">
                     <div className="ec-user">
-                        <img src={user.image} alt="" />
+                        <img src={user.image} alt="" referrerPolicy='no-referrer' />
                         <p>{user.name}</p>
                     </div>
                     <div className="ec-posted">
