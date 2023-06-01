@@ -34,11 +34,11 @@ function Preview({ data, user }) {
         // parse a
         console.log(a)
 
-
-        if (a !== "" || a !== null || a !== undefined) {
-            var social = JSON.parse(a)
-            console.log(social)
-            setSocials(social)
+                    
+if (a !== "" || a !== null || a !== undefined){
+ var social = JSON.parse(a)
+        console.log(social)
+        setSocials(social)
 
         }
         console.log(social)

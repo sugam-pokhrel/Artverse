@@ -1,11 +1,15 @@
 import { useSession } from 'next-auth/react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+
 
 function Dashboard() {
     var session = useSession()
+    const [prot,setport]=useState(false)
     var router = useRouter()
     var [userData, setUserData] = React.useState(null)
+    let sessiontest=prot?'Edit your':'Create a';
+    
 
     useEffect(() => {
         if (session.status === 'authenticated') {
@@ -15,6 +19,21 @@ function Dashboard() {
             router.push('/login')
         }
     }, [session.status])
+
+    useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/portfolio/check');
+        const data = await response.json();
+        console.log(data)
+        setport(data);
+      } catch (error) {
+        // Handle errors
+      }
+    }
+
+    fetchData();
+  }, []);
     function getUserData() {
         fetch("/api/users/getloggedin")
             .then(res => res.json())
@@ -62,7 +81,7 @@ function Dashboard() {
                 <div className="dashboard__info__text">
                     {infoStatus === 100 ? <h2 className='text p-2 text-green-200'>Profile Completed and you are eligible to create a portfolio</h2> : <h2>Complete your profile to create a portfolio and also other exclusive features</h2>}
                     <div className="dash-btns">
-                        {(infoStatus === 100) && <button className='btn btn-secondary' onClick={() => router.push("/create/portfolio")}>Create a Portfolio</button>}
+                        {(infoStatus === 100) && <button className='btn btn-secondary' onClick={() => router.push("/create/portfolio")}>{sessiontest} Portfolio</button>}
                         {(infoStatus === 100) && <button className='btn btn-primary' onClick={() => router.push("/profile/edit")}>Edit Profile</button>}
                         {(infoStatus !== 100) && <button className='btn bg-green-400 text-white' onClick={() => router.push("/profile/edit")}>Complete Profile</button>}
 

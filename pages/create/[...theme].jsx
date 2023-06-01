@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Login from '../../compos/Login/Login';
@@ -11,6 +11,22 @@ function Thems() {
   const session = useSession();
   var router = useRouter();
   var [preview, setPreview] = React.useState(false);
+   const [prot,setport]=useState(false)
+
+      useEffect(() => {
+    async function fetchingData() {
+      try {
+        const response = await fetch('/api/portfolio/check');
+        const data = await response.json();
+        console.log(data)
+        setport(data);
+      } catch (error) {
+        // Handle errors
+      }
+    }
+
+    fetchingData();
+  }, []);
   useEffect(() => {
     if (router.query.theme) {
       var params = router.query.theme;
@@ -44,10 +60,10 @@ function Thems() {
       contact: '',
     });
 
-    function fetchInfos(e) {
+   function fetchInfos(e) {
       const { name, bgImg, bio, image, projects, email, location } = e;
-
-      setWebsiteDets({
+      if(!prot){
+        setWebsiteDets({
         ...websiteDets,
         websiteDetail: {
           ...websiteDets.websiteDetail,
@@ -77,7 +93,12 @@ function Thems() {
           location: location || ''
         }
       });
+      }
+
+      
     }
+
+   
 
     useEffect(() => {
       if (session.status === 'authenticated') {
@@ -95,7 +116,10 @@ function Thems() {
           setUserData(data.user[0]);
           checkInfostatus(data.user[0]);
           setLoading(false);
-          fetchInfos(data.user[0]);
+          if(!prot){
+            fetchInfos(data.user[0]);
+          }
+          
           fetch('/api/portfolio/' + data.user[0].email)
             .then(res =>
 
@@ -135,12 +159,17 @@ function Thems() {
 
     }
 
-    useEffect(() => {
+    if(prot){
+          useEffect(() => {
       getUserData()
-
-
+      
 
     }, []);
+
+
+    }
+
+
 
     const [infoStatus, setInfoStatus] = React.useState(0);
 
