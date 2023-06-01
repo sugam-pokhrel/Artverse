@@ -1,20 +1,84 @@
-import React, { useEffect } from 'react'
+import React, { useEffect ,useState} from 'react'
 import Postcard from '../Me/PostCard'
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 function Home({ user }) {
+     const { data: session } = useSession();
+    const [auth, setAuth] = React.useState(false);
+
     var router = useRouter()
     // var [user, setUser] = React.useState(null)
     var [posts, setPosts] = React.useState([])
     var [loading, setLoading] = React.useState(true)
     var [sortedPosts, setSortedPosts] = React.useState("newest")
     var [postLikes, setPostLikes] = React.useState(0)
+    const [isFollowed, setIsFollowed] = useState(false);
+
+  useEffect(() => {
+    if (session) {
+      setAuth(true);
+    } else {
+      setAuth(false);
+    }
+  }, [session]);
+
+useEffect(() => {
+    var url = "/api/follow/" + user?.email;
+  // declare the data fetching function
+  const fetchData = async () => {
+    const data = await fetch(url);
+    const json = await data.json();
+    console.log(json)
+    const emailExists = json.follow.includes( session.user.email);
+
+if (emailExists) {
+  console.log("The email exists in the object.");
+  setIsFollowed(true)
+} else {
+  console.log("The email does not exist in the object.");
+}
+  }
+
+  // call the function
+  fetchData()
+    // make sure to catch any error
+    .catch(console.error);
+}, [])
+  const handleFollow = () => {
+    setIsFollowed(!isFollowed);
+      var url = "/api/follow/" + user?.email;
+
+    if (auth) {
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likedby: session.user.email }), // Pass session email in the request body
+      })
+        .then((res) => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            return res.json();
+          } else {
+            return 0;
+          }
+        })
+        
+    }
+    
+  };
 
     useEffect(() => {
         if (user) {
             setLoading(false)
         }
     }, [user])
+
+    useEffect(()=>{
+
+    })
     // function getUser() {
     //     fetch('/api/users/getloggedin')
     //         .then(res => res.json())
@@ -36,6 +100,7 @@ function Home({ user }) {
                 var revpost = [...post].reverse()
                 setPosts(revpost)
                 var postLikes = 0
+                console.log(post[0].createdBy)
                 // get all post likes
                 for (var i = 0; i < post.length; i++) {
                     var postsL = post[i].likes
@@ -94,7 +159,10 @@ function Home({ user }) {
                     }
                     <div className="mp-btns">
                         {loading ? <div className="mp-load-btn  "></div> :
-                            <button className='btn btn-primary'>Follow</button>
+                                <button className='btn btn-primary' onClick={handleFollow}>
+      {isFollowed ? 'Unfollow' : 'Follow'}
+    </button>
+
                         }
                     </div>
                 </div>

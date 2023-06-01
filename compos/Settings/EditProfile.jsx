@@ -42,13 +42,12 @@ function Edit() {
                 if (response.ok) {
                     const json = await response.json();
                     
-                    if (!json.social.length === 0) {
- 
+                    
+                 if (!json.social === "" || json.social === null || json.social === undefined){
                     var jsonstr = JSON.parse(json.social)
                     setSocials(jsonstr)
 
-}
-                  
+                 }             
 
 
                     
