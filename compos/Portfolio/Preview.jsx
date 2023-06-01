@@ -33,7 +33,7 @@ function Preview({ data, user }) {
         // parse a
 
                     
-if (!a === "" || a === null || a === undefined){
+if (a !== "" || a !== null || a !== undefined){
  var social = JSON.parse(a)
         console.log(social)
         setSocials(social)
