@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Login from '../../compos/Login/Login';
@@ -11,9 +11,9 @@ function Thems() {
   const session = useSession();
   var router = useRouter();
   var [preview, setPreview] = React.useState(false);
-   const [prot,setport]=useState(true)
+  const [prot, setport] = useState(true)
 
-      useEffect(() => {
+  useEffect(() => {
     async function fetchingData() {
       try {
         const response = await fetch('/api/portfolio/check');
@@ -42,7 +42,7 @@ function Thems() {
   if (session) {
     const [userData, setUserData] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
-    
+
     const [websiteDets, setWebsiteDets] = React.useState({
       websiteDetail: {
         title: '',
@@ -61,45 +61,45 @@ function Thems() {
       contact: '',
     });
 
-   function fetchInfos(e) {
+    function fetchInfos(e) {
       const { name, bgImg, bio, image, projects, email, location } = e;
-      if(!prot){
+      if (!prot) {
         setWebsiteDets({
-        ...websiteDets,
-        websiteDetail: {
-          ...websiteDets.websiteDetail,
-          title: name ? `${name}'s Portfolio` : ''
-        },
-        landing: {
-          ...websiteDets.landing,
-          bgImg: bgImg || '',
-          heading: name ? `Hello, I am ${name}` : '',
-          subHeading: bio || ''
-        },
-        about: {
-          ...websiteDets.about,
-          heading: 'About Me',
-          aboutImage: image || '',
-          aboutDesc: bio || ''
-        },
-        project: {
-          ...websiteDets.project,
-          heading: 'My Projects',
-          projects: projects || ''
-        },
-        contact: {
-          ...websiteDets.contact,
-          heading: 'Contact Me',
-          email: email || '',
-          location: location || ''
-        }
-      });
+          ...websiteDets,
+          websiteDetail: {
+            ...websiteDets.websiteDetail,
+            title: name ? `${name}'s Portfolio` : ''
+          },
+          landing: {
+            ...websiteDets.landing,
+            bgImg: bgImg || '',
+            heading: name ? `Hello, I am ${name}` : '',
+            subHeading: bio || ''
+          },
+          about: {
+            ...websiteDets.about,
+            heading: 'About Me',
+            aboutImage: image || '',
+            aboutDesc: bio || ''
+          },
+          project: {
+            ...websiteDets.project,
+            heading: 'My Projects',
+            projects: projects || ''
+          },
+          contact: {
+            ...websiteDets.contact,
+            heading: 'Contact Me',
+            email: email || '',
+            location: location || ''
+          }
+        });
       }
 
-      
+
     }
 
-   
+
 
     useEffect(() => {
       if (session.status === 'authenticated') {
@@ -118,11 +118,11 @@ function Thems() {
           checkInfostatus(data.user[0]);
           console.log(userData)
           setLoading(false);
-          if(!prot){
+          if (!prot) {
             fetchInfos(data.user[0]);
-           
+
           }
-          
+
           fetch('/api/portfolio/' + data.user[0].email)
             .then(res =>
 
@@ -162,19 +162,19 @@ function Thems() {
 
     }
 
-    
-          useEffect(() => {
-            if(prot){
 
-                getUserData()
-            }
-    
-      
+    useEffect(() => {
+      if (prot) {
+
+        getUserData()
+      }
+
+
 
     }, []);
 
 
-    
+
 
 
 

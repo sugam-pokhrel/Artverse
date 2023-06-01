@@ -1,15 +1,16 @@
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { FiEdit } from 'react-icons/fi'
 
 
 function Dashboard() {
     var session = useSession()
-    const [prot,setport]=useState(false)
+    const [prot, setport] = useState(false)
     var router = useRouter()
     var [userData, setUserData] = React.useState(null)
-    let sessiontest=prot?'Edit your':'Create a';
-    
+    let sessiontest = prot ? 'Edit your' : 'Create a';
+
 
     useEffect(() => {
         if (session.status === 'authenticated') {
@@ -21,19 +22,19 @@ function Dashboard() {
     }, [session.status])
 
     useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/portfolio/check');
-        const data = await response.json();
-        console.log(data)
-        setport(data);
-      } catch (error) {
-        // Handle errors
-      }
-    }
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/portfolio/check');
+                const data = await response.json();
+                console.log(data)
+                setport(data);
+            } catch (error) {
+                // Handle errors
+            }
+        }
 
-    fetchData();
-  }, []);
+        fetchData();
+    }, []);
     function getUserData() {
         fetch("/api/users/getloggedin")
             .then(res => res.json())
@@ -92,8 +93,11 @@ function Dashboard() {
             <div className="dash-create">
                 {(infoStatus === 100) && <div className="dc-item" onClick={() => router.push("/create/portfolio")}>
                     <h2 className='text text-secondary font-bold text-3xl '>Portfolio</h2>
-                    <h1>+</h1>
-                    <p>Create a stunnishing portfolio in a minute with zero code experience</p>
+                    {(!prot) ? <h1>+</h1> : <div className='dc-svg'><FiEdit /></div>}
+
+                    {(!prot) ? <p>Create a stunnishing portfolio in a minute with zero code experience</p>
+                        :
+                        <p>You have already created a portfolio. Update your portfolio</p>}
                 </div>}
                 <div className="dc-item" onClick={() => router.push("/upload")}>
                     <h2 className='text text-secondary font-bold text-3xl' >Post</h2>
