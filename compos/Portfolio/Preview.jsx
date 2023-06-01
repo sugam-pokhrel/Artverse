@@ -8,6 +8,7 @@ function Preview({ data, user }) {
     // console.log(data)
     // console.log(user)
     var [posts, setPosts] = React.useState([])
+    var [render, setRender] = React.useState(false)
     var [loading, setLoading] = React.useState(true)
     function fetchProjects() {
         fetch("/api/post/getpostbyEmail?email=" + user.email)
@@ -31,24 +32,24 @@ function Preview({ data, user }) {
     function getSocialmedia(a) {
         // social = 
         // parse a
-
-                    
-if (!a === "" || a === null || a === undefined){
- var social = JSON.parse(a)
-        console.log(social)
-        setSocials(social)
-
-                 }             
-
-        console.log(social)
         console.log(a)
-       
 
 
+        if (a !== "" || a !== null || a !== undefined) {
+            var social = JSON.parse(a)
+            console.log(social)
+            setSocials(social)
+
+        }
+        console.log(social)
+        setRender(true)
     }
     return (
         <>
-            <Basic data={data} user={user} posts={posts} socials={socials} />
+            {
+                (render) &&
+                <Basic data={data} user={user} posts={posts} socials={socials} />
+            }
         </>
     )
 }
