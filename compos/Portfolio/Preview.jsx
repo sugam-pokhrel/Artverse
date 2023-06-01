@@ -41,12 +41,22 @@ function Preview({ data, user }) {
     function getSocialmedia(a) {
         // social = 
         // parse a
-        if (a !== "" || a !== null || a !== undefined) {
+
+    
+                    
+                 if (a !== ""&& a !== "''"){
+
+                    console.log('empty not')
             var social = JSON.parse(a)
             console.log(social)
             setSocials(social)
+      
 
-        }
+                 }else{
+                    console.log('empty')
+                 }       
+
+
         setRender(true)
     }
     return (
