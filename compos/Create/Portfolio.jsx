@@ -22,6 +22,15 @@ function Portfolio() {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                getifPFecist()
+            }
+            )
+    }
+    function getifPFecist() {
+        fetch("/api/portfolio/check")
+            .then(res => res.json())
+            .then(data => {
+                setPfExists(data)
             }
             )
     }
@@ -72,17 +81,27 @@ function Portfolio() {
                 <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
             </div>}
             {(!loading) && <div className="create-portfolio__container">
-                <div className="cc-items">
+                {(!pfExists) && <div className="cc-items">
                     <h2>You need a portfolio !!!</h2>
                     <p>Show your skills, projects and capabilities on your own portfolio website, start now by chosing the theme</p>
-                </div>
+                </div>}
+                {(pfExists) && <div className="cc-items">
+                    <h2>Wanna Edit your  Portfolio?</h2>
+                    <p>You have already made a portfolio, but you can edit it any time. Do you want to edit?</p>
+                </div>}
                 <div className="cc-items cc-the">
                     <h2>Choose a theme</h2>
                     <div className="cc-themes">
-                        <div className="cc-theme" onClick={() => router.push("dark")}>
-                            <img src="https://th.bing.com/th/id/R.9f1b720be13a8887f1d2f1476b194b13?rik=qWlPYc8EyeuaXQ&pid=ImgRaw&r=0" alt="theme" />
-                            <h3>Dark</h3>
+                        <div className="cc-theme" onClick={() => router.push("basic")}>
+                            <img src="https://i.ibb.co/d0m64FJ/image.png" alt="theme" />
+                            <h3>Basic</h3>
                         </div>
+                        {/* https://i.ibb.co/wQXYMnS/image.png */}
+                        <div className="cc-theme" onClick={() => router.push("programmer")}>
+                            <img src="https://i.ibb.co/wQXYMnS/image.png" alt="theme" />
+                            <h3>Programmer</h3>
+                        </div>
+
                     </div>
                 </div>
 

@@ -3,13 +3,16 @@ import React, { useEffect } from 'react'
 import Postcard from '../Me/PostCard'
 import Socials from '../socialCard/Socials'
 import Basic from './Themes/Basic'
+import Programmerbasic from './Themes/Programmer/basic/Basic'
+import { Router, useRouter } from 'next/router'
 
 function Preview({ data, user }) {
+    var router = useRouter()
     // console.log(data)
     // console.log(user)
     var [posts, setPosts] = React.useState([])
     var [render, setRender] = React.useState(false)
-    var [loading, setLoading] = React.useState(true)
+    var [theme, setTheme] = React.useState("basic")
     function fetchProjects() {
         fetch("/api/post/getpostbyEmail?email=" + user.email)
             .then(res => res.json())
@@ -26,29 +29,38 @@ function Preview({ data, user }) {
             getSocialmedia(user?.social)
         }
     }, [user])
+
+    useEffect(() => {
+        if (router.query.theme) {
+            setTheme(router.query.theme[0])
+        }
+    }, [router.query.theme])
     var [socials, setSocials] = React.useState([])
 
 
     function getSocialmedia(a) {
         // social = 
         // parse a
-        console.log(a)
-
-                    
-if (a !== "" || a !== null || a !== undefined){
- var social = JSON.parse(a)
-        console.log(social)
-        setSocials(social)
+        if (a !== "" || a !== null || a !== undefined) {
+            var social = JSON.parse(a)
+            console.log(social)
+            setSocials(social)
 
         }
-        console.log(social)
         setRender(true)
     }
     return (
         <>
             {
                 (render) &&
-                <Basic data={data} user={user} posts={posts} socials={socials} />
+                    (theme === "basic") ? (
+                    <Basic data={data} user={user} posts={posts} socials={socials} />
+                )
+                    : (theme === "programmer") ? (
+                        <Programmerbasic data={data} user={user} posts={posts} socials={socials} />
+                    )
+                        :
+                        (null)
             }
         </>
     )
