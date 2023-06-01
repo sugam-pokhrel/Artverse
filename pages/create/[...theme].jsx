@@ -10,6 +10,7 @@ import Preview from '../../compos/Portfolio/Preview';
 function Thems() {
   const session = useSession();
   var router = useRouter();
+  const {theme}=router.query;
   var [preview, setPreview] = React.useState(false);
   const [prot, setport] = useState(true)
 
@@ -20,6 +21,7 @@ function Thems() {
         const data = await response.json();
         console.log(data)
         setport(data);
+        
       } catch (error) {
         // Handle errors
       }
@@ -167,6 +169,8 @@ function Thems() {
       if (prot) {
 
         getUserData()
+        
+       
       }
 
 
@@ -217,7 +221,13 @@ function Thems() {
     }
 
     function addDb() {
-      let requestBody = { email: session.data.user.email, landingbgImg: websiteDets.landing.bgImg }
+      const array = ['dark', 'programmer', 'artist'];
+      const isPresent = array.includes(theme[0])
+      if(!isPresent){
+        alert('please choose a proper theme')
+      }
+      console.log(theme[0])
+      let requestBody = { email: session.data.user.email, landingbgImg: websiteDets.landing.bgImg,theme:isPresent?theme[0]:'' }
 
       let objectsToAdd = websiteDets;
       for (const [name, value] of Object.entries(objectsToAdd)) {
@@ -276,6 +286,7 @@ function Thems() {
 
     function seePreview() {
       addDb()
+      
       router.push(router.query.theme[0] + "/preview")
     }
 
