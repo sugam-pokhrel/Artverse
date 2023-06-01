@@ -11,7 +11,7 @@ function Thems() {
   const session = useSession();
   var router = useRouter();
   var [preview, setPreview] = React.useState(false);
-   const [prot,setport]=useState(false)
+   const [prot,setport]=useState(true)
 
       useEffect(() => {
     async function fetchingData() {
@@ -42,6 +42,7 @@ function Thems() {
   if (session) {
     const [userData, setUserData] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
+    
     const [websiteDets, setWebsiteDets] = React.useState({
       websiteDetail: {
         title: '',
@@ -115,9 +116,11 @@ function Thems() {
         .then(data => {
           setUserData(data.user[0]);
           checkInfostatus(data.user[0]);
+          console.log(userData)
           setLoading(false);
           if(!prot){
             fetchInfos(data.user[0]);
+           
           }
           
           fetch('/api/portfolio/' + data.user[0].email)
@@ -127,7 +130,6 @@ function Thems() {
 
             )
             .then(data => {
-
 
 
 
@@ -151,6 +153,7 @@ function Thems() {
               };
 
               setWebsiteDets(updatedWebsiteDets);
+              console.log(websiteDets)
 
 
             })
@@ -159,15 +162,19 @@ function Thems() {
 
     }
 
-    if(prot){
+    
           useEffect(() => {
-      getUserData()
+            if(prot){
+
+                getUserData()
+            }
+    
       
 
     }, []);
 
 
-    }
+    
 
 
 
