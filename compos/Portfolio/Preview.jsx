@@ -32,9 +32,17 @@ function Preview({ data, user }) {
         // social = 
         // parse a
 
-        var social = JSON.parse(a)
+                    
+if (!a === "" || a === null || a === undefined){
+ var social = JSON.parse(a)
         console.log(social)
         setSocials(social)
+
+                 }             
+
+        console.log(social)
+        console.log(a)
+       
 
 
     }
