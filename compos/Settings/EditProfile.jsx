@@ -41,13 +41,14 @@ function Edit() {
                 const response = await fetch('/api/users/' + session.data.user.email);  // Replace with your API endpoint URL
                 if (response.ok) {
                     const json = await response.json();
+                    console.log(json)
 
                     
                     
-                 if (json.social !== ""){
+                 if (json.social !== ""&&json.social !== "''"){
 
                     console.log('empty not')
-                                         var jsonstr = JSON.parse(json.social)
+                    var jsonstr = JSON.parse(json.social)
                     setSocials(jsonstr)
       
 
