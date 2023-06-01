@@ -15,9 +15,12 @@ export default async function handler(req, res) {
         )
         if (user) {
            
-            if(req.method ==='GET'){}
+            res.send(true)
+
         
         
+        }else{
+            res.send(false)
         }
         
         
