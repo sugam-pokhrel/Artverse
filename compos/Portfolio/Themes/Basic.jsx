@@ -17,8 +17,13 @@ function Basic({ data, posts, socials, user }) {
                     {data.landing.bgImg ? <img src={data.landing.bgImg} alt={data.websiteDetail.title} /> : <img src="https://th.bing.com/th/id/R.07711086bcc73c621d551d7ab7cc60fe?rik=dQo%2fLWsjhjOkwA&pid=ImgRaw&r=0" alt={data.websiteDetail.title} />}
                 </div>
                 <div className="ph-content">
-                    <h1>{data.landing.heading}</h1>
-                    <p>{data.landing.subHeading}</p>
+                    {(!!data.landing.heading) ? <h1>{data.landing.heading}</h1> :
+                        <h1>Welcome!!!</h1>
+                    }
+                    {(!!data.landing.subHeading) ? <p>{data.landing.subHeading}</p>
+                        :
+                        <p>Hey, I am {user.name} and this is my portfolio website.Thank you for visiting me. You can learn about me by readyng my portfolio below</p>
+                    }
                 </div>
             </div>
             <div className="pp-portfolio-about">
@@ -26,8 +31,10 @@ function Basic({ data, posts, socials, user }) {
                     {data?.about?.aboutImage ? <img src={data?.about?.aboutImage} alt={data.websiteDetail.title} /> : <img src={user.image} alt={data.websiteDetail.title} />}
                 </div>
                 <div className="ph-aboutDetail">
-                    <h1 className='text text-warning'>{data?.about?.heading}</h1>
-                    <p>{data?.about?.aboutDesc}</p>
+                    {(!!data.about.heading) ? <h1 className='text text-warning'>{data?.about?.heading}</h1> :
+                        <h1 className='text text-warning'>About Me</h1>
+                    }
+                    {(!!data.about.aboutDesc) ? <p>{data?.about?.aboutDesc}</p> : <p>Hey, I am {user.name} and this is my portfolio website. These are some Information related to me. Thank you for visiting me</p>}
                     <div className="pha-tbl">
                         <div className="pha-tbl-row">
                             <div className="pha-tbl-col">
@@ -72,15 +79,14 @@ function Basic({ data, posts, socials, user }) {
                     </div>
                 </div>
             </div>
-            <div className="ph-projects">
+            {(posts.length > 0) && <div className="ph-projects">
                 <h1 className='text text-warning'>My Projects</h1>
                 <div className="ph-projects-list">
-                    {(posts.length > 0) && posts.map(post => (
+                    {posts.map(post => (
                         <Postcard post={post} key={post.$id} />
                     ))}
-                    {(posts.length == 0) && <h1 className='text text-warning'>No Projects Found</h1>}
                 </div>
-            </div>
+            </div>}
             <div className="ph-footer">
                 <p>© 2023 {user?.name} | All Rights Reserved</p>
                 <div className="ph-socials">
