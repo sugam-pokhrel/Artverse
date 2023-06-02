@@ -42,19 +42,19 @@ function Preview({ data, user }) {
         // social = 
         // parse a
 
-    
-                    
-                 if (a !== ""&& a !== "''"){
 
-                    console.log('empty not')
+
+        if (a !== "" && a !== "''") {
+
+            console.log('empty not')
             var social = JSON.parse(a)
             console.log(social)
             setSocials(social)
-      
 
-                 }else{
-                    console.log('empty')
-                 }       
+
+        } else {
+            console.log('empty')
+        }
 
 
         setRender(true)
@@ -70,7 +70,9 @@ function Preview({ data, user }) {
                         <Programmerbasic data={data} user={user} posts={posts} socials={socials} />
                     )
                         :
-                        (null)
+                        (
+                            <Basic data={data} user={user} posts={posts} socials={socials} />
+                        )
             }
         </>
     )

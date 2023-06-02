@@ -19,7 +19,7 @@ function Basic({ data, posts, socials, user }) {
         <>
             {(!!user && !!data) && <div className='pro-basic'>
                 <Head>
-                    <title>Preview - ({data.websiteDetail.title})</title>
+                    <title>{data.websiteDetail.title}</title>
                     <meta name="description" content={data.websiteDetail.description} />
                 </Head>
                 <div className="pro-header">

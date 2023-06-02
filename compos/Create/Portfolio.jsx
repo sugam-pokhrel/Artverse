@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { render } from 'react-dom'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 
 function Portfolio() {
@@ -14,7 +16,7 @@ function Portfolio() {
         for (var i = 0; i < Themes.length; i++) {
             if (Themes[i].slug === pTheme) {
                 return (
-                    <div className="cc-theme" onClick={() => router.push(Themes[i].slug)}>
+                    <div className="cc-theme">
                         <img src={Themes[i].image} alt="theme" />
                         <h3>{Themes[i].name}</h3>
                     </div>
@@ -49,12 +51,24 @@ function Portfolio() {
     }, [session.status])
     var [pfExists, setPfExists] = React.useState(false)
     var [pTheme, setPTheme] = React.useState("")
+    var [createdDate, setCreatedDate] = React.useState("")
+    var [updatedDate, setUpdatedDate] = React.useState("")
+
+    function getDate(a, b) {
+        dayjs.extend(relativeTime)
+        var createDate = dayjs(a).fromNow()
+        setCreatedDate(createDate)
+        var updateDate = dayjs(b).fromNow()
+        setUpdatedDate(updateDate)
+
+    }
     function fetchPF(email) {
         fetch("/api/portfolio/" + email)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
                 getifPFecist()
+                getDate(data.$createdAt, data.$updatedAt)
                 if (data) {
                     setPTheme(data.theme)
                 }
@@ -70,11 +84,15 @@ function Portfolio() {
             }
             )
     }
+    var [userName, setUserName] = React.useState("")
     function getUserData() {
         fetch("/api/users/getloggedin")
             .then(res => res.json())
             .then(data => {
                 setUserData(data.user[0])
+                var useremail = data.user[0].email
+                var username = useremail.split("@")[0]
+                setUserName(username)
                 fetchPF(data.user[0].email)
                 checkInfostatus(data.user[0])
             })
@@ -124,16 +142,57 @@ function Portfolio() {
                     <h2>Wanna Edit your  Portfolio?</h2>
                     <p>You have already made a portfolio, but you can edit it any time. Do you want to edit?</p>
                 </div>}
+
+
                 {(pfExists) && <div className="cc-items cc-the">
                     <h2>Your Current Theme</h2>
-                    <p>Please Select the current theme if you only want to edit the content, or else browse other cool theme below</p>
-                    {pTheme && <RenderPtheme />}
+                    <p>Edit the Old Theme, or choose new one from below.</p>
+                    <div className="cc-wrapper">
+
+                        <div className="cc-item-site cc-the">
+                            {pTheme && <RenderPtheme />}
+                            <div className="cc-btns">
+                                <button className='btn btn-warning' onClick={() => router.push("/create/" + pTheme)}>Edit</button>
+                                <button className='btn btn-regular' onClick={() => router.push('/portfolio/' + userName)}>Visit</button>
+                            </div>
+                        </div>
+                        <div className="cc-det-site">
+                            <h2>Your Portfolio Details</h2>
+                            <div className="cc-det">
+                                <div className="cc-det-item">
+                                    <h3>Theme</h3>
+                                    <p>{pTheme}</p>
+                                </div>
+                                <div className="cc-det-item">
+                                    <h3>Info Status</h3>
+                                    <p className='text bg-green-800 '>Published</p>
+                                </div>
+                                <div className="cc-det-item">
+                                    <h3>Portfolio Link</h3>
+                                    <a href={`https://artverse.vercel.app/portfolio/${userName}`} target='_blank'>https://artverse.vercel.app/portfolio/{userName}</a>
+                                </div>
+                                <div className="cc-det-item">
+                                    <h3>Created</h3>
+                                    <p>{createdDate}</p>
+                                </div>
+                                <div className="cc-det-item">
+                                    <h3>Last Updated</h3>
+                                    <p>{updatedDate}</p>
+                                </div>
+                                <div className="cc-det-item">
+                                    <h3>Portfolio Visited</h3>
+                                    <p>25</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>}
                 <div className="cc-items cc-the">
                     <h2>Choose a theme</h2>
                     <div className="cc-themes">
-                        {Themes.map((theme) => (
-                            <div className="cc-theme" onClick={() => router.push(theme.slug)}>
+                        {Themes.map((theme, index) => (
+                            <div className="cc-theme" key={index} onClick={() => router.push(theme.slug)}>
                                 <img src={theme.image} alt="theme" />
                                 <h3>{theme.name}</h3>
                             </div>

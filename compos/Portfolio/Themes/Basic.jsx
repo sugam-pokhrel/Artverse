@@ -9,7 +9,7 @@ function Basic({ data, posts, socials, user }) {
     return (
         <div className="pp-portfolio">
             <Head>
-                <title>Preview - ({data.websiteDetail.title})</title>
+                <title>{data.websiteDetail.title}</title>
                 <meta name="description" content={data.websiteDetail.description} />
             </Head>
             <div className="pp-portfolio-landing">

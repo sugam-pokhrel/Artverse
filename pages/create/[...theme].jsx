@@ -13,6 +13,8 @@ function Thems() {
   const { theme } = router.query;
   var [preview, setPreview] = React.useState(false);
   const [prot, setport] = useState(true)
+  const [userData, setUserData] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
     async function fetchingData() {
@@ -33,7 +35,11 @@ function Thems() {
     if (router.query.theme) {
       var params = router.query.theme;
       if (params.length === 2 && params[1] == 'preview') {
-        setPreview(true);
+        if (userData) {
+          setPreview(true);
+        } else {
+          setPreview(false);
+        }
       } else {
         setPreview(false);
       }
@@ -42,8 +48,7 @@ function Thems() {
   }, [router.query.theme]);
 
   if (session) {
-    const [userData, setUserData] = React.useState(null);
-    const [loading, setLoading] = React.useState(true);
+
 
     const [websiteDets, setWebsiteDets] = React.useState({
       websiteDetail: {
