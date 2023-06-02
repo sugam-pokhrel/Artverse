@@ -299,6 +299,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -1724,6 +1725,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.modelBtn {
+    display: none;
 }
 
 

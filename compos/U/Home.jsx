@@ -3,6 +3,7 @@ import Postcard from '../Me/PostCard'
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import Link from 'next/link';
 
 function Home({ user }) {
   const { data: session } = useSession();
@@ -175,7 +176,7 @@ function Home({ user }) {
               </div>
             </div>
           }
-          <div className="mp-btns">
+          {(auth) && <div className="mp-btns">
             {loading ? <div className="mp-load-btn  "></div> :
               !loadingFollow ? (<button className='btn btn-primary' onClick={handleFollow}>
                 {isFollowed ? 'Unfollow' : 'Follow'}
@@ -184,7 +185,14 @@ function Home({ user }) {
                   <AiOutlineLoading3Quarters size={22} />
                 </div>
             }
-          </div>
+          </div>}
+          {(!auth) && <div className="mp-btns">
+            <Link href="/login">
+              <button className='btn btn-primary'>
+                Login to Follow this User
+              </button>
+            </Link>
+          </div>}
         </div>
       </div>
       <div className="me-posts">
