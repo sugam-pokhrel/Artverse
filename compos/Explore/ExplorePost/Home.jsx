@@ -15,6 +15,7 @@ function Home({ post, user }) {
   const [liked, setLiked] = React.useState(false);
   const [likeLoading, setLikeLoading] = React.useState(true);
   const [likeStatus, setLikeStatus] = React.useState('Like');
+   const [isFollowed, setIsFollowed] = useState(false);
 
   useEffect(() => {
     if (session) {
@@ -23,6 +24,33 @@ function Home({ post, user }) {
       setAuth(false);
     }
   }, [session]);
+
+
+
+  useEffect(() => {
+    
+    var url = "/api/follow/" + post.createdBy;
+    // declare the data fetching function
+    const fetchData = async () => {
+      const data = await fetch(url);
+      const json = await data.json();
+      console.log(json)
+      const emailExists = json.follow.includes(session.user.email);
+
+      if (emailExists) {
+        console.log("The email exists in the object.");
+        setIsFollowed(true)
+      } else {
+        console.log("The email does not exist in the object.");
+      }
+   
+    }
+
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, [])
 
   useEffect(() => {
     likedByUser();
@@ -47,6 +75,7 @@ function Home({ post, user }) {
         console.error('An error occurred while checking if the post is liked:', error);
       });
   }
+  
 
   function likePost() {
     setLikeLoading(true);
@@ -144,7 +173,26 @@ function Home({ post, user }) {
           <img src={user?.image} alt="" referrerPolicy='no-referrer' />
           <div className="ep-u-data">
             <p>{post.title}</p>
-            <div><span className='ep-username' onClick={navtouser}>{user?.name}</span>  {(!selfposted) && <span>. Follow</span>}</div>
+            <div><span className='ep-username' onClick={navtouser}>{user?.name}</span>  {(!selfposted) && <span onClick={()=>{setIsFollowed(!isFollowed);var url = "/api/follow/" + post.createdBy;
+    if (auth) {
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likedby: session.user.email }), // Pass session email in the request body
+      })
+        .then((res) => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+           
+            return res.json();
+          } else {
+            return 0;
+          }
+        })
+
+    }}}>. {isFollowed?'Unfollow':'Follow'}   </span>}</div>
           </div>
         </div>
         <div className="ep-u-actions flex gap-5">
