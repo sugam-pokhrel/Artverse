@@ -144,7 +144,7 @@ function Home({ post, user }) {
           <img src={user?.image} alt="" referrerPolicy='no-referrer' />
           <div className="ep-u-data">
             <p>{post.title}</p>
-            <div><span className='ep-username' onClick={navtouser}>{user?.name}</span> . <span>Follow</span></div>
+            <div><span className='ep-username' onClick={navtouser}>{user?.name}</span>  {(!selfposted) && <span>. Follow</span>}</div>
           </div>
         </div>
         <div className="ep-u-actions flex gap-5">

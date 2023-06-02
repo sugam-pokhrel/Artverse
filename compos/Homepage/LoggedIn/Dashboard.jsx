@@ -41,6 +41,7 @@ function Dashboard() {
             .then(data => {
                 console.log(data.user[0])
                 setUserData(data.user[0])
+                getPost(data.user[0].email)
                 checkInfostatus(data.user[0])
             })
 
@@ -73,6 +74,27 @@ function Dashboard() {
         // round off
         percent = Math.round(percent)
         setInfoStatus(percent)
+    }
+    var [postLikes, setPostLikes] = React.useState(0)
+    var [totalPosts, setTotalPosts] = React.useState(0)
+
+    function getPost(e) {
+        fetch("/api/post/getpostbyEmail?email=" + e)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                var post = data?.post
+                var postLikes = 0
+                setTotalPosts(post.length)
+                console.log(post[0].createdBy)
+                // get all post likes
+                for (var i = 0; i < post.length; i++) {
+                    var postsL = post[i].likes
+                    var plength = postsL.length
+                    postLikes += plength
+                    setPostLikes(postLikes)
+                }
+            })
     }
     return (
         <div className='dashboard'>
@@ -110,6 +132,27 @@ function Dashboard() {
                     <p>Got many social medias? Share all social media links under one link with Linkify</p>
                 </div>
             </div>
+            <h1>Account Stats</h1>
+            <div className="dash-stats">
+                <div className="ds-item">
+                    <p>Total Followers</p>
+                    {userData && <h1>{userData.followers.length}</h1>}
+                </div>
+                <div className="ds-item">
+                    <p>Total Posts</p>
+                    <h1>{totalPosts}</h1>
+                </div>
+                <div className="ds-item">
+                    <p>Total post Likes</p>
+                    <h1>{postLikes}</h1>
+                </div>
+                <div className="ds-item">
+                    <p>Post Views</p>
+                    <h1>0</h1>
+                </div>
+
+            </div>
+
 
 
         </div>

@@ -31,6 +31,7 @@ function Portfolio() {
             .then(res => res.json())
             .then(data => {
                 setPfExists(data)
+                setLoading(false)
             }
             )
     }
@@ -41,7 +42,6 @@ function Portfolio() {
                 setUserData(data.user[0])
                 fetchPF(data.user[0].email)
                 checkInfostatus(data.user[0])
-                setLoading(false)
             })
 
     }
@@ -88,6 +88,11 @@ function Portfolio() {
                 {(pfExists) && <div className="cc-items">
                     <h2>Wanna Edit your  Portfolio?</h2>
                     <p>You have already made a portfolio, but you can edit it any time. Do you want to edit?</p>
+                </div>}
+                {(pfExists) && <div className="cc-items cc-the">
+                    asd
+
+
                 </div>}
                 <div className="cc-items cc-the">
                     <h2>Choose a theme</h2>
