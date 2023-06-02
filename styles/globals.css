@@ -1761,4 +1761,82 @@
     .exploreSearch {
         width: 100%;
     }
+
+    .pro-about {
+        flex-direction: column;
+        padding-top: 80px;
+    }
+
+    .pro-about-desc-card {
+        transform: rotate(0deg);
+        max-width: 95%;
+        width: 100% !important;
+        z-index: inherit;
+    }
+
+    .pro-about-desc-card p {
+        font-size: 18px;
+        /* wrap text */
+        white-space: pre-wrap;
+        /* get textinside the parent container */
+        word-break: break-all;
+    }
+
+    .padc-det {
+        padding-left: 5px;
+    }
+
+    .padt-proj p {
+        padding-left: 15px !important;
+    }
+
+    .pro-header-content h1 {
+        font-size: 35px;
+        text-align: center;
+    }
+
+    .cc-items h2 {
+        font-size: 20px;
+    }
+
+    .cc-items p {
+        font-size: 15px;
+        color: #ffffff58;
+    }
+
+    .cc-items {
+        align-items: flex-start;
+    }
+
+    .ep-home {
+        width: auto;
+        min-width: 0;
+    }
+
+    .editProfile {
+        padding: 10px;
+    }
+
+    .explorePost {
+        padding: 10px;
+    }
+
+    .ep-top {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .ep-more-posts {
+        flex-direction: column;
+    }
+
+    .ep-desc {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .mp-name {
+        width: 100%;
+    }
+
 }

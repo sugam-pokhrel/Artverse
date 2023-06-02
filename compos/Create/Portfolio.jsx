@@ -1,12 +1,43 @@
 import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { render } from 'react-dom'
+
 
 function Portfolio() {
     var session = useSession()
     var router = useRouter()
     var [userData, setUserData] = React.useState(null)
     var [loading, setLoading] = React.useState(true)
+
+    function RenderPtheme() {
+        for (var i = 0; i < Themes.length; i++) {
+            if (Themes[i].slug === pTheme) {
+                return (
+                    <div className="cc-theme" onClick={() => router.push(Themes[i].slug)}>
+                        <img src={Themes[i].image} alt="theme" />
+                        <h3>{Themes[i].name}</h3>
+                    </div>
+                )
+            }
+        }
+    }
+
+
+    const Themes =
+        [
+            {
+                "slug": "basic",
+                "name": "Basic",
+                "image": "https://i.ibb.co/d0m64FJ/image.png",
+            },
+            {
+                "slug": "programmer",
+                "name": "Programmer",
+                "image": "https://i.ibb.co/wQXYMnS/image.png",
+            }
+        ]
+
 
     useEffect(() => {
         if (session.status === 'authenticated') {
@@ -17,12 +48,16 @@ function Portfolio() {
         }
     }, [session.status])
     var [pfExists, setPfExists] = React.useState(false)
+    var [pTheme, setPTheme] = React.useState("")
     function fetchPF(email) {
         fetch("/api/portfolio/" + email)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
                 getifPFecist()
+                if (data) {
+                    setPTheme(data.theme)
+                }
             }
             )
     }
@@ -90,22 +125,19 @@ function Portfolio() {
                     <p>You have already made a portfolio, but you can edit it any time. Do you want to edit?</p>
                 </div>}
                 {(pfExists) && <div className="cc-items cc-the">
-                    asd
-
-
+                    <h2>Your Current Theme</h2>
+                    <p>Please Select the current theme if you only want to edit the content, or else browse other cool theme below</p>
+                    {pTheme && <RenderPtheme />}
                 </div>}
                 <div className="cc-items cc-the">
                     <h2>Choose a theme</h2>
                     <div className="cc-themes">
-                        <div className="cc-theme" onClick={() => router.push("basic")}>
-                            <img src="https://i.ibb.co/d0m64FJ/image.png" alt="theme" />
-                            <h3>Basic</h3>
-                        </div>
-                        {/* https://i.ibb.co/wQXYMnS/image.png */}
-                        <div className="cc-theme" onClick={() => router.push("programmer")}>
-                            <img src="https://i.ibb.co/wQXYMnS/image.png" alt="theme" />
-                            <h3>Programmer</h3>
-                        </div>
+                        {Themes.map((theme) => (
+                            <div className="cc-theme" onClick={() => router.push(theme.slug)}>
+                                <img src={theme.image} alt="theme" />
+                                <h3>{theme.name}</h3>
+                            </div>
+                        ))}
 
                     </div>
                 </div>
