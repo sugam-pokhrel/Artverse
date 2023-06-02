@@ -16,7 +16,11 @@ export default async function handler(req, res) {
     const userData = response.createdBy;
 
     if (req.method === 'GET') {
-      res.send(response);
+      let updatedObj={...response}
+           delete updatedObj['$collectionId'];
+                delete updatedObj['$databaseId'];
+      const promise = databases.updateDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', postid,{...updatedObj,views:updatedObj.views+1});
+      return res.send(response);
     } else if (req.method === 'PUT') {
 
         const session = await getSession({ req });
