@@ -10,8 +10,10 @@ export async function getServerSideProps(context) {
     const id = context.query.username // Get ID from slug 
     var dataz = null
     var newData = null
+    var uname = null
     try {
         dataz = await context.query.username + "@gmail.com"
+        uname = await context.query.username
         await fetch(`https://artverses.vercel.app/api/portfolio/${dataz}`)
             .then(res => res.json())
             .then(data => {
@@ -27,14 +29,14 @@ export async function getServerSideProps(context) {
         props: {
             newData,
             id,
-            dataz
+            dataz,
+            uname
         }
     }
 }
 
-function Username({ newData, id, dataz }) {
+function Username({ newData, id, dataz, uname }) {
     var router = useRouter()
-
     useEffect(() => {
     }, [])
 
@@ -152,13 +154,13 @@ function Username({ newData, id, dataz }) {
                 <meta name="description" content={`${newData.landingsubHeading} - created by Artverse's Portfolio`} />
 
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content="http://artverses.vercel.app/" />
+                <meta property="og:url" content={"http://artverses.vercel.app/portfolio/" + uname} />
                 <meta property="og:title" content={`${newData.websiteDetailtitle} + (Artverse)`} />
                 <meta property="og:description" content={`${newData.landingsubHeading} - created by Artverse's Portfolio`} />
                 <meta property="og:image" content={(newData.landingbgImg)} />
 
                 <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:url" content="http://artverses.vercel.app/" />
+                <meta property="twitter:url" content={"http://artverses.vercel.app/portfolio/" + uname} />
                 <meta property="twitter:title" content="Artverse - The Ultimate Platform for Creatives" />
                 <meta property="twitter:description" content={`${newData.landingsubHeading} - Created by Artverse's Portfolio`} />
                 <meta property="twitter:image" content={(newData.landingbgImg)}></meta>
