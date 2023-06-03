@@ -26,7 +26,6 @@ function Dashboard() {
             try {
                 const response = await fetch('/api/portfolio/check');
                 const data = await response.json();
-                console.log(data)
                 setport(data);
             } catch (error) {
                 // Handle errors
@@ -39,7 +38,6 @@ function Dashboard() {
         fetch("/api/users/getloggedin")
             .then(res => res.json())
             .then(data => {
-                console.log(data.user[0])
                 setUserData(data.user[0])
                 getPost(data.user[0].email)
                 checkInfostatus(data.user[0])
@@ -87,7 +85,7 @@ function Dashboard() {
                 var postLikes = 0
                 var postViews = 0
                 setTotalPosts(post.length)
-                console.log(post)
+
                 // get all post likes
                 for (var i = 0; i < post.length; i++) {
                     var postsL = post[i].likes

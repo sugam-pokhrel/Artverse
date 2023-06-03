@@ -1,7 +1,11 @@
+import { getSession } from "next-auth/react";
 import { databases } from "../../appwrite";
+import { ID } from 'appwrite';
+
 
 
 export default async function validate(req, res) {
+    var session = await getSession({ req });
 
     var email = req.query.email;
 
@@ -18,12 +22,12 @@ export default async function validate(req, res) {
             promise.then(function (response) {
                 return res.status(200).json({ message: "Email does not exist, so created one" })
             }, function (error) {
-                return res.status(200).json({ message: error })
+                return res.status(200).json({ message: error + "1" })
             });
         }
 
     }, function (error) {
-        return res.status(200).json({ message: error })
+        return res.status(200).json({ message: error + "2" })
     }
     );
 }
