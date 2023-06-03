@@ -21,13 +21,15 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   }
 
   return (
-    <SessionProvider session={session}>
+    <html data-theme="cupcake">
+      <SessionProvider session={session}>
 
-      <Navbar />
-      <Component {...pageProps} />
-      {/* <div className='debugCss' onClick={toggleView}>
+        <Navbar />
+        <Component {...pageProps} />
+        {/* <div className='debugCss' onClick={toggleView}>
         +
       </div> */}
-    </SessionProvider>
+      </SessionProvider>
+    </html>
   )
 }
