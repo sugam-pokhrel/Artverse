@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { storage,databases } from '../../appwrite'
+import { storage, databases } from '../../appwrite'
 import { ID } from 'appwrite'
 
 function Upload(props) {
     var [page, setPage] = React.useState(1)
     const [image, setImage] = React.useState(null)
-    const[postData,setPostData]=useState({title:'',desc:''})
-    const textChanged=e=>{
+    const [postData, setPostData] = useState({ title: '', desc: '' })
+    const textChanged = e => {
         setPostData({
-            ...postData,[e.target.name]: e.target.value
+            ...postData, [e.target.name]: e.target.value
         })
     }
 
-     const id=ID.unique()
+    const id = ID.unique()
     function openFile() {
         document.getElementById('open').click()
     }
     function imageDone(e) {
-        
+
         const selectedFile = e.files[0];
         const customFileName = props.title.email;
         const modifiedFile = new File([selectedFile], customFileName, {
-  type: selectedFile.type,
-  lastModified: selectedFile.lastModified,
-});
-console.log(modifiedFile)
- 
+            type: selectedFile.type,
+            lastModified: selectedFile.lastModified,
+        });
+        console.log(modifiedFile)
+
         // check if the file is an image
         if (e.files[0].type.includes('image')) {
             setPage(2)
@@ -42,31 +42,30 @@ console.log(modifiedFile)
     }, [])
 
 
-    const uploadImage=(e)=>{
- console.log(image)
-if(image){       
-     e.preventDefault();
+    const uploadImage = (e) => {
+        console.log(image)
+        if (image) {
+            e.preventDefault();
 
-    const promise = storage.createFile(
-    '646ebfc7beadb77d8861',
-    
-    id,
-   image
-);
+            const promise = storage.createFile(
+                '646ebfc7beadb77d8861',
+                id,
+                image
+            );
 
-promise.then(function (response) {
-    console.log(response); // Success
-    const result = storage.getFileView('646ebfc7beadb77d8861', response.$id);
-    console.log(result)
-    const promise = databases.createDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', ID.unique(), { createdBy: props.title.email, title: postData.title, desc: postData.desc,image:result.href })
+            promise.then(function (response) {
+                console.log(response); // Success
+                const result = storage.getFileView('646ebfc7beadb77d8861', response.$id);
+                console.log(result)
+                const promise = databases.createDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', ID.unique(), { createdBy: props.title.email, title: postData.title, desc: postData.desc, image: result.href })
 
-   setPage(1);
-   setImage(null);
-}, function (error) {
-    console.log(error); // Failure
-});
+                setPage(1);
+                setImage(null);
+            }, function (error) {
+                console.log(error); // Failure
+            });
 
-}
+        }
 
 
     }
@@ -74,7 +73,7 @@ promise.then(function (response) {
 
     return (
         <>
-            {(page == 1) && <div className='hero h-screen flex items-center flex-col justify-center '>
+            {/* {(page == 1) && <div className='hero h-screen flex items-center flex-col justify-center '>
                 <h2 className='text upload-title md:text-2xl text-sm font-bold py-10'> <span>1/2</span> Add a suitable thumbnail of your project.</h2>
                 <div className="flex md:w-3/5 w-11/12 h-3/5  border border-dotted">
                     <div className="flex flex-col upload hover:bg-primary ease-out duration-300" onClick={openFile}>
@@ -95,7 +94,10 @@ promise.then(function (response) {
                     </div>
                 </div>
             </div>
-            }
+            } */}
+            <div className='hero h-screen flex items-center flex-col justify-center '>
+                <h2 className='text upload-title md:text-3xl text-red-300 text-sm font-bold py-10'> Some error occured while uploading, it will be fixed soon. Thanks. <span>ERRTPYE: CORS</span></h2>
+            </div>
         </>
     )
 }

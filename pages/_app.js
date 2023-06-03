@@ -21,7 +21,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   }
 
   return (
-    <html data-theme="dark">
+    <div data-theme="dark">
       <SessionProvider session={session}>
 
         <Navbar />
@@ -30,6 +30,6 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
         +
       </div> */}
       </SessionProvider>
-    </html>
+    </div>
   )
 }
