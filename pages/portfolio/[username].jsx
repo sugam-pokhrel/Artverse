@@ -1,10 +1,44 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Basic from '../../compos/Portfolio/Themes/Basic'
+import Head from 'next/head'
 import ProgrammerBasic from '../../compos/Portfolio/Themes/Programmer/basic/Basic'
 
-function Username() {
+
+
+export async function getServerSideProps(context) {
+    const id = context.query.username // Get ID from slug 
+    var dataz = null
+    var newData = null
+    try {
+        dataz = await context.query.username + "@gmail.com"
+        await fetch(`https://artverses.vercel.app/api/portfolio/${dataz}`)
+            .then(res => res.json())
+            .then(data => {
+                newData = data
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    } catch (error) {
+        console.log(error)
+    }
+    return {
+        props: {
+            newData,
+            id,
+            dataz
+        }
+    }
+}
+
+function Username({ newData, id, dataz }) {
     var router = useRouter()
+
+    useEffect(() => {
+        console.log(newData)
+    }, [])
+
     useEffect(() => {
         if (router.query.username) {
             fetchUser(router.query.username)
@@ -83,7 +117,6 @@ function Username() {
         fetch("/api/portfolio/" + email)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setTheme(data.theme)
                 var updatedWebsiteDets = {
                     websiteDetail: {
@@ -111,27 +144,49 @@ function Username() {
 
 
     return (
-        <div>{
-            (loading) ? (
-                <div className="explore-load">
-                    <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
-                </div>
-            ) : (
-                (userFound && render) ? (
-                    <div>
-                        {(theme == "basic") && <Basic user={user} data={datax} posts={posts} socials={socials} />}
-                        {(theme == "programmer") && <ProgrammerBasic user={user} data={datax} posts={posts} socials={socials} />}
+        <div>
+            <Head>
+                <title>{newData.websiteDetailtitle}</title>
+                <meta name="description" content={`${newData.websiteDetailtitle} + (Artverse)`} />
+                <link rel="icon" href="/favicon.ico" />
+                <meta name="title" content={`${newData.websiteDetailtitle} + (Artverse)`} />
+                <meta name="description" content={`${newData.landingsubHeading} - created by Artverse's Portfolio`} />
 
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="http://artverses.vercel.app/" />
+                <meta property="og:title" content="Artverse - The Ultimate Platform for Creatives" />
+                <meta property="og:description" content={`${newData.landingsubHeading} - created by Artverse's Portfolio`} />
+                <meta property="og:image" content={(newData.landingbgImg) || 'https://th.bing.com/th/id/R.14911ae05bd97ed583f57b18376a4c6a?rik=heIG%2bZDE4HwuIQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f1%2f9%2f2%2f1086460-amazing-programmer-wallpapers-2560x1440-for-mobile-hd.jpg&ehk=VwVE8A9FjRKziwgiOZQXSrKsnuiN0jOXjsfV4uBAtlI%3d&risl=&pid=ImgRaw&r=0'} />
+
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="http://artverses.vercel.app/" />
+                <meta property="twitter:title" content="Artverse - The Ultimate Platform for Creatives" />
+                <meta property="twitter:description" content={`${newData.landingsubHeading} - Created by Artverse's Portfolio`} />
+                <meta property="twitter:image" content={(newData.landingbgImg) || 'https://th.bing.com/th/id/R.14911ae05bd97ed583f57b18376a4c6a?rik=heIG%2bZDE4HwuIQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f1%2f9%2f2%2f1086460-amazing-programmer-wallpapers-2560x1440-for-mobile-hd.jpg&ehk=VwVE8A9FjRKziwgiOZQXSrKsnuiN0jOXjsfV4uBAtlI%3d&risl=&pid=ImgRaw&r=0'}></meta>
+
+            </Head>
+            {
+                (loading) ? (
+                    <div className="explore-load">
+                        <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
                     </div>
                 ) : (
-                    <div>
-                        <h1>user not found</h1>
-                    </div>
+                    (userFound && render) ? (
+                        <div>
+                            {(theme == "basic") && <Basic user={user} data={datax} posts={posts} socials={socials} />}
+                            {(theme == "programmer") && <ProgrammerBasic user={user} data={datax} posts={posts} socials={socials} />}
+
+                        </div>
+                    ) : (
+                        <div>
+                            <h1>user not found</h1>
+                        </div>
+                    )
                 )
-            )
-        }
+            }
         </div>
     )
 }
 
 export default Username
+

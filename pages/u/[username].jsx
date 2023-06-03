@@ -11,6 +11,7 @@ function Profile() {
     var [userFound, setUserFound] = React.useState(null)
     var [userData, setUserData] = React.useState(null)
     var [itsME, setItsME] = React.useState(false)
+    var [loggedIn, setLoggedIn] = React.useState(false)
     useEffect(() => {
         if (router.query.username) {
             setUsername(router.query.username)
@@ -20,9 +21,10 @@ function Profile() {
     var session = useSession()
     useEffect(() => {
         if (session.status === 'unauthenticated') {
-
+            setLoggedIn(false)
         }
         if (session.status === 'authenticated') {
+            setLoggedIn(true)
             if (router.query.username) {
                 var getEmail = session.data.user.email
                 var getUsername = getEmail.split('@')[0]

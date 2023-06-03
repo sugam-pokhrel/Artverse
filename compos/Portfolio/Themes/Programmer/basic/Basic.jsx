@@ -10,7 +10,6 @@ function Basic({ data, posts, socials, user }) {
         } else {
             setError(true)
         }
-        console.log(data, user)
     }, [data, user])
 
 

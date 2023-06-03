@@ -5,7 +5,6 @@ import Postcard from '../../Me/PostCard'
 
 
 function Basic({ data, posts, socials, user }) {
-    console.log(socials)
     return (
         <div className="pp-portfolio">
             <Head>
