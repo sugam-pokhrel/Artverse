@@ -36,7 +36,6 @@ function Username({ newData, id, dataz }) {
     var router = useRouter()
 
     useEffect(() => {
-        console.log(newData)
     }, [])
 
     useEffect(() => {
@@ -154,15 +153,15 @@ function Username({ newData, id, dataz }) {
 
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="http://artverses.vercel.app/" />
-                <meta property="og:title" content="Artverse - The Ultimate Platform for Creatives" />
+                <meta property="og:title" content={`${newData.websiteDetailtitle} + (Artverse)`} />
                 <meta property="og:description" content={`${newData.landingsubHeading} - created by Artverse's Portfolio`} />
-                <meta property="og:image" content={(newData.landingbgImg) || 'https://th.bing.com/th/id/R.14911ae05bd97ed583f57b18376a4c6a?rik=heIG%2bZDE4HwuIQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f1%2f9%2f2%2f1086460-amazing-programmer-wallpapers-2560x1440-for-mobile-hd.jpg&ehk=VwVE8A9FjRKziwgiOZQXSrKsnuiN0jOXjsfV4uBAtlI%3d&risl=&pid=ImgRaw&r=0'} />
+                <meta property="og:image" content={(newData.landingbgImg)} />
 
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta property="twitter:url" content="http://artverses.vercel.app/" />
                 <meta property="twitter:title" content="Artverse - The Ultimate Platform for Creatives" />
                 <meta property="twitter:description" content={`${newData.landingsubHeading} - Created by Artverse's Portfolio`} />
-                <meta property="twitter:image" content={(newData.landingbgImg) || 'https://th.bing.com/th/id/R.14911ae05bd97ed583f57b18376a4c6a?rik=heIG%2bZDE4HwuIQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f1%2f9%2f2%2f1086460-amazing-programmer-wallpapers-2560x1440-for-mobile-hd.jpg&ehk=VwVE8A9FjRKziwgiOZQXSrKsnuiN0jOXjsfV4uBAtlI%3d&risl=&pid=ImgRaw&r=0'}></meta>
+                <meta property="twitter:image" content={(newData.landingbgImg)}></meta>
 
             </Head>
             {
