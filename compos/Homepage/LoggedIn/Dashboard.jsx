@@ -76,23 +76,28 @@ function Dashboard() {
         setInfoStatus(percent)
     }
     var [postLikes, setPostLikes] = React.useState(0)
+    var [postViews, setpostViews] = React.useState(0)
     var [totalPosts, setTotalPosts] = React.useState(0)
 
     function getPost(e) {
         fetch("/api/post/getpostbyEmail?email=" + e)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 var post = data?.post
                 var postLikes = 0
+                var postViews = 0
                 setTotalPosts(post.length)
-                console.log(post[0].createdBy)
+                console.log(post)
                 // get all post likes
                 for (var i = 0; i < post.length; i++) {
                     var postsL = post[i].likes
                     var plength = postsL.length
                     postLikes += plength
                     setPostLikes(postLikes)
+                    var postVs = post[i].views
+                    if (!!postVs)
+                        postViews += postVs
+                    setpostViews(postViews)
                 }
             })
     }
@@ -148,7 +153,7 @@ function Dashboard() {
                 </div>
                 <div className="ds-item">
                     <p>Post Views</p>
-                    <h1>0</h1>
+                    <h1>{postViews}</h1>
                 </div>
 
             </div>

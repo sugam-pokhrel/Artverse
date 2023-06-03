@@ -15,51 +15,58 @@ function auth() {
         )
     }
     else {
-        console.log(session.user.email)
-        const promise = databases.listDocuments('6468f10e6e9b67980c51', '646c2809265ac09c5196');
 
-        promise.then(function (response) {
-            let docs = response.documents
-            console.log(docs)
+        fetch("/api/validate?email=" + session.user.email)
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    router.push('/')
+                }
+            })
+        // const promise = databases.listDocuments('6468f10e6e9b67980c51', '646c2809265ac09c5196');
 
-            const emailToFind = session.user.email;
+        // promise.then(function (response) {
+        //     let docs = response.documents
+        //     console.log(docs)
 
-            const emailExists = docs.some(obj => obj.email === emailToFind);
+        //     const emailToFind = session.user.email;
 
-            if (emailExists) {
-                console.log("Email exists in the array");
-            } else {
-                console.log("Email does not exist in the array");
-                const promise = databases.createDocument('6468f10e6e9b67980c51', '646c2809265ac09c5196', ID.unique(), { name: session.user.name, email: session.user.email, image: session.user.image })
+        //     const emailExists = docs.some(obj => obj.email === emailToFind);
 
-                promise.then(function (response) {
+        //     if (emailExists) {
+        //         console.log("Email exists in the array");
+        //     } else {
+        //         console.log("Email does not exist in the array");
+        //         const promise = databases.createDocument('6468f10e6e9b67980c51', '646c2809265ac09c5196', ID.unique(), { name: session.user.name, email: session.user.email, image: session.user.image })
 
-                }, function (error) {
+        //         promise.then(function (response) {
 
-                });
-            }
-            router.push('/')
+        //         }, function (error) {
 
-            // let isUser=false;
-            // docs.map(doc=>{
-            //     if(session.user.email==doc.email){
-            //         isUser=true
+        //         });
+        //     }
+        // router.push('/')
+
+        // let isUser=false;
+        // docs.map(doc=>{
+        //     if(session.user.email==doc.email){
+        //         isUser=true
 
 
-            //     }
+        //     }
 
-            // console.log(isUser)    
+        // console.log(isUser)    
 
-            //         if(!isUser){
-            //              const promise = databases.createDocument('6468f10e6e9b67980c51', '6468f11ef0b4d9ad1d9e',  ID.unique(), {name:session.user.name,email:session.user.email,image:session.user.image});
-            //             promise.then(function (response) {
-            //     console.log(response); // Success
-            // }, function (error) {
-            //     console.log(error); // Failure
-            // });
+        //         if(!isUser){
+        //              const promise = databases.createDocument('6468f10e6e9b67980c51', '6468f11ef0b4d9ad1d9e',  ID.unique(), {name:session.user.name,email:session.user.email,image:session.user.image});
+        //             promise.then(function (response) {
+        //     console.log(response); // Success
+        // }, function (error) {
+        //     console.log(error); // Failure
+        // });
 
-            //         } 
-        })
+        //         } 
+        // })
 
         // }, function (error) {
         //     console.log(error); // Failure

@@ -20,6 +20,7 @@ function Home({ post, user }) {
   useEffect(() => {
     if (session) {
       setAuth(true);
+      checkifSelfposted()
     } else {
       setAuth(false);
     }
@@ -98,7 +99,6 @@ function Home({ post, user }) {
           }
         })
         .then((data) => {
-          console.log(data);
           setLiked(!liked);
           setLikeStatus(liked ? 'Like' : 'Unlike');
           setLikeLoading(false);
@@ -149,13 +149,13 @@ function Home({ post, user }) {
   }
   var [selfposted, setSelfposted] = useState(false)
   function checkifSelfposted() {
-    if (auth) {
-      if (post.createdBy === session.user.email) {
-        setSelfposted(true)
-      } else {
-        setSelfposted(false)
-      }
+
+    if (post.createdBy === session.user.email) {
+      setSelfposted(true)
+    } else {
+      setSelfposted(false)
     }
+
   }
   function navtouser() {
     // get username from email
@@ -165,8 +165,34 @@ function Home({ post, user }) {
 
   useEffect(() => {
     getPost()
-    checkifSelfposted()
   }, [])
+
+  function followuser() {
+    setIsFollowed(!isFollowed); var url = "/api/follow/" + post.createdBy;
+    if (auth) {
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likedby: session.user.email }), // Pass session email in the request body
+      })
+        .then((res) => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+
+            return res.json();
+          } else {
+            return 0;
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          setIsFollowed(!isFollowed);
+        }
+        )
+    }
+  }
 
   return (
     <div className='explorePost'>
@@ -175,28 +201,10 @@ function Home({ post, user }) {
           <img src={user?.image} alt="" referrerPolicy='no-referrer' />
           <div className="ep-u-data">
             <p>{post.title}</p>
-            {(auth) && <div><span className='ep-username' onClick={navtouser}>{user?.name}</span>  {(!selfposted) && <span onClick={() => {
-              setIsFollowed(!isFollowed); var url = "/api/follow/" + post.createdBy;
-              if (auth) {
-                fetch(url, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ likedby: session.user.email }), // Pass session email in the request body
-                })
-                  .then((res) => {
-                    const contentType = res.headers.get('content-type');
-                    if (contentType && contentType.includes('application/json')) {
-
-                      return res.json();
-                    } else {
-                      return 0;
-                    }
-                  })
-
-              }
-            }}>. {isFollowed ? 'Unfollow' : 'Follow'}   </span>}</div>}
+            {(auth) && <div>
+              <span className='ep-username' onClick={navtouser}>{user?.name}</span>
+              {(!selfposted) && <span onClick={() => { followuser() }}>. {isFollowed ? 'Unfollow' : 'Follow'}   </span>}
+            </div>}
             {(!auth) && <div><span className='ep-username' onClick={navtouser}>{user?.name}</span> <span onClick={() => { router.push("/login") }}>. Login to Follow   </span></div>}
 
           </div>

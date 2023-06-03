@@ -53,6 +53,7 @@ function Portfolio() {
     var [pTheme, setPTheme] = React.useState("")
     var [createdDate, setCreatedDate] = React.useState("")
     var [updatedDate, setUpdatedDate] = React.useState("")
+    var [portfolioVisited, setPortfolioVisited] = React.useState(0)
 
     function getDate(a, b) {
         dayjs.extend(relativeTime)
@@ -67,6 +68,7 @@ function Portfolio() {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                setPortfolioVisited(data.views)
                 getifPFecist()
                 getDate(data.$createdAt, data.$updatedAt)
                 if (data) {
@@ -176,12 +178,12 @@ function Portfolio() {
                                     <p>{createdDate}</p>
                                 </div>
                                 <div className="cc-det-item">
-                                    <h3>Last Updated</h3>
+                                    <h3>Last time portfolio visited</h3>
                                     <p>{updatedDate}</p>
                                 </div>
                                 <div className="cc-det-item">
                                     <h3>Portfolio Visited</h3>
-                                    <p>25</p>
+                                    <p>{portfolioVisited}</p>
                                 </div>
 
                             </div>
