@@ -104,7 +104,6 @@ function Username() {
                 };
 
                 setData(updatedWebsiteDets);
-                console.log(data)
             })
         setLoading(false)
         setRender(true)
