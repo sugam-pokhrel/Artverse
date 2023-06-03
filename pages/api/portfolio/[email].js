@@ -3,6 +3,7 @@ import { ID } from 'appwrite';
 export default async function handler(req, res) {
 
     //doesnt requre authentication for this
+
     const promise = await databases.listDocuments('6468f10e6e9b67980c51', "6476a30f14f33a95d2a0");
 
     const userEmail =req.query.email
@@ -32,6 +33,11 @@ export default async function handler(req, res) {
 
 
                 if(user[0]){
+                     let updatedObj={...user[0],views:user[0].views+1}
+           delete updatedObj['$collectionId'];
+                delete updatedObj['$databaseId'];
+                    const update = databases.updateDocument('6468f10e6e9b67980c51', "6476a30f14f33a95d2a0", user[0].$id,{...updatedObj});
+
                     return res.send(user[0])
                 
                 }
