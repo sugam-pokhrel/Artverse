@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Login from '../../compos/Login/Login';
 import { data } from 'autoprefixer';
 import Preview from '../../compos/Portfolio/Preview';
+import { useAmp } from 'next/amp';
 
 
 
@@ -15,6 +16,7 @@ function Thems() {
   const [prot, setport] = useState(true)
   const [userData, setUserData] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+  var [username, setUsername] = React.useState('');
 
   useEffect(() => {
     async function fetchingData() {
@@ -123,7 +125,9 @@ function Thems() {
         .then(data => {
           setUserData(data.user[0]);
           checkInfostatus(data.user[0]);
-          console.log(userData)
+          var email = data.user[0].email;
+          var uname = email.split('@')[0];
+          setUsername(uname);
           setLoading(false);
           if (!prot) {
             fetchInfos(data.user[0]);
@@ -160,7 +164,6 @@ function Thems() {
               };
 
               setWebsiteDets(updatedWebsiteDets);
-              console.log(websiteDets)
 
 
             })
@@ -188,6 +191,7 @@ function Thems() {
 
 
     const [infoStatus, setInfoStatus] = React.useState(0);
+    var [success, setSuccess] = React.useState(false)
 
     function checkInfostatus(data) {
       let count = 0;
@@ -215,6 +219,8 @@ function Thems() {
       }
     }
 
+    var [dataSaving, setDataSaving] = React.useState(false);
+
     function setWebsiteDetail(e) {
       setWebsiteDets({
         ...websiteDets,
@@ -226,13 +232,15 @@ function Thems() {
     }
 
     function addDb() {
+      var modelBtn = document.getElementById("myModel");
+      modelBtn.click();
+      setDataSaving(true);
       const array = ['basic', 'programmer', 'artist'];
       const isPresent = array.includes(theme[0])
       if (!isPresent) {
-        alert('please choose a proper theme')
+        alert('Please choose a proper theme')
         return
       }
-      console.log(theme[0])
       let requestBody = { email: session.data.user.email, landingbgImg: websiteDets.landing.bgImg, theme: isPresent ? theme[0] : '' }
 
       let objectsToAdd = websiteDets;
@@ -279,6 +287,8 @@ function Thems() {
         .then((data) => {
           // Handle the response data
           console.log(data);
+          // succed
+          setDataSaving(false);
         })
         .catch((error) => {
           // Handle the error
@@ -291,9 +301,14 @@ function Thems() {
     }
 
     function seePreview() {
-      addDb()
-
       router.push(router.query.theme[0] + "/preview")
+      addDb()
+    }
+    function copyLink() {
+      // copy the entire link to clipboard
+      var website = window.location.href;
+      navigator.clipboard.writeText(website);
+      alert('Link has been copied to clipboard')
     }
 
     return (
@@ -443,7 +458,40 @@ function Thems() {
               </button>
             </div>
           </div>
+          {/* model */}
+          {/* The button to open modal */}
+          {/* The button to open modal */}
+          <label id='myModel' htmlFor="my_modal_6" className="btn modelBtn">open modal</label>
+
+          {/* Put this part before </body> tag */}
+          <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+          <div className="modal">
+
+            <div className="modal-box">
+              {(dataSaving) ? <h3 className="font-bold text-lg">Saving The Data to Database!</h3>
+                : <h3 className="font-bold text-lg">Data has been Saved!</h3>
+              }
+              {(dataSaving) ? <div className="explore-load">
+                <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
+                <p className="py-4">Saving data may sake some times...</p>
+
+              </div> : <div className="">
+                <p className="py-4">Your Portfolio is Saved and ready to be shared. Try Sharing it to your social media and gain some engagements.</p>
+                <div className="pd-btns">
+                  <button onClick={() => { router.push("/portfolio/" + username) }} className="btn btn-warning">
+                    Visit
+                  </button>
+                  <button className='btn btn-secondary' onClick={copyLink}>Share</button>
+
+                  <label htmlFor="my_modal_6" className="btn">Close!</label>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+
         </div>}
+
         {preview && <Preview data={websiteDets} user={userData} theme={router.query.theme[0]} />}
       </div>
     )

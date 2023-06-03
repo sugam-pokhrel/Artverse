@@ -37,21 +37,19 @@ function PostId() {
             });
     }
 
-    if (session) {
-        return (
-            <>
-                {loading ? (
-                    <div className="explore-load">
-                        <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
-                    </div>
-                ) : (
-                    <Home user={userData} post={postData} />
-                )}
-            </>
-        );
-    } else {
-        return <Login />;
-    }
+
+    return (
+        <>
+            {loading ? (
+                <div className="explore-load">
+                    <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
+                </div>
+            ) : (
+                <Home user={userData} post={postData} />
+            )}
+        </>
+    );
+
 }
 
 export default PostId;

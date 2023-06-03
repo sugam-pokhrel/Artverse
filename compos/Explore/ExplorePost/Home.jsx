@@ -15,7 +15,7 @@ function Home({ post, user }) {
   const [liked, setLiked] = React.useState(false);
   const [likeLoading, setLikeLoading] = React.useState(true);
   const [likeStatus, setLikeStatus] = React.useState('Like');
-   const [isFollowed, setIsFollowed] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
 
   useEffect(() => {
     if (session) {
@@ -28,7 +28,7 @@ function Home({ post, user }) {
 
 
   useEffect(() => {
-    
+
     var url = "/api/follow/" + post.createdBy;
     // declare the data fetching function
     const fetchData = async () => {
@@ -43,7 +43,7 @@ function Home({ post, user }) {
       } else {
         console.log("The email does not exist in the object.");
       }
-   
+
     }
 
     // call the function
@@ -75,7 +75,7 @@ function Home({ post, user }) {
         console.error('An error occurred while checking if the post is liked:', error);
       });
   }
-  
+
 
   function likePost() {
     setLikeLoading(true);
@@ -149,10 +149,12 @@ function Home({ post, user }) {
   }
   var [selfposted, setSelfposted] = useState(false)
   function checkifSelfposted() {
-    if (post.createdBy === session.user.email) {
-      setSelfposted(true)
-    } else {
-      setSelfposted(false)
+    if (auth) {
+      if (post.createdBy === session.user.email) {
+        setSelfposted(true)
+      } else {
+        setSelfposted(false)
+      }
     }
   }
   function navtouser() {
@@ -173,29 +175,33 @@ function Home({ post, user }) {
           <img src={user?.image} alt="" referrerPolicy='no-referrer' />
           <div className="ep-u-data">
             <p>{post.title}</p>
-            <div><span className='ep-username' onClick={navtouser}>{user?.name}</span>  {(!selfposted) && <span onClick={()=>{setIsFollowed(!isFollowed);var url = "/api/follow/" + post.createdBy;
-    if (auth) {
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ likedby: session.user.email }), // Pass session email in the request body
-      })
-        .then((res) => {
-          const contentType = res.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-           
-            return res.json();
-          } else {
-            return 0;
-          }
-        })
+            {(auth) && <div><span className='ep-username' onClick={navtouser}>{user?.name}</span>  {(!selfposted) && <span onClick={() => {
+              setIsFollowed(!isFollowed); var url = "/api/follow/" + post.createdBy;
+              if (auth) {
+                fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ likedby: session.user.email }), // Pass session email in the request body
+                })
+                  .then((res) => {
+                    const contentType = res.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
 
-    }}}>. {isFollowed?'Unfollow':'Follow'}   </span>}</div>
+                      return res.json();
+                    } else {
+                      return 0;
+                    }
+                  })
+
+              }
+            }}>. {isFollowed ? 'Unfollow' : 'Follow'}   </span>}</div>}
+            {(!auth) && <div><span className='ep-username' onClick={navtouser}>{user?.name}</span> <span onClick={() => { router.push("/login") }}>. Login to Follow   </span></div>}
+
           </div>
         </div>
-        <div className="ep-u-actions flex gap-5">
+        {(auth) && <div className="ep-u-actions flex gap-5">
           {!likeLoading ? (
             <div className="btn btn-primary" onClick={likePost}>
               {liked ? <AiFillHeart size={22} /> : <AiOutlineHeart size={22} />}
@@ -216,8 +222,13 @@ function Home({ post, user }) {
             <AiOutlineDelete size={22} />
             Delete
           </div>}
-
+        </div>}
+        {(!auth) && <div className="ep-u-actions flex gap-5">
+          <div className="btn btn-primary" onClick={() => { router.push("/login") }}>
+            Login to Like and Save
+          </div>
         </div>
+        }
       </div>
       <div className="ep-img">
         <img src={post.image} alt="" />
