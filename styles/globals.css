@@ -1884,4 +1884,34 @@
         width: 100%;
     }
 
+    .cc-det {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .cc-det-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cc-det-item p,
+    .cc-det-item a {
+        /* make sure it doesnt go beyond parent
+         */
+        word-break: break-all;
+
+    }
+
+    .cc-item-site {
+        width: 100%;
+    }
+
+    .cc-det-site {
+        width: 100%;
+    }
+
+    .cc-wrapper {
+        padding: 0;
+    }
+
 }

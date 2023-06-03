@@ -129,6 +129,9 @@ function Portfolio() {
         // round off
         percent = Math.round(percent)
         setInfoStatus(percent)
+        if (percent !== 100) {
+            router.push('/profile')
+        }
     }
     return (
         <div className='create-portfolio'>
@@ -171,7 +174,7 @@ function Portfolio() {
                                 </div>
                                 <div className="cc-det-item">
                                     <h3>Portfolio Link</h3>
-                                    <a href={`https://artverse.vercel.app/portfolio/${userName}`} target='_blank'>https://artverse.vercel.app/portfolio/{userName}</a>
+                                    <a href={`https://artverses.vercel.app/portfolio/${userName}`} target='_blank'>https://artverse.vercel.app/portfolio/{userName}</a>
                                 </div>
                                 <div className="cc-det-item">
                                     <h3>Created</h3>
