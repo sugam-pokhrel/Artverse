@@ -21,7 +21,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   }
 
   return (
-    <html data-theme="cupcake">
+    <html data-theme="dark">
       <SessionProvider session={session}>
 
         <Navbar />
