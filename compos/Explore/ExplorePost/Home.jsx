@@ -3,6 +3,7 @@ import { AiOutlineHeart, AiFillHeart, AiOutlineLoading3Quarters, AiOutlineDelete
 import { FaRegSave } from 'react-icons/fa';
 import Thoughts from './Thoughts';
 import AddThought from './AddThought';
+import { databases } from '../../../appwrite';
 import { useSession } from 'next-auth/react';
 import Explorecard from '../Explorecard';
 import ExploreUser from '../ExploreUser';
