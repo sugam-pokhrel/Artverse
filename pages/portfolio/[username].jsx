@@ -170,7 +170,7 @@ function Username({ newData, id, dataz, uname }) {
 
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={"http://artverses.vercel.app/portfolio/" + uname} />
-                <meta property="og:title" content={`${newData.websiteDetailtitle} + (Artverse)`} />
+                <meta property="og:title" content={`${newData.websiteDetailtitle} (Artverse)`} />
                 <meta property="og:description" content={`${newData.landingsubHeading} - created by Artverse's Portfolio`} />
                 <meta property="og:image" content={(newData.landingbgImg)} />
 
