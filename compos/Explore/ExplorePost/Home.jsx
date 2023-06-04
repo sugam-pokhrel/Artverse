@@ -194,15 +194,14 @@ function Home({ post, user }) {
         )
     }
   }
-  function deleteOne(){
+  function deleteOne() {
     const promise = databases.deleteDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', post.$id);
-
-promise.then(function (response) {
-    console.log(response); // Success
+    promise.then(function (response) {
+      console.log(response); // Success
       router.push('/explore');
-}, function (error) {
-    console.log(error); // Failure
-});
+    }, function (error) {
+      console.log(error); // Failure
+    });
   }
 
   return (
@@ -237,8 +236,8 @@ promise.then(function (response) {
             Save
           </div>
 
-          {(selfposted) && <div className="btn bg-red-800">
-            <AiOutlineDelete onClick={deleteOne} size={22} />
+          {(selfposted) && <div className="btn bg-red-800" onClick={deleteOne}>
+            <AiOutlineDelete size={22} />
             Delete
           </div>}
         </div>}
