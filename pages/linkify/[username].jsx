@@ -42,14 +42,14 @@ function Linkify() {
 
                 <meta property="og:title" content="Linkify - Share Links" />
                 <meta property="og:description" content="Share your links with Linkify" />
-                <meta property="og:image" content="https://i.ibb.co/M8DJntr/image.png" />
+                <meta property="og:image" content="https://i.ibb.co/PxDPLp5/image.png" />
                 <meta property="og:url" content="https://artverse.vercel.app/" />
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="Artverse" />
 
                 <meta name="twitter:title" content="Linkify - Share Links" />
                 <meta name="twitter:description" content="Share your links with Linkify" />
-                <meta name="twitter:image" content="https://i.ibb.co/M8DJntr/image.png" />
+                <meta name="twitter:image" content="https://i.ibb.co/PxDPLp5/image.png" />
                 <meta name="twitter:card" content="summary_large_image" />
 
                 <meta name="theme-color" content="#000000" />
