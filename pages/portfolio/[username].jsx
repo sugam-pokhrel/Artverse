@@ -13,6 +13,7 @@ export async function getServerSideProps(context) {
     var dataz = null
     var newData = null
     var uname = null
+    var bgImg = null
     try {
         dataz = await context.query.username + "@gmail.com"
         uname = await context.query.username
@@ -20,6 +21,11 @@ export async function getServerSideProps(context) {
             .then(res => res.json())
             .then(data => {
                 newData = data
+                if (!!data.landingbgImg) {
+                    bgImg = data.landingbgImg
+                } else {
+                    bgImg = 'https://th.bing.com/th/id/R.14911ae05bd97ed583f57b18376a4c6a?rik=heIG%2bZDE4HwuIQ&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f1%2f9%2f2%2f1086460-amazing-programmer-wallpapers-2560x1440-for-mobile-hd.jpg&ehk=VwVE8A9FjRKziwgiOZQXSrKsnuiN0jOXjsfV4uBAtlI%3d&risl=&pid=ImgRaw&r=0'
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -32,12 +38,13 @@ export async function getServerSideProps(context) {
             newData,
             id,
             dataz,
-            uname
+            uname,
+            bgImg
         }
     }
 }
 
-function Username({ newData, id, dataz, uname }) {
+function Username({ newData, id, dataz, uname, bgImg }) {
     var router = useRouter()
     var session = useSession()
     var [sameUser, setSameUser] = React.useState(false)
@@ -49,10 +56,7 @@ function Username({ newData, id, dataz, uname }) {
         }
     }, [session.data])
 
-    function sameUSer() {
-
-    }
-
+    console.log(newData)
     useEffect(() => {
         if (router.query.username) {
             fetchUser(router.query.username)
@@ -172,13 +176,13 @@ function Username({ newData, id, dataz, uname }) {
                 <meta property="og:url" content={"http://artverses.vercel.app/portfolio/" + uname} />
                 <meta property="og:title" content={`${newData.websiteDetailtitle} (Artverse)`} />
                 <meta property="og:description" content={`${newData.landingsubHeading} - created by Artverse's Portfolio`} />
-                <meta property="og:image" content={(newData.landingbgImg)} />
+                <meta property="og:image" content={(bgImg)} />
 
                 <meta property="twitter:card" content="summary_large_image" />
                 <meta property="twitter:url" content={"http://artverses.vercel.app/portfolio/" + uname} />
                 <meta property="twitter:title" content="Artverse - The Ultimate Platform for Creatives" />
                 <meta property="twitter:description" content={`${newData.landingsubHeading} - Created by Artverse's Portfolio`} />
-                <meta property="twitter:image" content={(newData.landingbgImg)}></meta>
+                <meta property="twitter:image" content={(bgImg)}></meta>
 
             </Head>
             {sameUser && <div className="ph-howdy">
