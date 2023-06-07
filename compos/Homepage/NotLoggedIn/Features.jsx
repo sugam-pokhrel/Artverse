@@ -15,15 +15,15 @@ function Features() {
         >
             <h1 className="mb-8 text-center text-3xl font-bold text ">Features of Artverse :</h1>
 
-            <ul className="grid place-content-center sm:grid-cols-2 gap-8">
-                <li className="flex">
+            <ul className="grid place-content-center items-center w-full sm:grid-cols-2 gap-8">
+                <li className="flex items-center justify-center">
                     <div className="px-4 text-5xl font-extralight text ">01.</div>
                     <div>
                         <div className="text-xl font-bold text ">Portfolio</div>
                         <p className="max-w-xs py-2 text-sm text ">User will be able to create their own portfolio site in a minute without even a single line of coding, they can choose theme based on their interest and showcase their skills and projects among the world</p>
                     </div>
                 </li>
-                <li className="flex">
+                <li className="flex items-center justify-center">
                     <div className="px-4 text-5xl font-extralight text ">02.</div>
                     <div>
                         <div className="text-xl font-bold text ">Custom Link</div>
@@ -31,7 +31,7 @@ function Features() {
                         </p>
                     </div>
                 </li>
-                <li className="flex">
+                <li className="flex items-center justify-center">
                     <div className="px-4 text-5xl font-extralight text ">03.</div>
                     <div>
                         <div className="text-xl font-bold text ">Show Their Project</div>
@@ -39,7 +39,7 @@ function Features() {
                         </p>
                     </div>
                 </li>
-                <li className="flex">
+                <li className="flex items-center justify-center">
                     <div className="px-4 text-5xl font-extralight text ">04.</div>
                     <div>
                         <div className="text-xl font-bold text ">Grow</div>
@@ -47,7 +47,7 @@ function Features() {
                         </p>
                     </div>
                 </li>
-                <li className="flex">
+                <li className="flex items-center justify-center">
                     <div className="px-4 text-5xl font-extralight text ">05.</div>
                     <div>
                         <div className="text-xl font-bold text ">Skill matters</div>

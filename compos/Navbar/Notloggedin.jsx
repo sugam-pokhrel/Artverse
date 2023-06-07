@@ -10,7 +10,7 @@ function Notloggedin() {
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
-                    <li><Link href={"/"}>Home</Link></li>
+                    <li><Link href={"/talents"}>Talents</Link></li>
                     <li><Link href={"/explore"}>Explore</Link></li>
                 </ul>
                 <button className='btn btn-primary' onClick={signIn}>Login</button>

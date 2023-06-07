@@ -4,7 +4,11 @@
 
 
 .landing {
-    background-color: #161c3f;
+    background-image: url('https://i.ibb.co/PCtrDyf/image.png');
+}
+
+.platform {
+    background-color: #212529;
 }
 
 .upload {
@@ -57,7 +61,6 @@
 
 .Explore {
     min-height: 100vh;
-    padding: 18px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -80,6 +83,20 @@
     gap: 10px;
     width: 50%;
     height: 100%;
+}
+
+.exp-home {
+    background-image: url('https://getwallpapers.com/wallpaper/full/8/a/a/6122.jpg');
+    min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 * {
@@ -1774,10 +1791,153 @@
     display: none;
 }
 
+.tc-name p:nth-child(1) {
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+}
 
+.tc-name p:nth-child(1):hover {
+    /* underline */
+    text-decoration: underline;
+    color: #6da7ff;
+}
 
+.tc-name p:nth-child(1)::first-letter {
+    text-transform: uppercase;
+}
+
+.talent-cards {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    width: 100%;
+}
+
+.talent-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    width: 100%;
+    background-color: #1c1c1c46;
+    border-radius: 20px;
+}
+
+.tc-data {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.tc-data img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.tc-fc {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.search {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+}
+
+.searchIndex {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.sc-user {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    background-color: #1c1c1c46;
+    border-radius: 20px;
+    /* max-width: 600px; */
+}
+
+.post-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    background-color: #1c1c1c46;
+    border-radius: 20px;
+}
+
+.post-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.post-card-img img {
+    max-width: 250px;
+}
+
+.pi-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.pi-top p span:hover {
+    color: #b15115 !important;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.pi-top p {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.pi-top img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.post-card-title h1:hover {
+    color: #1575b1 !important;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+}
 
 @media only screen and (max-width:680px) {
+
     .upload-btn {
         display: none;
     }
@@ -1965,4 +2125,22 @@
         font-size: 40px;
     }
 
+    .talent-cards {
+        padding: 0;
+    }
+
+    .talent-card {
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    .tc-data {
+        align-items: center;
+        padding: 0;
+        width: 100%;
+    }
+
+    .tc-fc {
+        width: 100%;
+    }
 }

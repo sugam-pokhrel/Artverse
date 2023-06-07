@@ -19,7 +19,7 @@ function Platform() {
         return () => clearTimeout(intervalId);
     }, []);
     return (
-        <motion.div className="hero min-h-screen bg-base-200"
+        <motion.div className="hero min-h-screen bg-base-200 platform"
             ref={ref}
             initial={{ opacity: 0 }}
             animate={{ opacity: (inView) ? 1 : 0 }}

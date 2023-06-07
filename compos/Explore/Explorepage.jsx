@@ -21,8 +21,8 @@ function Explorepage() {
         getPosts()
     }, [])
     return (
-        <div className='flex flex-col gap-5'>
-            <h2 className='text sm:text-2xl text-xl'>Recently Posted Creativities</h2>
+        <div className='flex flex-col gap-5 p-10'>
+            <h2 className='text font-bold sm:text-3xl text-xl'>Recently Posted Creativities</h2>
             {loading ? (
                 <div className="explore-load">
                     <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />

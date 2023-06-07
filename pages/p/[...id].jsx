@@ -3,6 +3,7 @@ import Home from '../../compos/Explore/ExplorePost/Home';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Login from '../../compos/Login/Login';
+import Head from 'next/head';
 
 function PostId() {
     const { data: session } = useSession();
@@ -40,6 +41,22 @@ function PostId() {
 
     return (
         <>
+            <Head>
+                <title>{postData.title} | ArtVerse</title>
+                <meta name="description" content={postData.description} />
+
+                <meta property="og:title" content={postData.title} />
+                <meta property="og:description" content={postData.description} />
+                <meta property="og:image" content={postData.thumbnail} />
+                <meta property="og:url" content={"https://artverse.vercel.app/p/" + postData._id} />
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content="Artverse" />
+
+                <meta name="twitter:title" content={postData.title} />
+                <meta name="twitter:description" content={postData.description} />
+                <meta name="twitter:image" content={postData.thumbnail} />
+                <meta name="twitter:card" content="summary_large_image" />
+            </Head>
             {loading ? (
                 <div className="explore-load">
                     <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />

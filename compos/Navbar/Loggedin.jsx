@@ -34,8 +34,8 @@ function Loggedin() {
                     </div>
                 </div> */}
                 <ul className="menu menu-horizontal px-1">
-                    <li><Link href={"/"}>Home</Link></li>
                     <li><Link href={"/explore"}>Explore</Link></li>
+                    <li><Link href={"/talents"}>Talents</Link></li>
                 </ul>
 
                 <div className="dropdown dropdown-end">

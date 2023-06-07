@@ -114,18 +114,15 @@ function Home({ user }) {
     fetch("/api/post/getpostbyEmail?email=" + user?.email)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         var post = data?.post
         var revpost = [...post].reverse()
         setPosts(revpost)
         var postLikes = 0
-        console.log(post[0].createdBy)
         // get all post likes
         for (var i = 0; i < post.length; i++) {
           var postsL = post[i].likes
           var plength = postsL.length
           postLikes += plength
-          console.log(postLikes);
           setPostLikes(postLikes)
         }
       })
