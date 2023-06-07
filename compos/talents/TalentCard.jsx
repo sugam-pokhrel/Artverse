@@ -1,16 +1,78 @@
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Login from '../Login/Login';
 
 function TalentCard({ data }) {
+
+
+    const [isFollowed, setIsFollowed] = useState(false);
     var [auth, setAuth] = useState(false)
+
+   
     var session = useSession()
+    if(!session){
+        return <Login />
+    }
     var router = useRouter()
     useEffect(() => {
         if (session.status === 'authenticated') {
             setAuth(true)
         }
     }, [session])
+      useEffect(() => {
+
+    var url = "/api/follow/" + data?.email;
+    // declare the data fetching function
+    const fetchData = async () => {
+      const data = await fetch(url);
+      const json = await data.json();
+      console.log(json)
+      const emailExists = json.follow.includes(session.data.user.email);
+
+      if (emailExists) {
+        console.log("The email exists in the object.");
+        setIsFollowed(true)
+      } else {
+        console.log("The email does not exist in the object.");
+      }
+
+    }
+
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error);
+  }, [])
+console.log(session.data.user.email)
+
+  function followuser() {
+    setIsFollowed(!isFollowed); var url = "/api/follow/" + data.email;
+    if (auth) {
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likedby: session.data.user.email }), // Pass session email in the request body
+      })
+        .then((res) => {
+          const contentType = res.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+
+            return res.json();
+          } else {
+            return 0;
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          setIsFollowed(!isFollowed);
+        }
+        )
+    }
+  }
+
 
     var [length, setLength] = useState(0)
     function getPosts() {
@@ -44,7 +106,7 @@ function TalentCard({ data }) {
                 </div>
             </div>
             <div className="tc-fc">
-                {(auth) && <div className="fc-btn btn btn-primary">Follow</div>}
+                {(auth) && <div className="fc-btn btn btn-primary" onClick={followuser}>{isFollowed ? 'Unfollow' : 'Follow'} </div>}
                 <div className="fc-btn btn btn-warning" onClick={navtouser}>Visit Profile</div>
             </div>
         </div>
