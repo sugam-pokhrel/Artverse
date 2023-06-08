@@ -3,9 +3,18 @@ import Explorepage from '../compos/Explore/Explorepage'
 import ExploreNav from '../compos/Explore/ExploreNav'
 import Head from 'next/head'
 import Home from '../compos/Explore/Home'
+import { useSession } from 'next-auth/react'
+import Index from '../compos/Explore/loggedIn/Index'
 
 function explore() {
     const [data, setData] = useState([])
+    var [auth, setAuth] = useState(false)
+    var session = useSession()
+    useEffect(() => {
+        if (session.status === 'authenticated') {
+            setAuth(true)
+        }
+    }, [session])
     function getPosts() {
         fetch("/api/post")
             .then(res => res.json())
@@ -24,6 +33,7 @@ function explore() {
                 <meta name="description" content="Explore ArtVerse, see the letest projects that has been uploaded to artverse Recently" />
             </Head>
             <Home />
+            {auth && <Index />}
             <Explorepage />
         </div>
     )

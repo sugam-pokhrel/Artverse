@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { useRouter } from 'next/router'
+import { AiOutlineEye } from 'react-icons/ai'
+import { FiThumbsUp } from 'react-icons/fi'
 
 function Explorecard({ post }) {
     var [user, setUser] = useState({})
@@ -53,6 +55,15 @@ function Explorecard({ post }) {
                     </div>
                 </div>
             }
+            <div className="exp-hover">
+                <div className="exp-hover-title">
+                    <h1 className='text sm:text-2xl text-xl'>{post.title}</h1>
+                </div>
+                <div className="pi-top">
+                    <p><AiOutlineEye /> . {post.views}</p>
+                    <p><FiThumbsUp /> . {post?.likes?.length}</p>
+                </div>
+            </div>
         </div>
 
     )

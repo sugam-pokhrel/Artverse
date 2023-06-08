@@ -7,6 +7,9 @@ import Features from '../compos/Homepage/NotLoggedIn/Features'
 import { useEffect, useState } from "react";
 import { useSession } from 'next-auth/react'
 import Dashboard from '../compos/Homepage/LoggedIn/Dashboard'
+import ExpHome from '../compos/Explore/Home'
+import Index from '../compos/Explore/loggedIn/Index'
+import Explorepage from '../compos/Explore/Explorepage'
 
 
 export default function Home() {
@@ -54,7 +57,9 @@ export default function Home() {
         <Footer />
       </div>}
       {(authenticated && !loading) && <div>
-        <Dashboard />
+        {/* <ExpHome /> */}
+        {authenticated && <Index />}
+        <Explorepage />
       </div>}
       {loading && <div className='explore-load'>
         <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />

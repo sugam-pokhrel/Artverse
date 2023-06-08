@@ -9,12 +9,12 @@ function Dashboard() {
     const [prot, setport] = useState(false)
     var router = useRouter()
     var [userData, setUserData] = React.useState(null)
+    var [loading, setLoading] = React.useState(true)
     let sessiontest = prot ? 'Edit your' : 'Create a';
 
 
     useEffect(() => {
         if (session.status === 'authenticated') {
-
         }
         if (session.status === 'unasuthenticated') {
             router.push('/login')
@@ -85,6 +85,7 @@ function Dashboard() {
                 var postLikes = 0
                 var postViews = 0
                 setTotalPosts(post.length)
+                setLoading(false)
 
                 // get all post likes
                 for (var i = 0; i < post.length; i++) {
@@ -100,65 +101,65 @@ function Dashboard() {
             })
     }
     return (
-        <div className='dashboard'>
-            <h1>Hello {session?.data?.user.name} </h1>
-            <div className="dashboard__info">
-                <div className="radial-progress bg-primary text-primary-content border-4 border-primary" style={{ "--value": infoStatus }}>{infoStatus}%</div>
-                <div className="dashboard__info__text">
-                    {infoStatus === 100 ? <h2 className='text p-2 text-green-200'>Profile Completed and you are eligible to create a portfolio</h2> : <h2>Complete your profile to create a portfolio and also other exclusive features</h2>}
-                    <div className="dash-btns">
-                        {(infoStatus === 100) && <button className='btn btn-secondary' onClick={() => router.push("/create/portfolio")}>{sessiontest} Portfolio</button>}
-                        {(infoStatus === 100) && <button className='btn btn-primary' onClick={() => router.push("/profile/edit")}>Edit Profile</button>}
-                        {(infoStatus !== 100) && <button className='btn bg-green-400 text-white' onClick={() => router.push("/profile/edit")}>Complete Profile</button>}
-
+        <ds-wrap>
+            {(!loading) && <div className='dashboard'>
+                <h1>Hello {session?.data?.user.name} </h1>
+                <div className="dashboard__info">
+                    <div className="radial-progress bg-primary text-primary-content border-4 border-primary" style={{ "--value": infoStatus }}>{infoStatus}%</div>
+                    <div className="dashboard__info__text">
+                        {infoStatus === 100 ? <h2 className='text p-2 text-green-200'>Profile Completed and you are eligible to create a portfolio</h2> : <h2>Complete your profile to create a portfolio and also other exclusive features</h2>}
+                        <div className="dash-btns">
+                            {(infoStatus === 100) && <button className='btn btn-secondary' onClick={() => router.push("/create/portfolio")}>{sessiontest} Portfolio</button>}
+                            {(infoStatus === 100) && <button className='btn btn-primary' onClick={() => router.push("/profile/edit")}>Edit Profile</button>}
+                            {(infoStatus !== 100) && <button className='btn bg-green-400 text-white' onClick={() => router.push("/profile/edit")}>Complete Profile</button>}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <h1>Create</h1>
-            <div className="dash-create">
-                {(infoStatus === 100) && <div className="dc-item" onClick={() => router.push("/create/portfolio")}>
-                    <h2 className='text text-secondary font-bold text-3xl '>Portfolio</h2>
-                    {(!prot) ? <h1>+</h1> : <div className='dc-svg'><FiEdit /></div>}
-
-                    {(!prot) ? <p>Create a stunnishing portfolio in a minute with zero code experience</p>
-                        :
-                        <p>You have already created a portfolio. Update your portfolio</p>}
-                </div>}
-                <div className="dc-item" onClick={() => router.push("/upload")}>
-                    <h2 className='text text-secondary font-bold text-3xl' >Post</h2>
-                    <h1>+</h1>
-                    <p>Show your projects to the world, post one now</p>
+                <h1>Create</h1>
+                <div className="dash-create">
+                    {(infoStatus === 100) && <div className="dc-item" onClick={() => router.push("/create/portfolio")}>
+                        <h2 className='text text-secondary font-bold text-3xl '>Portfolio</h2>
+                        {(!prot) ? <h1>+</h1> : <div className='dc-svg'><FiEdit /></div>}
+                        {(!prot) ? <p>Create a stunnishing portfolio in a minute with zero code experience</p>
+                            :
+                            <p>You have already created a portfolio. Update your portfolio</p>}
+                    </div>}
+                    <div className="dc-item" onClick={() => router.push("/upload")}>
+                        <h2 className='text text-secondary font-bold text-3xl' >Post</h2>
+                        <h1>+</h1>
+                        <p>Show your projects to the world, post one now</p>
+                    </div>
+                    <div className="dc-item" onClick={() => router.push("/create/linkify")}>
+                        <h2 className='text text-secondary font-bold text-3xl ' >Linkify</h2>
+                        <h1>+</h1>
+                        <p>Got many social medias? Share all social media links under one link with Linkify</p>
+                    </div>
                 </div>
-                <div className="dc-item" onClick={() => router.push("/create/linkify")}>
-                    <h2 className='text text-secondary font-bold text-3xl ' >Linkify</h2>
-                    <h1>+</h1>
-                    <p>Got many social medias? Share all social media links under one link with Linkify</p>
+                <h1>Account Stats</h1>
+                <div className="dash-stats">
+                    <div className="ds-item">
+                        <p>Total Followers</p>
+                        {userData && <h1>{userData.followers.length}</h1>}
+                    </div>
+                    <div className="ds-item">
+                        <p>Total Posts</p>
+                        <h1>{totalPosts}</h1>
+                    </div>
+                    <div className="ds-item">
+                        <p>Total post Likes</p>
+                        <h1>{postLikes}</h1>
+                    </div>
+                    <div className="ds-item">
+                        <p>Post Views</p>
+                        <h1>{postViews}</h1>
+                    </div>
                 </div>
-            </div>
-            <h1>Account Stats</h1>
-            <div className="dash-stats">
-                <div className="ds-item">
-                    <p>Total Followers</p>
-                    {userData && <h1>{userData.followers.length}</h1>}
-                </div>
-                <div className="ds-item">
-                    <p>Total Posts</p>
-                    <h1>{totalPosts}</h1>
-                </div>
-                <div className="ds-item">
-                    <p>Total post Likes</p>
-                    <h1>{postLikes}</h1>
-                </div>
-                <div className="ds-item">
-                    <p>Post Views</p>
-                    <h1>{postViews}</h1>
-                </div>
-
-            </div>
-
-
-
-        </div>
+            </div>}
+            {(loading) && <div className="loading">
+                <div className="lds-ripple"><div></div><div></div></div>
+                <p className='text sm:text-2xl text-xl'> Please Wait while We set Dashboard for you.</p>
+            </div>}
+        </ds-wrap>
     )
 }
 

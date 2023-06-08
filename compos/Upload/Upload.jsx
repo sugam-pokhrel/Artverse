@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { storage, databases } from '../../appwrite'
 import { ID } from 'appwrite'
+import { useRouter } from 'next/router'
 
 function Upload(props) {
     var [page, setPage] = React.useState(1)
     const [image, setImage] = React.useState(null)
     const [postData, setPostData] = useState({ title: '', desc: '' })
+    var router = useRouter()
     const textChanged = e => {
         setPostData({
             ...postData, [e.target.name]: e.target.value
@@ -24,7 +26,6 @@ function Upload(props) {
             type: selectedFile.type,
             lastModified: selectedFile.lastModified,
         });
-        console.log(modifiedFile)
 
         // check if the file is an image
         if (e.files[0].type.includes('image')) {
@@ -34,6 +35,7 @@ function Upload(props) {
             alert('Please upload an image.')
         }
     }
+    var [loading, setLoading] = React.useState(false)
 
 
 
@@ -43,7 +45,7 @@ function Upload(props) {
 
 
     const uploadImage = (e) => {
-        console.log(image)
+        setLoading(true)
         if (image) {
             e.preventDefault();
 
@@ -57,10 +59,16 @@ function Upload(props) {
                 console.log(response); // Success
                 const result = storage.getFileView('646ebfc7beadb77d8861', response.$id);
                 console.log(result)
-                const promise = databases.createDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', ID.unique(), { createdBy: props.title.email, title: postData.title, desc: postData.desc, image: result.href })
+                const promisex = databases.createDocument('646ed509771c8bf97447', '646ed512bc1b4def6d45', ID.unique(), { createdBy: props.title.email, title: postData.title, desc: postData.desc, image: result.href })
 
-                setPage(1);
-                setImage(null);
+
+                promisex.then(function (response) {
+                    router.push("/p/" + response.$id); // Success
+                }, function (error) {
+                    setLoading(false)
+                    console.log(error); // Failure
+                    alert("Your post couldn't be uploaded. Description cannot be greater than 900 words. Shortern it and try again")
+                });
             }, function (error) {
                 console.log(error); // Failure
             });
@@ -73,7 +81,7 @@ function Upload(props) {
 
     return (
         <>
-            {(page == 1) && <div className='hero h-screen flex items-center flex-col justify-center '>
+            {(!loading && page == 1) && <div className='hero h-screen flex items-center flex-col justify-center '>
                 <h2 className='text upload-title md:text-2xl text-sm font-bold py-10'> <span>1/2</span> Add a suitable thumbnail of your project.</h2>
                 <div className="flex md:w-3/5 w-11/12 h-3/5  border border-dotted">
                     <div className="flex flex-col upload hover:bg-primary ease-out duration-300" onClick={openFile}>
@@ -83,7 +91,7 @@ function Upload(props) {
                     </div>
                 </div>
             </div>}
-            {(page == 2) && <div className='hero h-screen flex items-center flex-col justify-center '>
+            {(!loading && page == 2) && <div className='hero h-screen flex items-center flex-col justify-center '>
                 <h2 className='text upload-title md:text-2xl text-xl font-bold py-10'> <span>2/2</span> Add title and Description about your project.</h2>
                 <div className="flex md:w-3/5 w-11/12 h-5/6  border border-dotted">
                     <div className="flex py-10 gap-3 flex-col upload ease-out duration-300" >
@@ -95,9 +103,12 @@ function Upload(props) {
                 </div>
             </div>
             }
-            <div className='hero h-screen flex items-center flex-col justify-center '>
-                <h2 className='text upload-title md:text-3xl text-red-300 text-sm font-bold py-10'> Some error occured while uploading, it will be fixed soon. Thanks. <span>ERRTPYE: CORS</span></h2>
-            </div>
+            {(loading) && <div className="loading">
+                <div className="lds-ripple"><div></div><div></div></div>
+                <p className='text sm:text-2xl text-xl'> Your post is being uploaded to server.</p>
+            </div>}
+
+
         </>
     )
 }
