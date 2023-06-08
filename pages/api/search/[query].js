@@ -17,8 +17,14 @@ export default async function handler(req, res) {
             // search both uppercase and lowecase
             query = query.toLowerCase()
             var title = post?.title.toLowerCase()
-            var description = post?.desc.toLowerCase()
-            return title.includes(query) || description.includes(query)
+            if (!!post?.desc) {
+
+                var description = post?.desc.toLowerCase()
+                return title.includes(query) || description.includes(query)
+            } else {
+                return title.includes(query)
+            }
+
         }
         )
         if (results) {
