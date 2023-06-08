@@ -2057,6 +2057,10 @@
     display: none;
 }
 
+.mobbar {
+    display: none;
+}
+
 @media only screen and (max-width:680px) {
     .mobMenu {
         display: none;
@@ -2069,6 +2073,13 @@
         backdrop-filter: blur(10px);
         padding: 20px;
         z-index: 99;
+    }
+
+    .mobbar {
+        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .mm-close {

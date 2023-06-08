@@ -81,12 +81,12 @@ function Loggedin() {
                     </ul>
                 </div>
 
-                {(!menuShown) && <label tabIndex={0} className="btn btn-ghost btn-circle avatar mobMenu" onClick={() => setMenuShown(!menuShown)}>
+                {(!menuShown) && <label tabIndex={0} className="btn btn-ghost btn-circle avatar mobbar" onClick={() => setMenuShown(!menuShown)}>
                     <div className="w-10 rounded-full">
                         <img src="https://cdn1.iconfinder.com/data/icons/basic-ui-elements-color/700/06_menu_stack-512.png" referrerPolicy='no-referrer' />
                     </div>
                 </label>}
-                {menuShown ? <div className="btn btn-ghost bg-red-800 btn-circle avatar mobMenu" onClick={() => setMenuShown(!menuShown)}>
+                {menuShown ? <div className="btn btn-ghost bg-red-800 btn-circle avatar flex items-center justify-center mobbar" onClick={() => setMenuShown(!menuShown)}>
                     <div className="w-8 rounded-full bg:white">
                         <img src="https://th.bing.com/th/id/R.79c96a45cf274d54cfa372d072859584?rik=Ppi9azY6ypNomw&pid=ImgRaw&r=0" referrerPolicy='no-referrer' />
                     </div>
