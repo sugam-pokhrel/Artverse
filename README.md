@@ -14,6 +14,7 @@ Artverse is a platform designed for individuals to showcase their coding skills 
    - Add the public Google ID to the `.env` file using the following format: `NEXT_PUBLIC_GOOGLE_ID="your public id"`
    - Add the secret to the `.env` file using the following format: `NEXT_PUBLIC_GOOGLE_SECRET="your secret"`
    - Save the `.env` file.
+   - we really need many themes so any developer good at creating good frontend code can write the css for themes and contribute  esaily the file can be found at compos/Themes so, cd to the above path and you start  contributing to this project
 
 5. The Artverse project has hardcoded all Appwrite APIs, so no other dependencies are required. However, to get involved in the Artverse project, you need to **create an Appwrite account**. Please contact us to get access to the Artverse project.
 
