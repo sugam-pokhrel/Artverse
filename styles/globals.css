@@ -2053,7 +2053,52 @@
     border: 3px solid #b15115;
 }
 
+.mobMenu {
+    display: none;
+}
+
 @media only screen and (max-width:680px) {
+    .mobMenu {
+        display: none;
+        position: fixed;
+        top: 60px;
+        height: 100vh;
+        width: 100vw;
+        left: 0;
+        background-color: #00000079;
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        z-index: 99;
+    }
+
+    .mm-close {
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 10px;
+    }
+
+    .mm {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        transition: all 0.5s ease-in-out;
+        animation: slideFromTop;
+    }
+
+
+    .mobMenu li {
+        background-color: #0000003c;
+        border-radius: 10px;
+    }
+
+    .menAtt {
+        display: none;
+    }
+
+    .exploreCard {
+        width: 100%;
+    }
+
     .exp-follow {
         padding: 10px;
     }
