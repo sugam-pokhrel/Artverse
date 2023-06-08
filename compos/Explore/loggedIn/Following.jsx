@@ -14,7 +14,7 @@ function Following({ user }) {
     }
     return (
         <div className='f-card' onClick={gotouser}>
-            {(!!user.image) && <img src={img} onError={() => console.log("error")} referrerPolicy='no-referrer' alt='User Image' />}
+            {(!!user.image) && <img src={img} referrerPolicy='no-referrer' alt='User Image' />}
         </div>
     )
 }

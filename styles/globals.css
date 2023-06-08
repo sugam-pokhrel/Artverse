@@ -2034,7 +2034,29 @@
 }
 
 .exp-followings::-webkit-scrollbar {
-    display: none;
+    height: 8px;
+
+}
+
+.exp-followings::-webkit-scrollbar-track {
+    background: #4d4a4a00;
+}
+
+.exp-followings::-webkit-scrollbar-thumb {
+    background: #d0d0d04d;
+    border-radius: 10px;
+}
+
+.exp-followings::-webkit-scrollbar-thumb:hover {
+    background: #b15115;
+}
+
+.exp-followings::-webkit-scrollbar-thumb:active {
+    background: #b15115;
+}
+
+.exp-followings::-webkit-scrollbar-thumb:window-inactive {
+    background: #b15115;
 }
 
 .f-card img {
@@ -2059,6 +2081,12 @@
 
 .mobbar {
     display: none;
+}
+
+.pcards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 @media only screen and (max-width:680px) {
