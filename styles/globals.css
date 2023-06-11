@@ -1385,7 +1385,7 @@
 }
 
 
-.hero {
+.herog {
     font-size: clamp(30px, 10vw, 50px);
     line-height: 1;
     display: inline-block;
@@ -1853,6 +1853,28 @@
     text-align: center;
 }
 
+.sharePost {
+    position: fixed;
+    left: 5px;
+    bottom: 50%;
+    transform: translateY(50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 100;
+}
+
+.sharePost svg {
+    width: 30px;
+    height: 30px;
+    fill: #fff;
+    transition: all 0.3s ease;
+}
+
+.sharePost svg:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
 
 
 .r-img img {
@@ -1998,7 +2020,7 @@
 }
 
 .w-300 {
-    max-width: 380px;
+    max-width: 80%;
 }
 
 .ph-projects {

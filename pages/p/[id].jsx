@@ -4,6 +4,52 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Login from '../../compos/Login/Login';
 import Head from 'next/head';
+import {
+    EmailShareButton,
+    FacebookShareButton,
+    HatenaShareButton,
+    InstapaperShareButton,
+    LineShareButton,
+    LinkedinShareButton,
+    LivejournalShareButton,
+    MailruShareButton,
+    OKShareButton,
+    PinterestShareButton,
+    PocketShareButton,
+    RedditShareButton,
+    TelegramShareButton,
+    TumblrShareButton,
+    TwitterShareButton,
+    ViberShareButton,
+    VKShareButton,
+    WhatsappShareButton,
+    WorkplaceShareButton
+} from "react-share";
+
+import {
+    EmailIcon,
+    FacebookIcon,
+    FacebookMessengerIcon,
+    HatenaIcon,
+    InstapaperIcon,
+    LineIcon,
+    LinkedinIcon,
+    LivejournalIcon,
+    MailruIcon,
+    OKIcon,
+    PinterestIcon,
+    PocketIcon,
+    RedditIcon,
+    TelegramIcon,
+    TumblrIcon,
+    TwitterIcon,
+    ViberIcon,
+    VKIcon,
+    WeiboIcon,
+    WhatsappIcon,
+    WorkplaceIcon
+} from "react-share";
+
 
 
 export async function getServerSideProps(context) {
@@ -74,9 +120,9 @@ function PostId({ newData }) {
                 <meta property="og:title" content={newData.title} />
                 <meta property="og:description" content={newData.desc} />
                 <meta property="og:image" content={newData.image} />
-                <meta property="og:url" content={"https://artverse.vercel.app/p/" + newData.$id} />
+                <meta property="og:url" content={"https://artverses.vercel.app/p/" + newData.$id} />
                 <meta property="og:type" content="website" />
-                <meta property="og:site_name" content="Artverse" />
+                <meta property="og:site_name" content="Artverses" />
 
                 <meta name="twitter:title" content={newData.title} />
                 <meta name="twitter:description" content={newData.description} />
@@ -88,7 +134,50 @@ function PostId({ newData }) {
                     <img src="https://i.ibb.co/sWNd2Vc/ARTVERSE-1.gif" alt="loading" />
                 </div>
             ) : (
-                <Home user={userData} post={postData} />
+                <div className="wrap-home">
+                    <div className="sharePost">
+                        <FacebookShareButton
+                            url={"https://artverses.vercel.app/p/" + newData.$id}
+                            quote={newData.title}
+                            hashtag="#artverses"
+                        >
+                            <FacebookIcon size={32} round={true} />
+                        </FacebookShareButton>
+                        <TwitterShareButton
+                            url={"https://artverses.vercel.app/p/" + newData.$id}
+                            title={newData.title}
+                            hashtags={["artverses"]}
+                        >
+                            <TwitterIcon size={32} round={true} />
+                        </TwitterShareButton>
+                        <WhatsappShareButton
+                            url={"https://artverses.vercel.app/p/" + newData.$id}
+                            title={newData.title}
+                            separator=":: "
+                        >
+                            <WhatsappIcon size={32} round={true} />
+                        </WhatsappShareButton>
+
+                        <EmailShareButton
+                            url={"https://artverses.vercel.app/p/" + newData.$id}
+                            subject={newData.title}
+                            body="body"
+                        >
+                            <EmailIcon size={32} round={true} />
+                        </EmailShareButton>
+
+                        <LinkedinShareButton
+                            url={"https://artverses.vercel.app/p/" + newData.$id}
+                            title={newData.title}
+                            summary={newData.desc}
+                            source={"https://artverses.vercel.app/p/" + newData.$id}
+                        >
+                            <LinkedinIcon size={32} round={true} />
+                        </LinkedinShareButton>
+
+                    </div>
+                    <Home user={userData} post={postData} />
+                </div>
             )}
         </>
     );
