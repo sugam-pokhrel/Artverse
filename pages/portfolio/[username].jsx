@@ -5,6 +5,7 @@ import Head from 'next/head'
 import ProgrammerBasic from '../../compos/Portfolio/Themes/Programmer/basic/Basic'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import Retro from '../../compos/Portfolio/Themes/Retro'
 
 
 
@@ -205,6 +206,7 @@ function Username({ newData, id, dataz, uname, bgImg }) {
                         <div>
                             {(theme == "basic") && <Basic user={user} data={datax} posts={posts} socials={socials} />}
                             {(theme == "programmer") && <ProgrammerBasic user={user} data={datax} posts={posts} socials={socials} />}
+                            {(theme == "retro") && <Retro user={user} data={datax} posts={posts} socials={socials} />}
 
                         </div>
                     ) : (

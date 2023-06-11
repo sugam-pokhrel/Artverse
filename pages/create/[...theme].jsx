@@ -235,7 +235,7 @@ function Thems() {
       var modelBtn = document.getElementById("myModel");
       modelBtn.click();
       setDataSaving(true);
-      const array = ['basic', 'programmer', 'artist'];
+      const array = ['basic', 'programmer', 'retro'];
       const isPresent = array.includes(theme[0])
       if (!isPresent) {
         alert('Please choose a proper theme')
@@ -286,7 +286,6 @@ function Thems() {
         .then((response) => response.json())
         .then((data) => {
           // Handle the response data
-          console.log(data);
           // succed
           setDataSaving(false);
         })

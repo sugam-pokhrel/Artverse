@@ -5,6 +5,7 @@ import Socials from '../socialCard/Socials'
 import Basic from './Themes/Basic'
 import Programmerbasic from './Themes/Programmer/basic/Basic'
 import { Router, useRouter } from 'next/router'
+import Retro from './Themes/Retro'
 
 function Preview({ data, user }) {
     var router = useRouter()
@@ -69,10 +70,12 @@ function Preview({ data, user }) {
                     : (theme === "programmer") ? (
                         <Programmerbasic data={data} user={user} posts={posts} socials={socials} />
                     )
-                        :
-                        (
-                            <Basic data={data} user={user} posts={posts} socials={socials} />
+                        : (theme === "retro") ? (
+                            <Retro data={data} user={user} posts={posts} socials={socials} />
                         )
+                            : (
+                                <Basic data={data} user={user} posts={posts} socials={socials} />
+                            )
             }
         </>
     )

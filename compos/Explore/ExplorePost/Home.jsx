@@ -77,6 +77,7 @@ function Home({ post, user }) {
         console.error('An error occurred while checking if the post is liked:', error);
       });
   }
+  var [lieCount, setLikeCount] = React.useState(0);
 
 
   function likePost() {
@@ -132,11 +133,13 @@ function Home({ post, user }) {
     }
   }
   var [posts, setPosts] = useState([])
+
   function getPost() {
     fetch("/api/post/getpostbyEmail?email=" + post.createdBy)
       .then(res => res.json())
       .then(data => {
         var gotPost = data?.post
+
         // remove post thats same as params.id
         for (var i = 0; i < gotPost.length; i++) {
           if (gotPost[i].$id === post.$id) {
@@ -188,7 +191,6 @@ function Home({ post, user }) {
           }
         })
         .then((data) => {
-          console.log(data);
           setIsFollowed(!isFollowed);
         }
         )
@@ -222,7 +224,11 @@ function Home({ post, user }) {
         {(auth) && <div className="ep-u-actions flex gap-5">
           {!likeLoading ? (
             <div className="btn btn-primary" onClick={likePost}>
-              {liked ? <AiFillHeart size={22} /> : <AiOutlineHeart size={22} />}
+              {liked ?
+
+                <div >
+                  <AiFillHeart size={22} />
+                </div> : <AiOutlineHeart size={22} />}
               {likeStatus}
             </div>
           ) : (

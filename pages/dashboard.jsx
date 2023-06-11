@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Dashboard from '../compos/Homepage/LoggedIn/Dashboard'
 import { useSession } from 'next-auth/react'
+import Head from 'next/head'
 
 function dashboard() {
     var [auth, setAuth] = useState(false)
@@ -17,9 +18,15 @@ function dashboard() {
     }, [session])
 
     return (
-        <div className="dash">{(auth && !loading) ? <Dashboard /> :
-            null
-        }
+        <div className="dash">
+            <Head>
+                <title>ArtVerse - Dashboard</title>
+                <meta name="description" content="ArtVerse Dashboard" />
+            </Head>
+
+            {(auth && !loading) ? <Dashboard /> :
+                null
+            }
             {(!auth && !loading) && <div className="dash">
                 <h1 className='text-3xl font-bold'>You are not logged in</h1>
                 <p className='text-xl'>Please login to view your dashboard</p>
