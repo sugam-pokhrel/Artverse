@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Postcard from './PostCard';
 import { useRouter } from 'next/router';
+import { signOut } from 'next-auth/react';
 
 function Home() {
     var router = useRouter()
@@ -69,7 +70,7 @@ function Home() {
                             <button className='btn btn-primary' onClick={() => router.push("/profile/edit")}>Edit Profile</button>
                         }
                         {loading ? <div className="mp-load-btn"></div> :
-                            <button className='btn bg-maroon-200'>Logout</button>
+                            <button className='btn bg-maroon-200' onClick={signOut}>Logout</button>
                         }
                     </div>
                 </div>

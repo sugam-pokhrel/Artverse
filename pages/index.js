@@ -10,6 +10,7 @@ import Dashboard from '../compos/Homepage/LoggedIn/Dashboard'
 import ExpHome from '../compos/Explore/Home'
 import Index from '../compos/Explore/loggedIn/Index'
 import Explorepage from '../compos/Explore/Explorepage'
+import Postedbyfollowings from '../compos/Explore/Postedbyfollowings'
 
 
 export default function Home() {
@@ -58,7 +59,11 @@ export default function Home() {
       </div>}
       {(authenticated && !loading) && <div>
         {/* <ExpHome /> */}
-        {authenticated && <Index />}
+        {authenticated && <div className="auth">
+          <Index />
+          <Postedbyfollowings />
+
+        </div>}
         <Explorepage />
       </div>}
       {loading && <div className='explore-load'>

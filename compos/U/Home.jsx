@@ -208,6 +208,9 @@ function Home({ user }) {
             {(posts.length > 0) && posts.map(post => (
               <Postcard post={post} key={post.$id} />
             ))}
+            {(posts.length === 0) && <div className="mp-no-post flex item-center justify-center">
+              <h1 className='text sm:text-2xl text-xl'><span className='text text-blue-400 font-bold'>{user.name}</span> has not posted anything in a while.</h1>
+            </div>}
 
           </div>
         </div>

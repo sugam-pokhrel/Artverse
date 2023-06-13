@@ -1111,6 +1111,11 @@
     cursor: pointer;
 }
 
+.btns {
+    display: flex;
+    gap: 18px;
+}
+
 .cc-theme {
     display: flex;
     flex-direction: column;
@@ -2591,6 +2596,43 @@
 
 .exp-followings::-webkit-scrollbar-thumb:window-inactive {
     background: #b15115;
+}
+
+.t-card {
+    width: 220px !important;
+    min-width: 220px !important;
+    display: flex;
+    flex-direction: column;
+    height: fit;
+}
+
+.more-card {
+    width: 220px !important;
+    min-width: 220px !important;
+    display: flex;
+    flex-direction: column;
+    height: fit;
+    background-color: #1c1c1c46;
+    justify-content: center;
+    align-items: center;
+}
+
+.t-card img {
+    height: 100px;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100px;
+    object-fit: cover;
+}
+
+.t-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    width: 100%;
+    background-color: #1c1c1c46;
+    border-radius: 20px;
 }
 
 .f-card img {

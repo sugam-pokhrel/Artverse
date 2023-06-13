@@ -37,6 +37,22 @@ function Portfolio() {
                 "slug": "programmer",
                 "name": "Programmer",
                 "image": "https://i.ibb.co/wQXYMnS/image.png",
+            },
+            {
+                "slug": "artist",
+                "name": "Artist",
+                "image": "https://th.bing.com/th/id/R.1a7701d5b548bb68ad78794276222c4b?rik=31a6k70Iyab86Q&pid=ImgRaw&r=0",
+
+            },
+            {
+                "slug": "retro",
+                "name": "Cyberpunk",
+                "image": "https://i.ibb.co/RcKK5vQ/image.png",
+            },
+            {
+                "slug": "musician",
+                "name": "Musician",
+                "image": "https://th.bing.com/th/id/R.1f6a3f164aa9a0f2221b75b715c74909?rik=gw4Yu1TcL6m89A&pid=ImgRaw&r=0",
             }
         ]
 
@@ -147,6 +163,22 @@ function Portfolio() {
                     <h2>Wanna Edit your  Portfolio?</h2>
                     <p>You have already made a portfolio, but you can edit it any time. Do you want to edit?</p>
                 </div>}
+                <div className="cc-items">
+                    <div className="addTheme cc-themes">
+                        <div className="cc-theme">
+                            <div className="badge badge-info gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                info
+                            </div>
+                            <h2>Did you Know?</h2>
+                            <p>You can add your own theme to ArtVerse, Since Artverse is an open-sourced project, you can help us by contributing in this project. Make your own Cool theme and publish.</p>
+                            <div className="btns">
+                                <button className='btn glass' onClick={() => router.push('https://github.com/Meprazhant/Artverse/', "blank")}>Contribute</button>
+                                <div className="btn btn-primary">Learn More about Contribution</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
                 {(pfExists) && <div className="cc-items cc-the">
@@ -204,6 +236,7 @@ function Portfolio() {
                         ))}
 
                     </div>
+
                 </div>
 
             </div>
