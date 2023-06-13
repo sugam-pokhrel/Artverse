@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Explorepage from '../compos/Explore/Explorepage'
-import ExploreNav from '../compos/Explore/ExploreNav'
 import Head from 'next/head'
 import Home from '../compos/Explore/Home'
 import { useSession } from 'next-auth/react'
